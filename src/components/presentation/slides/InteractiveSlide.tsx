@@ -229,7 +229,7 @@ function TemplateComparison() {
 
   const templateFields = [
     { id: 'docReq', label: 'Documentary Requirements', value: 'Commercial Invoice, B/L, Packing List, COO' },
-    { id: 'shipTerms', label: 'Shipping Terms', value: 'CIF Hong Kong, Partial Shipment Allowed' },
+    { id: 'shipTerms', label: 'Shipping Terms', value: 'FOB Destination, Partial Shipment Allowed' },
     { id: 'clauses', label: 'Special Clauses', value: 'Late presentation acceptable up to 21 days' },
     { id: 'conditions', label: 'Payment Conditions', value: '90 days from B/L date, 2% discount if <30 days' },
   ];
@@ -5895,14 +5895,14 @@ function ModuleConsolidation() {
   // Duplicated modules across backend systems
   const duplicatedModules = [
     { name: 'Billing', icon: '🧾', color: '#00D4FF' },
-    { name: 'Participation', icon: '🤝', color: '#C9A227' },
-    { name: 'CIF', icon: '👥', color: '#10B981' },
+    { name: 'Module P', icon: '🤝', color: '#C9A227' },
+    { name: 'Module C', icon: '👥', color: '#10B981' },
     { name: 'Pricing', icon: '💰', color: '#8B5CF6' },
   ];
 
   // Animation phases (controlled by navigation):
   // 0: Initial - Platform A & Platform B appear
-  // 1: Highlight duplication in Platform A & Platform B
+  // 1: Highlight duplication in Platform A & Platform B in Platform A & Platform B
   // 2: Frontend appears on top with connections
   // 3: Shared modules appear, modules consolidate
   // 4: Platforms shrink, metrics appear
@@ -6510,8 +6510,8 @@ function TradeArchitecture() {
 
   // Modular Reusable Components - Key highlight
   const modularComponents = [
-    { icon: '👥', label: 'CIF', desc: 'Customer Information', color: '#00D4FF' },
-    { icon: '🤝', label: 'Participation', desc: 'Syndication & Distribution', color: '#C9A227' },
+    { icon: '👥', label: 'Module C', desc: 'Customer Information', color: '#00D4FF' },
+    { icon: '🤝', label: 'Module P', desc: 'Syndication & Distribution', color: '#C9A227' },
     { icon: '💰', label: 'Pricing', desc: 'Dynamic Rate Engine', color: '#10B981' },
     { icon: '🧾', label: 'Billing', desc: 'Revenue Management', color: '#8B5CF6' },
   ];
@@ -6519,7 +6519,7 @@ function TradeArchitecture() {
   // Shared Services
   const sharedServices = [
     { label: 'Document Management', color: '#00D4FF' },
-    { label: 'CIF', color: '#C9A227' },
+    { label: 'Module C', color: '#C9A227' },
     { label: 'Payments', color: '#10B981' },
     { label: 'Accounting (Ledger)', color: '#8B5CF6' },
   ];
@@ -6529,8 +6529,8 @@ function TradeArchitecture() {
     { label: 'Platform B/SCF', desc: 'Payables & Receivables' },
     { label: 'Platform A', desc: 'Trade Processing' },
     { label: 'Unified Frontend', desc: 'Data Conversion' },
-    { label: 'SOP', desc: 'Supplier Onboarding' },
-    { label: 'DD', desc: 'Dynamic Discounting' },
+    { label: 'Module S', desc: 'Supplier Onboarding' },
+    { label: 'Module D', desc: 'Dynamic Discounting' },
   ];
 
   useEffect(() => {

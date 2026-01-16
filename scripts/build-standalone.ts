@@ -41,8 +41,8 @@ function ModuleConsolidation({ phase }) {
 
   const duplicatedModules = [
     { name: 'Billing', icon: '🧾', color: '#00D4FF' },
-    { name: 'Participation', icon: '🤝', color: '#C9A227' },
-    { name: 'CIF', icon: '👥', color: '#10B981' },
+    { name: 'Module P', icon: '🤝', color: '#C9A227' },
+    { name: 'Module C', icon: '👥', color: '#10B981' },
     { name: 'Pricing', icon: '💰', color: '#8B5CF6' },
   ];
 

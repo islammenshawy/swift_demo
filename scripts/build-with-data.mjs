@@ -57,6 +57,33 @@ const REPLACEMENTS = [
   ['"TENET"', '"Legacy System"'],
   ['{ name: \'TENET\'', '{ name: \'Legacy System\''],
 
+  // Module names
+  ['CIF Hong Kong', 'FOB Destination'],
+  ["'CIF'", "'Module C'"],
+  ['"CIF"', '"Module C"'],
+  ['{ name: \'CIF\'', '{ name: \'Module C\''],
+  ['👥 CIF', '👥 Module C'],
+  ['• CIF •', '• Module C •'],
+  ['• CIF', '• Module C'],
+  ['label: \'CIF\'', 'label: \'Module C\''],
+
+  ["'Participation'", "'Module P'"],
+  ['"Participation"', '"Module P"'],
+  ['{ name: \'Participation\'', '{ name: \'Module P\''],
+  ['🤝 Participation', '🤝 Module P'],
+  ['• Participation •', '• Module P •'],
+  ['• Participation', '• Module P'],
+  ['Participation •', 'Module P •'],
+  ['label: \'Participation\'', 'label: \'Module P\''],
+
+  ["'SOP'", "'Module S'"],
+  ['"SOP"', '"Module S"'],
+  ['label: \'SOP\'', 'label: \'Module S\''],
+
+  ["'DD'", "'Module D'"],
+  ['"DD"', '"Module D"'],
+  ['label: \'DD\'', 'label: \'Module D\''],
+
   // Variable names
   ['showTCFE', 'showFrontend'],
 
