@@ -5902,7 +5902,7 @@ function ModuleConsolidation() {
 
   // Animation phases (controlled by navigation):
   // 0: Initial - Platform A & Platform B appear
-  // 1: Highlight duplication in Platform A & Platform B in Platform A & Platform B in Platform A & Platform B
+  // 1: Highlight duplication in Platform A & Platform B in Platform A & Platform B in Platform A & Platform B in Platform A & Platform B
   // 2: Frontend appears on top with connections
   // 3: Shared modules appear, modules consolidate
   // 4: Platforms shrink, metrics appear

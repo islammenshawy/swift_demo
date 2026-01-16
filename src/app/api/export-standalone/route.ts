@@ -2,16 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import * as fs from 'fs';
 import * as path from 'path';
 import { getDemo } from '@/data/swift-demos';
-import { getDemoById } from '@/lib/database';
 import { Demo } from '@/types/demo';
-
-// Get demo from static files or database
-async function getDemoData(demoId: string): Promise<Demo | null> {
-  const staticDemo = getDemo(demoId);
-  if (staticDemo) return staticDemo;
-  const dbDemo = await getDemoById(demoId);
-  return dbDemo;
-}
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -22,8 +13,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Get the demo data
-    const demoData = await getDemoData(demoId);
+    // Get the demo data from static files
+    const demoData = getDemo(demoId);
     if (!demoData) {
       return NextResponse.json({ error: 'Demo not found' }, { status: 404 });
     }

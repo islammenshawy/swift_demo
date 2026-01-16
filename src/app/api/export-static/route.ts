@@ -2,23 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import * as fs from 'fs';
 import * as path from 'path';
 import { getDemo } from '@/data/swift-demos';
-import { getDemoById } from '@/lib/database';
 import { Demo } from '@/types/demo';
 
 // Dynamic import to avoid Turbopack trying to parse esbuild's binary
 async function getEsbuild() {
   return await import('esbuild');
-}
-
-// Get demo from static files or database
-async function getDemoData(demoId: string): Promise<Demo | null> {
-  // First try static demos
-  const staticDemo = getDemo(demoId);
-  if (staticDemo) return staticDemo;
-
-  // Then try database
-  const dbDemo = await getDemoById(demoId);
-  return dbDemo;
 }
 
 const STANDALONE_ENTRY = `
@@ -712,8 +700,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    // Get the demo data (from static files or database)
-    const demoData = await getDemoData(demoId);
+    // Get the demo data from static files
+    const demoData = getDemo(demoId);
     if (!demoData) {
       return NextResponse.json({ error: 'Demo not found' }, { status: 404 });
     }
