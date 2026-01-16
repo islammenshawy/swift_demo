@@ -5,17 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // Import actual visualization components
 import InteractiveSlide from '@/components/presentation/slides/InteractiveSlide';
+import type { SlideContent, Slide as DemoSlide, Demo as DemoType, VisualizationType } from '@/types/demo';
 
-// Types
-interface SlideContent {
-  title?: string;
-  subtitle?: string;
-  text?: string;
-  bullets?: string[];
-  visualization?: string;
-}
-
-interface Slide {
+// Local types for standalone (JSON data may have looser types)
+interface StandaloneSlide {
   id: string;
   order: number;
   type: string;
@@ -23,17 +16,17 @@ interface Slide {
   animation?: { entry: string; duration: number; delay: number };
 }
 
-interface Demo {
+interface StandaloneDemo {
   id: string;
   title: string;
   description: string;
-  slides: Slide[];
+  slides: StandaloneSlide[];
 }
 
 // Demo data is injected via window at runtime
 declare global {
   interface Window {
-    DEMO_DATA: Demo;
+    DEMO_DATA: StandaloneDemo;
   }
 }
 
@@ -49,7 +42,7 @@ const PHASE_COUNTS: Record<string, number> = {
   'trade-architecture': 1,
 };
 
-function getPhaseCount(slide: Slide): number {
+function getPhaseCount(slide: StandaloneSlide): number {
   if (slide.type === 'interactive' && slide.content.visualization) {
     return PHASE_COUNTS[slide.content.visualization] || 1;
   }
@@ -181,7 +174,7 @@ function ContentSlide({ content }: { content: SlideContent }) {
 }
 
 // Slide Renderer
-function SlideRenderer({ slide, phase }: { slide: Slide; phase: number }) {
+function SlideRenderer({ slide, phase }: { slide: StandaloneSlide; phase: number }) {
   if (slide.type === 'title') {
     return <TitleSlide content={slide.content} />;
   }
