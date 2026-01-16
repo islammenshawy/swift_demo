@@ -3,24 +3,48 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "resolve-data": "node scripts/resolve-data.mjs",
+    "sanitize": "node scripts/build-with-data.mjs sanitize",
+    "restore": "node scripts/build-with-data.mjs restore",
+    "dev": "npm run resolve-data && next dev",
+    "build": "node scripts/build-with-data.mjs",
+    "build:standalone": "vite build --config vite.standalone.config.ts",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "archiver": "^7.0.1",
+    "framer-motion": "^12.25.0",
+    "modern-screenshot": "^4.6.7",
+    "mongodb": "^7.0.0",
+    "mongodb-memory-server-core": "^11.0.1",
     "next": "16.1.1",
+    "openai": "^6.16.0",
+    "pdfjs-dist": "^5.4.530",
+    "pptxgenjs": "^4.0.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-dropzone": "^14.3.8",
+    "three": "^0.182.0",
+    "zustand": "^5.0.9"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/vite": "^4.1.18",
+    "@types/archiver": "^7.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.182.0",
+    "@vitejs/plugin-react": "^5.1.2",
+    "esbuild": "^0.27.2",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "terser": "^5.45.0",
+    "typescript": "^5",
+    "vite": "^7.3.1"
   }
 }

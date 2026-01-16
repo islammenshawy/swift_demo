@@ -1,0 +1,139 @@
+# Sanitized Data Configuration
+# This file contains placeholder values safe for sharing.
+# Create data.secret.yaml locally with real values (it's gitignored).
+
+# Systems & Applications
+systems:
+  TRADE_SYSTEM: "System A"
+  ACCOUNTS_SYSTEM: "System B"
+  CONVERSION_FRONTEND: "Frontend Layer"
+  NETWORK: "Network Platform"
+  LEGACY_1: "Legacy System"
+  LEGACY_2: "Legacy Module"
+  SUPPLIER_PORTAL: "Portal"
+  DISCOUNTING: "Module D"
+  REPORTING_DB: "Data Store"
+  RISK_ENGINE: "Risk Module"
+  SETTLEMENT: "Settlement Module"
+
+# Message Types & Standards (these are public standards, can keep real names)
+standards:
+  MSG_TYPE_1: "Type 700"
+  MSG_TYPE_2: "Type 710"
+  MSG_TYPE_3: "Type 760"
+  MSG_TYPE_4: "Type 767"
+  MSG_TYPE_5: "Type 400"
+  ISO_STANDARD: "ISO Standard"
+
+# Organizations
+organizations:
+  COMPANY_1: "Company Alpha"
+  COMPANY_2: "Company Beta"
+  COMPANY_3: "Company Gamma"
+  COMPANY_4: "Company Delta"
+  BANK_1: "Bank One"
+  BANK_2: "Bank Two"
+  BANK_3: "Bank Three"
+  BANK_4: "Bank Four"
+  PARTNER_1: "Partner A"
+  PARTNER_2: "Partner B"
+
+# People
+people:
+  EXEC_1: "Executive A"
+  EXEC_1_TITLE: "Head of Division"
+  EXEC_2: "Executive B"
+  EXEC_2_TITLE: "VP Operations"
+  EMPLOYEE_1: "Team Member 1"
+  EMPLOYEE_2: "Team Member 2"
+  EMPLOYEE_3: "Team Member 3"
+
+# Operational Metrics
+metrics:
+  # Deployment & Release
+  DEPLOY_FREQ: "Low frequency"
+  DEPLOY_FREQ_INDUSTRY: "High frequency"
+  LEAD_TIME: "Several weeks"
+  LEAD_TIME_INDUSTRY: "Days"
+  FAILURE_RATE: "XX%"
+  RECOVERY_TIME: "Several hours"
+
+  # Code & Technical
+  CODE_LINES: "Millions of lines"
+  CODEBASE_AGE: "Many years"
+  ACTIVE_MODULES: "Dozens"
+  TECH_STACK: "Legacy stack"
+  DOC_COVERAGE: "Low"
+  TEST_COVERAGE: "Low"
+  OUTDATED_DEPS: "High %"
+
+  # Integration
+  INTEGRATION_POINTS: "Many"
+  API_DOC_COVERAGE: "Low"
+  BREAKING_CHANGES: "Frequent"
+  CHANGE_COORDINATION: "Weeks"
+
+  # Processing
+  STP_CURRENT: "XX%"
+  STP_TARGET: "YY%"
+  MANUAL_TOUCH: "XX%"
+  QUEUE_DEPTH: "Thousands"
+  BATCH_WINDOW: "Hours"
+
+  # Data Quality
+  DATA_LATENCY: "T-X"
+  DATA_DISCREPANCY: "XX%"
+  RECON_TIME: "Hours daily"
+  ERROR_DISCOVERY: "Days"
+
+  # Support
+  KNOWLEDGE_CONCENTRATION: "Few people"
+  BUG_FIX_TIME: "Weeks"
+  REGRESSION_RATE: "XX%"
+  SUPPORT_ESCALATIONS: "Many monthly"
+
+# Financial Amounts
+amounts:
+  SCF_GAP: "$X Trillion"
+  INVOICE_EXAMPLE: "$XXX,XXX"
+  EARLY_PAYMENT: "$XXX,XXX"
+  MAINTENANCE_COST: "$X.XM"
+  PIPELINE_VALUE: "$XX.XM+"
+  TRANSACTION_1: "$X.XM"
+  TRANSACTION_2: "$X.XM"
+  TRANSACTION_3: "$X.XM"
+  MARKET_SIZE_1: "XXX Billion"
+  MARKET_SIZE_2: "XXX Billion"
+  MARKET_SIZE_3: "XXX Billion"
+  FINANCING_VOLUME: "$XB+ annually"
+
+# Time Periods
+timeframes:
+  SETTLEMENT_CYCLE: "T+X"
+  DATA_FRESHNESS: "T-X"
+  CHANGE_CYCLE: "Months"
+  ONBOARDING_OLD: "Months"
+  ONBOARDING_NEW: "Days"
+
+# Percentages & Ratios
+percentages:
+  COST_REDUCTION: "XX%"
+  TIME_SAVED: "XX%"
+  ACCURACY_TARGET: "XX%"
+  EFFICIENCY_GAIN: "XX%"
+  UPTIME_TARGET: "XX.X%"
+  DISCOUNT_RATE: "X.X%"
+  APR_BANK: "XX.X%"
+  APR_FACTORING: "X.X%"
+  APR_SCF: "X.X%"
+
+# Scale & Volume
+scale:
+  BUYERS_CURRENT: "XX"
+  BUYERS_TARGET: "XXX+"
+  SUPPLIERS_CURRENT: "XX"
+  SUPPLIERS_TARGET: "XXX+"
+  BANKS_CURRENT: "X"
+  BANKS_TARGET: "XX+"
+  COUNTRIES: "XX"
+  PROGRAMS: "XX+"
