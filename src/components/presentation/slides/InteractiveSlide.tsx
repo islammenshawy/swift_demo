@@ -3003,7 +3003,7 @@ function LegacyProblems() {
                   <div className="grid grid-cols-3 gap-3 mb-4">
                     {[
                       { name: 'Platform A Core', connections: 12 },
-                      { name: 'TENET', connections: 9 },
+                      { name: 'Legacy System', connections: 9 },
                       { name: 'Settlement', connections: 11 },
                       { name: 'Risk Engine', connections: 8 },
                       { name: 'Reporting', connections: 7 },

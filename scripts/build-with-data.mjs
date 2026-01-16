@@ -52,6 +52,11 @@ const REPLACEMENTS = [
   ['APAR Platform', 'Platform B'],
   ['TCFE -', 'Unified Frontend -'],
 
+  // Legacy systems
+  ["'TENET'", "'Legacy System'"],
+  ['"TENET"', '"Legacy System"'],
+  ['{ name: \'TENET\'', '{ name: \'Legacy System\''],
+
   // Variable names
   ['showTCFE', 'showFrontend'],
 
