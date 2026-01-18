@@ -94,11 +94,25 @@ export const useDemoStore = create<DemoState>()(
       getDemoById: (id) => {
         // For default demos, always return the latest version from code
         const defaultDemo = defaultDemos.find((d) => d.id === id);
-        if (defaultDemo) return defaultDemo;
+        if (defaultDemo) {
+          // Filter out hidden slides and re-index
+          const visibleSlides = defaultDemo.slides
+            .filter(slide => !slide.hidden)
+            .map((slide, index) => ({ ...slide, order: index }));
+          return { ...defaultDemo, slides: visibleSlides };
+        }
 
         // For user-created demos, check stored demos
         const state = get();
-        return state.demos.find((d) => d.id === id);
+        const demo = state.demos.find((d) => d.id === id);
+        if (demo) {
+          // Filter out hidden slides and re-index
+          const visibleSlides = demo.slides
+            .filter(slide => !slide.hidden)
+            .map((slide, index) => ({ ...slide, order: index }));
+          return { ...demo, slides: visibleSlides };
+        }
+        return undefined;
       },
 
       importDemos: (demos) => {

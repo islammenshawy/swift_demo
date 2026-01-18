@@ -21,5 +21,13 @@ export const demoList = Object.values(demos).map((demo) => ({
 }));
 
 export function getDemo(id: string): Demo | null {
-  return demos[id] || null;
+  const demo = demos[id];
+  if (!demo) return null;
+
+  // Filter out hidden slides and re-index
+  const visibleSlides = demo.slides
+    .filter(slide => !slide.hidden)
+    .map((slide, index) => ({ ...slide, order: index }));
+
+  return { ...demo, slides: visibleSlides };
 }

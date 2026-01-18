@@ -4,6 +4,8 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { SlideContent } from '@/types/demo';
+import { ELCArchitecture } from './ELCArchitectureVisualization';
+import { ELCIntegrationPatterns } from './ELCIntegrationPatterns';
 
 interface InteractiveSlideProps {
   content: SlideContent;
@@ -2732,8 +2734,8 @@ function LegacyProblems() {
     {
       icon: '3',
       label: 'Integration Complexity',
-      desc: '47+ point-to-point connections',
-      detail: 'No standard APIs • Cascading failures • High change coordination cost',
+      desc: '100+ service-level connections',
+      detail: '5x industry average • No standard APIs • High coordination cost',
     },
     {
       icon: '4',
@@ -2746,6 +2748,18 @@ function LegacyProblems() {
       label: 'Technical Debt',
       desc: 'High maintenance burden',
       detail: 'Low documentation • Key-person risk • 4-6 month change cycles',
+    },
+    {
+      icon: '6',
+      label: 'Schema Rigidity',
+      desc: 'Fixed relational models',
+      detail: 'Every change requires deployment • No runtime flexibility • Tightly coupled data structures',
+    },
+    {
+      icon: '7',
+      label: 'Quality & Defects',
+      desc: 'Growing technical debt',
+      detail: 'High defect backlog • Long resolution cycles • Reactive fixes over proactive quality',
     },
   ];
 
@@ -2792,13 +2806,13 @@ function LegacyProblems() {
     switch (index) {
       case 0: // Monolithic Architecture - Professional metrics view
         return (
-          <div className="relative w-full h-full flex items-center justify-center p-8">
-            <div className="w-full max-w-5xl flex gap-12">
+          <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
+            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
               {/* Left: Architecture Diagram */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
-                className="flex-1"
+                className="flex-1 min-w-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Current Architecture</h3>
                 <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
@@ -2849,7 +2863,7 @@ function LegacyProblems() {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-                className="w-80"
+                className="w-full lg:w-80 flex-shrink-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Business Impact</h3>
 
@@ -2857,8 +2871,8 @@ function LegacyProblems() {
                   {[
                     { label: 'Deployment Frequency', value: '1x / month', impact: 'vs. industry 10x/day', bad: true },
                     { label: 'Change Lead Time', value: '6-8 weeks', impact: 'vs. industry <1 week', bad: true },
-                    { label: 'Failure Rate', value: '23%', impact: 'of deployments fail', bad: true },
-                    { label: 'Recovery Time', value: '4-6 hours', impact: 'mean time to restore', bad: true },
+                    { label: 'Test → Dev Cycles', value: 'Multiple', impact: 'regressions bounce back to engineering', bad: true },
+                    { label: 'Regression Risk', value: 'High', impact: 'changes break unrelated areas', bad: true },
                     { label: 'Code Dependencies', value: '2.4M lines', impact: 'in single codebase', bad: true },
                   ].map((metric, i) => (
                     <motion.div
@@ -2884,13 +2898,13 @@ function LegacyProblems() {
 
       case 1: // Slow Processing - Professional metrics view
         return (
-          <div className="relative w-full h-full flex items-center justify-center p-8">
-            <div className="w-full max-w-5xl flex gap-12">
+          <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
+            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
               {/* Left: Processing Flow Diagram */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
-                className="flex-1"
+                className="flex-1 min-w-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Current Processing Flow</h3>
                 <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
@@ -2955,7 +2969,7 @@ function LegacyProblems() {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-                className="w-80"
+                className="w-full lg:w-80 flex-shrink-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Performance Impact</h3>
                 <div className="space-y-4">
@@ -2964,7 +2978,7 @@ function LegacyProblems() {
                     { label: 'Batch Window', value: '4 hrs/night', impact: 'Limits processing capacity', bad: true },
                     { label: 'Queue Depth', value: '12,000+', impact: 'avg. trades waiting', bad: true },
                     { label: 'Manual Touch', value: '34%', impact: 'of trades require intervention', bad: true },
-                    { label: 'STP Rate', value: '66%', impact: 'vs. target 95%', bad: true },
+                    { label: 'STP Rate', value: '20%', impact: 'vs. target 90%', bad: true },
                   ].map((metric, i) => (
                     <motion.div
                       key={metric.label}
@@ -2989,13 +3003,13 @@ function LegacyProblems() {
 
       case 2: // Integration Chaos - Professional metrics view
         return (
-          <div className="relative w-full h-full flex items-center justify-center p-8">
-            <div className="w-full max-w-5xl flex gap-12">
+          <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
+            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
               {/* Left: Integration Architecture */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
-                className="flex-1"
+                className="flex-1 min-w-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Current Integration Landscape</h3>
                 <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
@@ -3031,7 +3045,7 @@ function LegacyProblems() {
                     >
                       <p className="text-sm text-gray-400 mb-2">Integration Issues</p>
                       {[
-                        { issue: 'Point-to-point connections', count: '47+', severity: 'critical' },
+                        { issue: 'Service-level connections', count: '100+', severity: 'critical' },
                         { issue: 'Custom data formats', count: '23', severity: 'high' },
                         { issue: 'Undocumented interfaces', count: '31', severity: 'high' },
                       ].map((item, i) => (
@@ -3068,16 +3082,16 @@ function LegacyProblems() {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-                className="w-80"
+                className="w-full lg:w-80 flex-shrink-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Integration Debt</h3>
                 <div className="space-y-4">
                   {[
-                    { label: 'Integration Points', value: '47+', impact: 'point-to-point connections', bad: true },
+                    { label: 'Integration Points', value: '100+', impact: 'vs. industry avg of 20 service-level connections', bad: true },
                     { label: 'API Documentation', value: '12%', impact: 'interfaces documented', bad: true },
                     { label: 'Breaking Changes/Yr', value: '156', impact: 'avg. cascading failures', bad: true },
                     { label: 'Change Coordination', value: '3-4 weeks', impact: 'for multi-system updates', bad: true },
-                    { label: 'Testing Coverage', value: '28%', impact: 'of integration paths', bad: true },
+                    { label: 'Testing Coverage', value: '60%', impact: 'of integration paths', bad: true },
                   ].map((metric, i) => (
                     <motion.div
                       key={metric.label}
@@ -3102,13 +3116,13 @@ function LegacyProblems() {
 
       case 3: // Limited Visibility - Focus on reporting delay, duplicate data, reconciliation
         return (
-          <div className="relative w-full h-full flex items-center justify-center p-8">
-            <div className="w-full max-w-5xl flex gap-12">
+          <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
+            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
               {/* Left: Core Visibility Issues */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
-                className="flex-1"
+                className="flex-1 min-w-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Data Visibility Challenges</h3>
                 <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6 space-y-5">
@@ -3190,7 +3204,7 @@ function LegacyProblems() {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-                className="w-80"
+                className="w-full lg:w-80 flex-shrink-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Business Impact</h3>
                 <div className="space-y-4">
@@ -3225,23 +3239,23 @@ function LegacyProblems() {
 
       case 4: // Maintenance Nightmare - Professional metrics view
         return (
-          <div className="relative w-full h-full flex items-center justify-center p-8">
-            <div className="w-full max-w-5xl flex gap-12">
+          <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
+            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
               {/* Left: Technical Debt Overview */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
-                className="flex-1"
+                className="flex-1 min-w-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Technical Debt Assessment</h3>
                 <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
                   {/* Codebase stats */}
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     {[
-                      { label: 'Codebase Age', value: '15+ years', status: 'critical' },
+                      { label: 'Codebase Age', value: '10+ years', status: 'critical' },
                       { label: 'Lines of Code', value: '2.4M', status: 'high' },
                       { label: 'Active Modules', value: '47', status: 'high' },
-                      { label: 'Tech Stack', value: 'Legacy Java/COBOL', status: 'critical' },
+                      { label: 'Legacy Components', value: 'Outdated Mule ESB', status: 'critical' },
                     ].map((stat, i) => (
                       <motion.div
                         key={stat.label}
@@ -3297,16 +3311,15 @@ function LegacyProblems() {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-                className="w-80"
+                className="w-full lg:w-80 flex-shrink-0"
               >
                 <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Maintenance Cost</h3>
                 <div className="space-y-4">
                   {[
                     { label: 'Change Lead Time', value: '4-6 months', impact: 'for significant changes', bad: true },
                     { label: 'Bug Fix Time', value: '3-4 weeks', impact: 'average resolution', bad: true },
-                    { label: 'Regression Rate', value: '34%', impact: 'of changes cause issues', bad: true },
+                    { label: 'Regression Rate', value: '20%', impact: 'of changes cause issues in regression', bad: true },
                     { label: 'Support Escalations', value: '45/month', impact: 'requiring dev attention', bad: true },
-                    { label: 'Annual Maintenance', value: '$4.2M', impact: 'just to keep running', bad: true },
                   ].map((metric, i) => (
                     <motion.div
                       key={metric.label}
@@ -3321,6 +3334,176 @@ function LegacyProblems() {
                       </div>
                       <p className="text-2xl font-bold text-white mt-1">{metric.value}</p>
                       <p className="text-xs text-gray-500 mt-1">{metric.impact}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        );
+
+      case 5: // Schema Rigidity - Architectural comparison view
+        return (
+          <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
+            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
+              {/* Left: Current Architecture */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
+                className="flex-1 min-w-0"
+              >
+                <h3 className="text-lg font-semibold text-red-400 mb-4">Current: Fixed Relational Model</h3>
+                <div className="bg-[var(--bg-secondary)] rounded-xl border border-red-500/30 p-6">
+                  {/* Current constraints */}
+                  <div className="space-y-3 mb-4">
+                    {[
+                      { label: 'Data Model', value: 'Fixed relational tables', desc: 'Schema defined at design time' },
+                      { label: 'Any Change', value: 'Requires deployment', desc: 'No runtime flexibility' },
+                      { label: 'Structure', value: 'Tightly coupled', desc: 'Changes cascade across system' },
+                      { label: 'Adaptability', value: 'Code-driven only', desc: 'Cannot configure without release' },
+                    ].map((item, i) => (
+                      <motion.div
+                        key={item.label}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : -10 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="p-3 bg-gray-800/50 rounded-lg border-l-4 border-red-500/50"
+                      >
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-sm text-white font-medium">{item.label}</span>
+                          <span className="text-xs px-2 py-0.5 rounded bg-red-500/20 text-red-400">{item.value}</span>
+                        </div>
+                        <p className="text-xs text-gray-500">{item.desc}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Warning */}
+                  {animPhase >= 3 && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg"
+                    >
+                      <p className="text-red-400 text-sm text-center">Every business change requires a full release cycle</p>
+                    </motion.div>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Right: Modern Architecture */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
+                className="w-full lg:w-80 flex-shrink-0"
+              >
+                <h3 className="text-lg font-semibold text-green-400 mb-4">Modern: Flexible Architecture</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Flexible Models', desc: 'Document stores, event sourcing adapt to change' },
+                    { label: 'Config-Driven', desc: 'Many changes without deployment' },
+                    { label: 'Loosely Coupled', desc: 'Services evolve independently' },
+                    { label: 'Runtime Adaptable', desc: 'Feature flags, dynamic schemas' },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : 10 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="bg-[var(--bg-secondary)] rounded-lg border border-green-500/30 p-4"
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-green-400">✓</span>
+                        <p className="text-sm text-white font-medium">{item.label}</p>
+                      </div>
+                      <p className="text-xs text-gray-400 ml-5">{item.desc}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        );
+
+      case 6: // Quality & Defects - JIRA metrics view
+        return (
+          <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
+            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
+              {/* Left: Quality Challenges */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
+                className="flex-1 min-w-0"
+              >
+                <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Quality Indicators</h3>
+                <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
+                  {/* JIRA-style metrics */}
+                  <div className="space-y-3 mb-4">
+                    {[
+                      { label: 'Defect Backlog', value: 'Growing', desc: 'More bugs opened than closed each sprint', status: 'critical' },
+                      { label: 'Resolution Time', value: 'Extended', desc: 'Complex codebase slows root cause analysis', status: 'critical' },
+                      { label: 'Regression Rate', value: '20%', desc: 'of changes cause issues', status: 'warning' },
+                      { label: 'Test Coverage', value: 'Limited', desc: 'Legacy code difficult to test', status: 'warning' },
+                    ].map((item, i) => (
+                      <motion.div
+                        key={item.label}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : -10 }}
+                        transition={{ delay: i * 0.1 }}
+                        className={`p-3 bg-gray-800/50 rounded-lg border-l-4 ${
+                          item.status === 'critical' ? 'border-red-500/50' : 'border-orange-500/50'
+                        }`}
+                      >
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-sm text-white font-medium">{item.label}</span>
+                          <span className={`text-xs px-2 py-0.5 rounded ${
+                            item.status === 'critical' ? 'bg-red-500/20 text-red-400' : 'bg-orange-500/20 text-orange-400'
+                          }`}>{item.value}</span>
+                        </div>
+                        <p className="text-xs text-gray-500">{item.desc}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Warning */}
+                  {animPhase >= 3 && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg"
+                    >
+                      <p className="text-red-400 text-sm text-center">Reactive firefighting consumes development capacity</p>
+                    </motion.div>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Right: Impact on Delivery */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
+                className="w-full lg:w-80 flex-shrink-0"
+              >
+                <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Delivery Impact</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Sprint Disruption', desc: 'Unplanned defect work derails roadmap items' },
+                    { label: 'Technical Debt Cycle', desc: 'Quick fixes add more debt, more future bugs' },
+                    { label: 'Team Morale', desc: 'Constant firefighting leads to burnout' },
+                    { label: 'Release Confidence', desc: 'Fear of breaking changes slows delivery' },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={item.label}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : 10 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="bg-[var(--bg-secondary)] rounded-lg border border-gray-700 p-4"
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-red-400">⚠</span>
+                        <p className="text-sm text-white font-medium">{item.label}</p>
+                      </div>
+                      <p className="text-xs text-gray-400 ml-5">{item.desc}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -3348,7 +3531,7 @@ function LegacyProblems() {
 
       <div className="flex-1 flex gap-6 min-h-0">
         {/* Problem selector - Left side */}
-        <div className="w-64 flex flex-col gap-2">
+        <div className="w-64 flex flex-col gap-1.5 overflow-y-auto">
           {problems.map((problem, i) => {
             const isActive = activeProblem === i;
             return (
@@ -3358,23 +3541,23 @@ function LegacyProblems() {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className={`text-left p-3 rounded-xl border-2 transition-all ${
+                className={`flex-shrink-0 text-left p-2.5 rounded-xl border-2 transition-all ${
                   isActive
                     ? 'bg-red-500/20 border-red-500'
                     : 'bg-[var(--bg-secondary)]/50 border-transparent hover:border-red-500/30'
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold ${
+                <div className="flex items-center gap-2">
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                     isActive ? 'bg-red-500 text-white' : 'bg-gray-700 text-gray-400'
                   }`}>
                     {problem.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className={`font-semibold text-sm ${isActive ? 'text-red-400' : 'text-[var(--text-primary)]'}`}>
+                    <p className={`font-semibold text-xs ${isActive ? 'text-red-400' : 'text-[var(--text-primary)]'}`}>
                       {problem.label}
                     </p>
-                    <p className="text-xs text-[var(--text-muted)] truncate">{problem.desc}</p>
+                    <p className="text-[10px] text-[var(--text-muted)] truncate">{problem.desc}</p>
                   </div>
                 </div>
               </motion.button>
@@ -3386,10 +3569,10 @@ function LegacyProblems() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="mt-auto p-3 bg-red-500/10 border border-red-500/30 rounded-xl"
+            className="flex-shrink-0 mt-2 p-2 bg-red-500/10 border border-red-500/30 rounded-lg"
           >
-            <p className="text-xs text-[var(--text-muted)] mb-1">Assessment</p>
-            <p className="text-red-400 font-bold text-sm">Requires Modernization</p>
+            <p className="text-[10px] text-[var(--text-muted)]">Assessment</p>
+            <p className="text-red-400 font-bold text-xs">Requires Modernization</p>
           </motion.div>
         </div>
 
@@ -3449,38 +3632,38 @@ function TechnicalChallenges() {
   const challenges = [
     {
       icon: '1',
+      title: 'Schema Rigidity',
+      subtitle: 'Hard-coded data models',
+      impact: '6+ months for changes',
+      detail: 'Adding new fields requires full release cycle',
+    },
+    {
+      icon: '2',
       title: 'Data Silos',
       subtitle: 'Fragmented data across systems',
       impact: 'No single source of truth',
       detail: 'Platform A, Platform B, and other systems maintain separate datasets',
     },
     {
-      icon: '2',
+      icon: '3',
       title: 'Integration Constraints',
-      subtitle: 'Point-to-point connections',
-      impact: '47+ direct integrations',
+      subtitle: 'High service-level complexity',
+      impact: '100+ connections vs. 20 industry avg',
       detail: 'No standardized API layer or event-driven architecture',
     },
     {
-      icon: '3',
+      icon: '4',
       title: 'Limited Data Sharing',
       subtitle: 'Assets locked in systems',
       impact: 'Manual data extraction',
       detail: 'Cannot expose data to partners or new channels easily',
     },
     {
-      icon: '4',
+      icon: '5',
       title: 'Batch-Only Processing',
       subtitle: 'No real-time data flow',
       impact: 'T-1 day data latency',
       detail: 'All data synchronization happens overnight',
-    },
-    {
-      icon: '5',
-      title: 'Schema Rigidity',
-      subtitle: 'Hard-coded data models',
-      impact: '6+ months for changes',
-      detail: 'Adding new fields requires full release cycle',
     },
   ];
 
@@ -3546,7 +3729,7 @@ function TechnicalChallenges() {
         ],
         rightTitle: 'Integration Burden',
         rightMetrics: [
-          { label: 'Total Connections', value: '47+', impact: 'point-to-point links', severity: 'Critical' },
+          { label: 'Total Connections', value: '100+', impact: '5x industry benchmark', severity: 'Critical' },
           { label: 'New Integration', value: '3-6 months', impact: 'per partner', severity: 'Slow' },
           { label: 'Maintenance Cost', value: 'High', impact: 'per connection', severity: 'High' },
           { label: 'Failure Cascade', value: 'Likely', impact: 'tight coupling', severity: 'Critical' },
@@ -3606,13 +3789,13 @@ function TechnicalChallenges() {
     if (!data) return null;
 
     return (
-      <div className="relative w-full h-full flex items-center justify-center p-8">
-        <div className="w-full max-w-5xl flex gap-12">
+      <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
+        <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
           {/* Left: Current State */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
-            className="flex-1"
+            className="flex-1 min-w-0"
           >
             <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">{data.leftTitle}</h3>
             <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
@@ -3651,7 +3834,7 @@ function TechnicalChallenges() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-            className="w-80"
+            className="w-full lg:w-80 flex-shrink-0"
           >
             <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">{data.rightTitle}</h3>
             <div className="space-y-4">
@@ -3823,6 +4006,20 @@ function ProductOpportunities() {
       enabler: 'Event-driven architecture supports any protocol',
       detail: 'Seamless adoption of new standards and technologies',
     },
+    {
+      icon: '5',
+      title: 'Market Expansion',
+      subtitle: 'Microservices-powered growth',
+      enabler: 'Modular architecture enables rapid market entry',
+      detail: 'Deploy new capabilities independently, reach markets faster',
+    },
+    {
+      icon: '6',
+      title: 'Intelligent Scaling',
+      subtitle: 'Focused domains, targeted changes',
+      enabler: 'Changes happen where they matter, not in duplicate places',
+      detail: 'Engage only required teams per program • Navigate new markets with changes in one place • Drive efficiency and cost reduction',
+    },
   ];
 
   // Use forcePhase to control active opportunity (for standalone/export navigation)
@@ -3868,7 +4065,7 @@ function ProductOpportunities() {
         improvements: [
           { metric: 'Platform Access', from: '1 system', to: 'All platforms', percent: 100 },
           { metric: 'Data Products', from: '0', to: '10+ services', percent: 100 },
-          { metric: 'Partner Access', from: 'None', to: 'Self-service', percent: 100 },
+          { metric: 'Asset Accessibility', from: 'Internal only', to: 'Global', percent: 100 },
         ],
         businessValue: { label: 'Asset Utilization', value: '3x', note: 'increase in data value' },
       },
@@ -3903,15 +4100,26 @@ function ProductOpportunities() {
         businessValue: { label: 'Future-Proof', value: 'Yes', note: 'ready for ISO 20022, DLT, etc.' },
       },
       {
-        kpi: 'Operations Model',
-        current: { value: 'Linear', detail: 'Volume = Headcount' },
-        target: { value: 'Scalable', detail: 'Automated processing' },
+        kpi: 'Market Speed',
+        current: { value: 'Slow', detail: 'Monolithic deployment cycles' },
+        target: { value: 'Rapid', detail: 'Independent microservice releases' },
         improvements: [
-          { metric: 'Staff per 1K trades', from: '5 FTEs', to: '0.5 FTE', percent: 90 },
-          { metric: 'Manual Processing', from: '60%', to: '<5%', percent: 92 },
-          { metric: 'Volume Capacity', from: 'Capped', to: 'Unlimited', percent: 100 },
+          { metric: 'New Feature Delivery', from: 'Months', to: 'Days', percent: 95 },
+          { metric: 'Market Entry', from: 'Sequential', to: 'Parallel', percent: 100 },
+          { metric: 'Regional Rollout', from: 'Full release', to: 'Targeted deploy', percent: 100 },
         ],
-        businessValue: { label: 'Cost per Trade', value: '-80%', note: 'at 10x current volume' },
+        businessValue: { label: 'Time to Market', value: '10x', note: 'faster feature delivery' },
+      },
+      {
+        kpi: 'Resource Efficiency',
+        current: { value: 'Constrained', detail: 'System limits growth potential' },
+        target: { value: 'Intelligent', detail: 'Smart integration unlocks capacity' },
+        improvements: [
+          { metric: 'System Integration', from: 'Manual', to: 'Automated', percent: 0 },
+          { metric: 'Processing Capacity', from: 'Limited', to: 'Elastic', percent: 0 },
+          { metric: 'Scaling Approach', from: 'Add resources', to: 'Add intelligence', percent: 0 },
+        ],
+        businessValue: { label: 'Growth Enablement', value: '→', note: 'scale smarter, not harder' },
       },
     ];
 
@@ -4550,6 +4758,12 @@ function ProductOpportunities() {
         { id: 'realtime', label: 'Real-time Events', icon: '⚡' },
       ];
 
+      const commercializationOpportunities = [
+        { id: 'tbml', label: 'TBML Detection', desc: 'Trade-Based Money Laundering screening as a service', icon: '🛡️', color: '#EF4444' },
+        { id: 'trade-ai', label: 'Trade AI/LLM', desc: 'Intelligent document processing & risk analysis', icon: '🤖', color: '#8B5CF6' },
+        { id: 'api-products', label: 'API Products', desc: 'Monetize unified platform capabilities', icon: '💰', color: '#F59E0B' },
+      ];
+
       return (
         <div className="relative w-full h-full flex flex-col items-center justify-center p-6 pt-16">
           {/* Title */}
@@ -4742,16 +4956,94 @@ function ProductOpportunities() {
                 </motion.div>
               ))}
             </motion.div>
+
+            {/* Commercialization Opportunity */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+              animate={{
+                opacity: phase >= 3 ? 1 : 0,
+                scale: phase >= 3 ? 1 : 0.95,
+                filter: phase >= 3 ? 'blur(0px)' : 'blur(10px)'
+              }}
+              transition={{ delay: 0.6, duration: 0.5, ease: 'easeOut' }}
+              className="mt-4 p-4 bg-gradient-to-r from-red-500/10 via-purple-500/10 to-amber-500/10 border border-[var(--accent-gold)]/30 rounded-lg relative overflow-hidden"
+            >
+              {/* Animated background shimmer */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                animate={{ x: ['-100%', '100%'] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+              />
+              <div className="relative flex items-center justify-between">
+                <div>
+                  <motion.p
+                    className="text-xs text-[var(--accent-gold)] uppercase tracking-wider mb-1"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: phase >= 3 ? 1 : 0, x: phase >= 3 ? 0 : -20 }}
+                    transition={{ delay: 0.7 }}
+                  >
+                    Commercialization Opportunity
+                  </motion.p>
+                  <motion.p
+                    className="text-sm text-white font-medium"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: phase >= 3 ? 1 : 0, x: phase >= 3 ? 0 : -20 }}
+                    transition={{ delay: 0.8 }}
+                  >
+                    APIs & unified platform unlock new revenue streams
+                  </motion.p>
+                </div>
+                <div className="flex gap-3">
+                  {commercializationOpportunities.map((opp, i) => (
+                    <motion.div
+                      key={opp.id}
+                      initial={{ opacity: 0, y: 30, rotateX: -15 }}
+                      animate={{
+                        opacity: phase >= 3 ? 1 : 0,
+                        y: phase >= 3 ? 0 : 30,
+                        rotateX: phase >= 3 ? 0 : -15
+                      }}
+                      transition={{
+                        delay: 0.8 + i * 0.15,
+                        type: 'spring',
+                        stiffness: 200,
+                        damping: 20
+                      }}
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      className="flex flex-col items-center p-3 rounded-lg cursor-pointer"
+                      style={{ backgroundColor: `${opp.color}15`, border: `1px solid ${opp.color}40` }}
+                    >
+                      <motion.span
+                        className="text-2xl"
+                        animate={{
+                          scale: [1, 1.1, 1],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: i * 0.3,
+                          ease: 'easeInOut'
+                        }}
+                      >
+                        {opp.icon}
+                      </motion.span>
+                      <span className="text-xs font-semibold mt-1" style={{ color: opp.color }}>{opp.label}</span>
+                      <span className="text-[10px] text-gray-400 text-center max-w-[120px]">{opp.desc}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
 
           {/* Bottom insight */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: phase >= 3 ? 1 : 0 }}
-            className="absolute bottom-16 left-0 right-0 text-center"
+            className="absolute bottom-8 left-0 right-0 text-center"
           >
-            <p className="text-[var(--accent-gold)] font-semibold">Multiple channels, one platform — reach any partner, any way they prefer</p>
-            <p className="text-xs text-gray-500 mt-1">Buyers, suppliers, and banks connect through their preferred method</p>
+            <p className="text-[var(--accent-gold)] font-semibold">Multiple channels, one platform — reach any partner, unlock new markets</p>
+            <p className="text-xs text-gray-500 mt-1">From internal operations to external revenue opportunities</p>
           </motion.div>
         </div>
       );
@@ -4767,11 +5059,11 @@ function ProductOpportunities() {
       ];
 
       const volumeData = [
-        { year: 'Y1', volume: 20, oldStaff: 20, newStaff: 20 },
-        { year: 'Y2', volume: 40, oldStaff: 38, newStaff: 22 },
-        { year: 'Y3', volume: 70, oldStaff: 65, newStaff: 25 },
-        { year: 'Y4', volume: 100, oldStaff: 95, newStaff: 28 },
-        { year: 'Y5', volume: 150, oldStaff: 140, newStaff: 32 },
+        { year: 'Y1', volume: 20, oldEffort: 20, newEffort: 20 },
+        { year: 'Y2', volume: 40, oldEffort: 38, newEffort: 22 },
+        { year: 'Y3', volume: 70, oldEffort: 65, newEffort: 25 },
+        { year: 'Y4', volume: 100, oldEffort: 95, newEffort: 28 },
+        { year: 'Y5', volume: 150, oldEffort: 140, newEffort: 32 },
       ];
 
       return (
@@ -4782,8 +5074,8 @@ function ProductOpportunities() {
             animate={{ opacity: 1, y: 0 }}
             className="absolute top-16 left-0 right-0 text-center z-10"
           >
-            <h2 className="text-2xl font-bold text-white mb-1">Break the Linear Scaling Trap</h2>
-            <p className="text-sm text-gray-400">Grow volume exponentially, not your headcount</p>
+            <h2 className="text-2xl font-bold text-white mb-1">Scale Smarter, Not Harder</h2>
+            <p className="text-sm text-gray-400">Intelligent systems handle growth efficiently</p>
           </motion.div>
 
           <div className="w-full max-w-6xl mt-8 flex gap-8">
@@ -4795,7 +5087,7 @@ function ProductOpportunities() {
             >
               <div className="text-center mb-4">
                 <p className="text-xs text-red-400 uppercase tracking-wider">Today&apos;s Reality</p>
-                <p className="text-lg font-semibold text-gray-400">Volume = Headcount</p>
+                <p className="text-lg font-semibold text-gray-400">Legacy System Constraints</p>
               </div>
 
               {/* Animated bar chart showing linear growth */}
@@ -4811,11 +5103,11 @@ function ProductOpportunities() {
                           animate={{ height: phase >= 1 ? `${d.volume * 0.95}%` : 0 }}
                           transition={{ duration: 0.5, delay: i * 0.1 }}
                         />
-                        {/* Staff bar (old way) */}
+                        {/* Effort bar (old way) */}
                         <motion.div
                           className="w-5 bg-red-500/70 rounded-t"
                           initial={{ height: 0 }}
-                          animate={{ height: phase >= 1 ? `${d.oldStaff * 0.95}%` : 0 }}
+                          animate={{ height: phase >= 1 ? `${d.oldEffort * 0.95}%` : 0 }}
                           transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
                         />
                       </div>
@@ -4825,7 +5117,7 @@ function ProductOpportunities() {
                 </div>
                 <div className="flex justify-center gap-4 text-xs">
                   <span className="flex items-center gap-1"><span className="w-3 h-3 bg-gray-600 rounded" /> Volume</span>
-                  <span className="flex items-center gap-1"><span className="w-3 h-3 bg-red-500/70 rounded" /> Staff Needed</span>
+                  <span className="flex items-center gap-1"><span className="w-3 h-3 bg-red-500/70 rounded" /> System Effort</span>
                 </div>
 
                 <motion.div
@@ -4834,8 +5126,8 @@ function ProductOpportunities() {
                   transition={{ delay: 0.8 }}
                   className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-center"
                 >
-                  <p className="text-red-400 font-semibold">7x volume = 7x staff</p>
-                  <p className="text-xs text-gray-500">Linear cost growth is unsustainable</p>
+                  <p className="text-red-400 font-semibold">Growth limited by system capacity</p>
+                  <p className="text-xs text-gray-500">Manual constraints hold back expansion</p>
                 </motion.div>
               </div>
             </motion.div>
@@ -4910,7 +5202,7 @@ function ProductOpportunities() {
             >
               <div className="text-center mb-4">
                 <p className="text-xs text-[var(--accent-cyan)] uppercase tracking-wider">With Platform</p>
-                <p className="text-lg font-semibold text-white">Volume ≠ Headcount</p>
+                <p className="text-lg font-semibold text-white">Intelligent Scaling</p>
               </div>
 
               {/* Animated bar chart showing decoupled growth */}
@@ -4926,11 +5218,11 @@ function ProductOpportunities() {
                           animate={{ height: phase >= 3 ? `${d.volume * 0.95}%` : 0 }}
                           transition={{ duration: 0.5, delay: i * 0.1 }}
                         />
-                        {/* Staff bar (new way - flat) */}
+                        {/* Effort bar (new way - flat) */}
                         <motion.div
                           className="w-5 bg-green-500 rounded-t"
                           initial={{ height: 0 }}
-                          animate={{ height: phase >= 3 ? `${d.newStaff * 0.95}%` : 0 }}
+                          animate={{ height: phase >= 3 ? `${d.newEffort * 0.95}%` : 0 }}
                           transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
                         />
                       </div>
@@ -4939,8 +5231,8 @@ function ProductOpportunities() {
                   ))}
                 </div>
                 <div className="flex justify-center gap-4 text-xs">
-                  <span className="flex items-center gap-1"><span className="w-3 h-3 bg-[var(--accent-cyan)] rounded" /> Volume</span>
-                  <span className="flex items-center gap-1"><span className="w-3 h-3 bg-green-500 rounded" /> Staff Needed</span>
+                  <span className="flex items-center gap-1"><span className="w-3 h-3 bg-[var(--accent-cyan)] rounded" /> Volume Growth</span>
+                  <span className="flex items-center gap-1"><span className="w-3 h-3 bg-green-500 rounded" /> Team Capacity</span>
                 </div>
 
                 <motion.div
@@ -4949,8 +5241,8 @@ function ProductOpportunities() {
                   transition={{ delay: 0.8 }}
                   className="mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-center"
                 >
-                  <p className="text-green-400 font-semibold">7x volume = 1.6x staff</p>
-                  <p className="text-xs text-gray-400">Automation absorbs the growth</p>
+                  <p className="text-green-400 font-semibold">Volume ≠ Staff</p>
+                  <p className="text-xs text-gray-400">Focused domains + intelligent systems enable growth without proportional headcount</p>
                 </motion.div>
               </div>
             </motion.div>
@@ -4964,10 +5256,10 @@ function ProductOpportunities() {
             className="mt-6 grid grid-cols-4 gap-4 w-full max-w-4xl"
           >
             {[
-              { metric: 'Cost per Transaction', old: '$12', new: '$2', saving: '83% reduction' },
-              { metric: 'Processing Capacity', old: '1,000/day', new: '50,000/day', saving: '50x throughput' },
-              { metric: 'Staff per $1B Volume', old: '45 FTE', new: '8 FTE', saving: '82% fewer' },
-              { metric: 'Time to Scale', old: '6-12 months', new: 'Instant', saving: 'On-demand' },
+              { metric: 'Cost per Transaction', old: 'High', new: 'Optimized', saving: '80%+ reduction' },
+              { metric: 'Processing Capacity', old: 'Limited', new: 'Elastic', saving: '50x+ throughput' },
+              { metric: 'Cost of Change', old: 'High', new: 'Low', saving: 'Focused domains' },
+              { metric: 'Time to Scale', old: 'Months', new: 'Instant', saving: 'On-demand' },
             ].map((item, i) => (
               <motion.div
                 key={item.metric}
@@ -4995,6 +5287,270 @@ function ProductOpportunities() {
           >
             <p className="text-[var(--accent-gold)] font-semibold">Scale your business, not your payroll</p>
             <p className="text-xs text-gray-500 mt-1">Automation handles the volume — your team handles the exceptions</p>
+          </motion.div>
+        </div>
+      );
+    }
+
+    // Special visualization for Intelligent Scaling (index 5) - Focused Domains
+    if (index === 5) {
+      const duplicatedDomains = [
+        { id: 'billing', label: 'Billing', copies: ['Platform A', 'Platform B', 'LCS'] },
+        { id: 'cif', label: 'Module C', copies: ['Platform A', 'Platform B'] },
+        { id: 'participation', label: 'Module P', copies: ['Platform A', 'GTS'] },
+      ];
+
+      const focusedDomains = [
+        { id: 'billing', label: 'Billing Domain', owner: 'Billing Team', color: '#00D4FF' },
+        { id: 'cif', label: 'CIF Domain', owner: 'CIF Team', color: '#10B981' },
+        { id: 'participation', label: 'Participation Domain', owner: 'Participation Team', color: '#8B5CF6' },
+      ];
+
+      const teams = [
+        { id: 't1', label: 'Billing', active: true },
+        { id: 't2', label: 'Module C', active: false },
+        { id: 't3', label: 'Module P', active: false },
+        { id: 't4', label: 'Ops', active: false },
+        { id: 't5', label: 'QA', active: false },
+      ];
+
+      // Message showing which team is engaged for the change
+      const engagementMessage = "When billing logic needs to change or a fix:";
+
+      return (
+        <div className="relative w-full h-full flex flex-col items-center justify-center p-4 lg:p-8 pt-16">
+          {/* Title */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="absolute top-16 left-0 right-0 text-center z-10"
+          >
+            <h2 className="text-2xl font-bold text-white mb-1">Focused Domains, Targeted Changes</h2>
+            <p className="text-sm text-gray-400">Changes where they matter, teams engaged when needed</p>
+          </motion.div>
+
+          {/* Main comparison layout */}
+          <div className="w-full max-w-6xl flex flex-col lg:flex-row items-stretch gap-6 mt-8">
+
+            {/* LEFT - Duplicated Domains (Old Way) */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : -30 }}
+              className="flex-1 bg-red-500/5 rounded-xl border border-red-500/30 p-4"
+            >
+              <div className="text-center mb-4">
+                <p className="text-xs text-red-400 uppercase tracking-wider">Legacy Architecture</p>
+                <p className="text-lg font-semibold text-white">Duplicated Logic</p>
+              </div>
+
+              {/* Duplicated modules visualization */}
+              <div className="space-y-3 mb-4">
+                {duplicatedDomains.map((domain, i) => (
+                  <motion.div
+                    key={domain.id}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : -10 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="p-3 bg-gray-800/50 rounded-lg border border-gray-700"
+                  >
+                    <p className="text-xs text-gray-400 mb-2">{domain.label} Logic exists in:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {domain.copies.map((copy, j) => (
+                        <motion.span
+                          key={j}
+                          className="px-2 py-1 text-xs bg-red-500/20 text-red-400 rounded border border-red-500/30"
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: j * 0.3 }}
+                        >
+                          {copy}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Change impact */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: phase >= 1 ? 1 : 0 }}
+                transition={{ delay: 0.5 }}
+                className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg"
+              >
+                <p className="text-xs text-red-400 font-semibold mb-2">When a change is needed:</p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {['All Teams', 'All Systems', 'Full Testing'].map((item, i) => (
+                    <motion.span
+                      key={i}
+                      className="px-2 py-1 text-xs bg-red-500/20 text-red-300 rounded"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: phase >= 1 ? 1 : 0 }}
+                      transition={{ delay: 0.6 + i * 0.1 }}
+                    >
+                      ⚠️ {item}
+                    </motion.span>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* CENTER - Transformation */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: phase >= 2 ? 1 : 0, scale: phase >= 2 ? 1 : 0.8 }}
+              className="flex flex-col items-center justify-center w-32 lg:w-40"
+            >
+              <div className="relative">
+                <motion.div
+                  className="w-20 h-20 rounded-full border-4 border-[var(--accent-cyan)] flex items-center justify-center"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                >
+                  <div className="absolute inset-2 rounded-full bg-[var(--accent-cyan)]/10" />
+                </motion.div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <span className="text-2xl">🎯</span>
+                    <p className="text-[9px] text-[var(--accent-cyan)] font-semibold">Focus</p>
+                  </div>
+                </div>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: phase >= 2 ? 1 : 0 }}
+                className="my-3"
+              >
+                <svg width="40" height="50" viewBox="0 0 40 50">
+                  <motion.path
+                    d="M20 0 L20 35 M10 28 L20 40 L30 28"
+                    stroke="var(--accent-cyan)"
+                    strokeWidth="2"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.8 }}
+                  />
+                </svg>
+              </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: phase >= 2 ? 1 : 0 }}
+                className="text-xs text-center text-gray-400"
+              >
+                Domain<br />Ownership
+              </motion.p>
+            </motion.div>
+
+            {/* RIGHT - Focused Domains (New Way) */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: phase >= 3 ? 1 : 0, x: phase >= 3 ? 0 : 30 }}
+              className="flex-1 bg-[var(--accent-cyan)]/5 rounded-xl border border-[var(--accent-cyan)]/30 p-4"
+            >
+              <div className="text-center mb-4">
+                <p className="text-xs text-[var(--accent-cyan)] uppercase tracking-wider">Modern Architecture</p>
+                <p className="text-lg font-semibold text-white">Focused Domains</p>
+              </div>
+
+              {/* Single-owner domains */}
+              <div className="space-y-3 mb-4">
+                {focusedDomains.map((domain, i) => (
+                  <motion.div
+                    key={domain.id}
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: phase >= 3 ? 1 : 0, x: phase >= 3 ? 0 : 10 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="p-3 rounded-lg border"
+                    style={{
+                      backgroundColor: `${domain.color}10`,
+                      borderColor: `${domain.color}50`
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-medium text-white">{domain.label}</p>
+                      <span
+                        className="px-2 py-1 text-xs rounded"
+                        style={{ backgroundColor: `${domain.color}30`, color: domain.color }}
+                      >
+                        {domain.owner}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-1">Single source of truth</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Change impact - targeted */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: phase >= 3 ? 1 : 0 }}
+                transition={{ delay: 0.5 }}
+                className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg"
+              >
+                <p className="text-xs text-green-400 font-semibold mb-2">When billing logic needs to change or a fix:</p>
+                <div className="flex items-center gap-2">
+                  {teams.map((team, i) => (
+                    <motion.span
+                      key={team.id}
+                      className={`px-2 py-1 text-xs rounded ${
+                        team.active
+                          ? 'bg-green-500/30 text-green-300 border border-green-500/50'
+                          : 'bg-gray-700/30 text-gray-500'
+                      }`}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: phase >= 3 ? 1 : 0 }}
+                      transition={{ delay: 0.6 + i * 0.1 }}
+                    >
+                      {team.active ? '✓' : '—'} {team.label}
+                    </motion.span>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-500 mt-2">Only required teams engage</p>
+              </motion.div>
+            </motion.div>
+          </div>
+
+          {/* Bottom - Efficiency Metrics */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : 20 }}
+            transition={{ delay: 0.5 }}
+            className="mt-6 grid grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-4xl"
+          >
+            {[
+              { metric: 'Change Scope', old: 'All systems', new: 'One domain', icon: '🎯' },
+              { metric: 'Teams Involved', old: 'Everyone', new: 'Domain owner', icon: '👥' },
+              { metric: 'Testing Effort', old: 'Full regression', new: 'Targeted tests', icon: '✅' },
+              { metric: 'Market Agility', old: 'Constrained', new: 'Rapid entry', icon: '🚀' },
+            ].map((item, i) => (
+              <motion.div
+                key={item.metric}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: phase >= 3 ? 1 : 0, scale: phase >= 3 ? 1 : 0.95 }}
+                transition={{ delay: 0.6 + i * 0.1 }}
+                className="bg-[var(--bg-secondary)]/50 rounded-lg border border-gray-700 p-3 text-center"
+              >
+                <span className="text-lg">{item.icon}</span>
+                <p className="text-xs text-gray-400 mt-1">{item.metric}</p>
+                <div className="flex items-center justify-center gap-2 mt-1">
+                  <span className="text-xs text-gray-500">{item.old}</span>
+                  <span className="text-gray-600">→</span>
+                  <span className="text-xs text-[var(--accent-cyan)] font-semibold">{item.new}</span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Bottom insight */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: phase >= 3 ? 1 : 0 }}
+            className="absolute bottom-16 left-0 right-0 text-center"
+          >
+            <p className="text-[var(--accent-gold)] font-semibold">Changes in one place, efficiency everywhere</p>
+            <p className="text-xs text-gray-500 mt-1">Navigate new markets faster with architecture that enables focus, not friction</p>
           </motion.div>
         </div>
       );
@@ -5162,17 +5718,19 @@ function ProductOpportunities() {
 
         {/* Visualization area - Right side */}
         <div className="flex-1 bg-[var(--bg-secondary)]/30 rounded-2xl border border-[var(--accent-cyan)]/20 overflow-hidden relative">
-          {/* Opportunity title inside viz */}
-          <div className="absolute top-4 left-4 z-10">
-            <motion.div
-              key={activeOpportunity}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <p className="text-xl font-bold text-[var(--accent-cyan)]">{opportunities[activeOpportunity].title}</p>
-              <p className="text-sm text-[var(--text-muted)]">{opportunities[activeOpportunity].detail}</p>
-            </motion.div>
-          </div>
+          {/* Opportunity title inside viz - hide for visualizations with their own titles (index 2, 3, 4, 5) */}
+          {activeOpportunity < 2 && (
+            <div className="absolute top-4 left-4 z-10">
+              <motion.div
+                key={activeOpportunity}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <p className="text-xl font-bold text-[var(--accent-cyan)]">{opportunities[activeOpportunity].title}</p>
+                <p className="text-sm text-[var(--text-muted)]">{opportunities[activeOpportunity].detail}</p>
+              </motion.div>
+            </div>
+          )}
 
           {/* Navigation dots */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
@@ -5212,12 +5770,12 @@ function TransformationGoals() {
   const [activeGoal, setActiveGoal] = useState(-1);
 
   const goals = [
-    { icon: '⚡', title: 'Operational Efficiency', metric: '40%', unit: 'cost reduction', color: '#00D4FF', height: 85 },
-    { icon: '🚀', title: 'Time to Market', metric: '3x', unit: 'faster deployment', color: '#C9A227', height: 75 },
-    { icon: '🔄', title: 'End-to-End STP', metric: '95%', unit: 'straight-through', color: '#4ECDC4', height: 95 },
-    { icon: '📈', title: 'Scalability', metric: '10x', unit: 'volume capacity', color: '#9B59B6', height: 80 },
-    { icon: '🤝', title: 'Client Trust', metric: '99.9%', unit: 'uptime target', color: '#E74C3C', height: 90 },
-    { icon: '🧠', title: 'Modern Processing', metric: 'AI', unit: 'powered decisions', color: '#3498DB', height: 70 },
+    { icon: '⚡', title: 'Cost Reduction', metric: '~30%', unit: 'lower cost of change', color: '#00D4FF', height: 85 },
+    { icon: '🚀', title: 'Time to Market', metric: '2-6', unit: 'months (vs 3-12)', color: '#C9A227', height: 75 },
+    { icon: '🔄', title: 'End-to-End STP', metric: '~90%', unit: 'straight-through', color: '#4ECDC4', height: 95 },
+    { icon: '📈', title: 'Processing Time', metric: '40%+', unit: 'reduction', color: '#9B59B6', height: 80 },
+    { icon: '☁️', title: 'Availability', metric: '5 9s', unit: 'system uptime', color: '#E74C3C', height: 90 },
+    { icon: '🎯', title: 'Accuracy', metric: '>95%', unit: 'target', color: '#3498DB', height: 70 },
   ];
 
   useEffect(() => {
@@ -5387,7 +5945,7 @@ function TransformationGoals() {
               className="mt-6 flex items-center gap-3"
             >
               <div className="text-center">
-                <p className="text-2xl font-bold text-red-400">39%</p>
+                <p className="text-2xl font-bold text-red-400">20%</p>
                 <p className="text-[10px] text-[var(--text-muted)]">Today</p>
               </div>
 
@@ -5408,7 +5966,7 @@ function TransformationGoals() {
               </div>
 
               <div className="text-center">
-                <p className="text-2xl font-bold text-green-400">79%</p>
+                <p className="text-2xl font-bold text-green-400">~90%</p>
                 <p className="text-[10px] text-[var(--text-muted)]">Target</p>
               </div>
             </motion.div>
@@ -5507,23 +6065,23 @@ function TransformationGoals() {
         >
           <div className="flex items-center gap-6 px-8 py-4 bg-gradient-to-r from-[var(--accent-cyan)]/10 via-[var(--accent-gold)]/10 to-[var(--accent-cyan)]/10 border border-[var(--accent-gold)]/30 rounded-2xl">
             <div className="text-center">
-              <p className="text-2xl font-bold text-[var(--accent-gold)]">40%</p>
+              <p className="text-2xl font-bold text-[var(--accent-gold)]">~30%</p>
               <p className="text-xs text-[var(--text-muted)]">Cost Reduction</p>
             </div>
             <div className="w-px h-10 bg-[var(--accent-gold)]/30" />
             <div className="text-center">
-              <p className="text-2xl font-bold text-[var(--accent-cyan)]">3x</p>
+              <p className="text-2xl font-bold text-[var(--accent-cyan)]">40%+</p>
               <p className="text-xs text-[var(--text-muted)]">Faster Processing</p>
             </div>
             <div className="w-px h-10 bg-[var(--accent-gold)]/30" />
             <div className="text-center">
-              <p className="text-2xl font-bold text-green-400">95%</p>
+              <p className="text-2xl font-bold text-green-400">~90%</p>
               <p className="text-xs text-[var(--text-muted)]">STP Target</p>
             </div>
             <div className="w-px h-10 bg-[var(--accent-gold)]/30" />
             <div className="text-center">
-              <p className="text-2xl font-bold text-purple-400">10x</p>
-              <p className="text-xs text-[var(--text-muted)]">Scale Capacity</p>
+              <p className="text-2xl font-bold text-purple-400">5 9's</p>
+              <p className="text-xs text-[var(--text-muted)]">Availability</p>
             </div>
           </div>
         </motion.div>
@@ -5550,10 +6108,10 @@ function ELCReimagination() {
   ];
 
   const benefits = [
-    { icon: '⚡', label: 'Speed', value: '10x faster' },
+    { icon: '⚡', label: 'Speed', value: '40%+ faster' },
     { icon: '🎯', label: 'Accuracy', value: '>95%' },
-    { icon: '💰', label: 'Cost', value: '40% reduction' },
-    { icon: '📊', label: 'Visibility', value: 'Real-time' },
+    { icon: '💰', label: 'Cost', value: '~30% reduction' },
+    { icon: '📊', label: 'STP Rate', value: '~90%' },
   ];
 
   useEffect(() => {
@@ -5745,128 +6303,320 @@ function ELCReimagination() {
 // Transformation Metrics Visualization - Animated KPI Dashboard
 function TransformationMetrics() {
   const [phase, setPhase] = useState(0);
-  const [counters, setCounters] = useState<Record<string, number>>({});
 
   const metrics = [
-    { key: 'accuracy', icon: '🎯', label: 'Processing Accuracy', target: 95, suffix: '%', color: '#4ECDC4' },
-    { key: 'reduction', icon: '⏱️', label: 'Time Reduction', target: 40, suffix: '%', color: '#C9A227' },
-    { key: 'connectivity', icon: '🔌', label: 'API Connectivity', target: 100, suffix: '%', color: '#00D4FF' },
-    { key: 'stp', icon: '🔄', label: 'STP Rate', target: 95, suffix: '%', color: '#9B59B6' },
-    { key: 'uptime', icon: '⚡', label: 'System Uptime', target: 99.9, suffix: '%', color: '#2ECC71' },
-    { key: 'cost', icon: '💰', label: 'Cost Efficiency', target: 40, suffix: '%', color: '#E74C3C' },
+    {
+      icon: '🔄',
+      label: 'STP Rate',
+      before: '20%',
+      after: '~90%',
+      badge: '+70%',
+      color: '#4ECDC4',
+      gradient: 'from-red-500/20 to-emerald-500/20'
+    },
+    {
+      icon: '⏱️',
+      label: 'Processing Time',
+      before: '40min - 4hrs',
+      after: '15min - 1hr',
+      badge: '40%+ faster',
+      color: '#C9A227',
+      gradient: 'from-orange-500/20 to-cyan-500/20'
+    },
+    {
+      icon: '📋',
+      label: 'Process Steps',
+      before: '6 steps',
+      after: '4 steps',
+      badge: '-33%',
+      color: '#00D4FF',
+      gradient: 'from-gray-500/20 to-blue-500/20'
+    },
+    {
+      icon: '🎯',
+      label: 'Accuracy',
+      before: '~85%',
+      after: '>95%',
+      badge: '+10%',
+      color: '#9B59B6',
+      gradient: 'from-purple-500/20 to-green-500/20'
+    },
+    {
+      icon: '💰',
+      label: 'Cost of Change',
+      before: 'High',
+      after: 'Low',
+      badge: '~30%↓',
+      color: '#E74C3C',
+      gradient: 'from-red-500/20 to-emerald-500/20'
+    },
+    {
+      icon: '☁️',
+      label: 'Availability',
+      before: '3 9\'s',
+      after: '5 9\'s',
+      badge: 'Enterprise',
+      color: '#2ECC71',
+      gradient: 'from-yellow-500/20 to-green-500/20'
+    },
+    {
+      icon: '🚀',
+      label: 'Time to Market',
+      before: '3-12 months',
+      after: '2-6 months',
+      badge: '50%+ faster',
+      color: '#FF6B6B',
+      gradient: 'from-pink-500/20 to-cyan-500/20'
+    },
   ];
 
   useEffect(() => {
-    setTimeout(() => setPhase(1), 500);
-    setTimeout(() => setPhase(2), 1200);
-    setTimeout(() => setPhase(3), 2000);
-
-    // Animate counters
-    metrics.forEach((metric, i) => {
-      const startTime = 2000 + i * 200;
-      const duration = 1500;
-      const steps = 30;
-      const increment = metric.target / steps;
-
-      for (let step = 0; step <= steps; step++) {
-        setTimeout(() => {
-          setCounters(prev => ({
-            ...prev,
-            [metric.key]: Math.min(step * increment, metric.target),
-          }));
-        }, startTime + (step * duration) / steps);
-      }
-    });
+    setTimeout(() => setPhase(1), 300);
+    setTimeout(() => setPhase(2), 800);
+    setTimeout(() => setPhase(3), 1400);
   }, []);
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-8">
-      <div className="w-full max-w-5xl">
+    <div className="w-full h-full flex items-center justify-center p-4 lg:p-6">
+      <div className="w-full max-w-6xl">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-10"
+          className="text-center mb-5"
         >
-          <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-2">Transformation Metrics</h2>
-          <p className="text-xl text-[var(--text-secondary)]">Measurable Impact, Real Results</p>
+          <h2 className="text-2xl lg:text-3xl font-bold text-[var(--text-primary)] mb-1">
+            Goals & Value Proposition
+          </h2>
+          <div className="flex items-center justify-center gap-4 text-sm">
+            <span className="text-red-400 font-medium">TPS/TENET</span>
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1, repeat: Infinity }}
+              className="text-gray-500"
+            >
+              →
+            </motion.span>
+            <span className="text-emerald-400 font-medium">New System</span>
+          </div>
         </motion.div>
 
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-3 gap-6">
-          {metrics.map((metric, i) => {
-            const value = counters[metric.key] || 0;
-            const percentage = (value / metric.target) * 100;
-
-            return (
+        {/* Metrics Grid - 2 rows */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+          {metrics.slice(0, 4).map((metric, i) => (
+            <motion.div
+              key={metric.label}
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              animate={{
+                opacity: phase >= 1 ? 1 : 0,
+                y: phase >= 1 ? 0 : 30,
+                scale: phase >= 1 ? 1 : 0.9
+              }}
+              transition={{ delay: i * 0.1, type: 'spring', stiffness: 120 }}
+              className={`relative rounded-xl p-4 bg-gradient-to-br ${metric.gradient} border border-gray-700/50 overflow-hidden`}
+            >
+              {/* Animated background pulse */}
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : 30 }}
-                transition={{ delay: i * 0.1 }}
-                className="relative bg-[var(--bg-secondary)] rounded-2xl p-6 border border-[var(--accent-cyan)]/20 overflow-hidden"
-              >
-                {/* Background glow */}
-                <motion.div
-                  animate={{
-                    opacity: [0.1, 0.2, 0.1],
-                  }}
-                  transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(circle at center, ${metric.color}30 0%, transparent 70%)`
-                  }}
-                />
+                className="absolute inset-0 bg-white/5"
+                animate={{ opacity: [0, 0.1, 0] }}
+                transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 }}
+              />
 
-                <div className="relative z-10">
-                  {/* Icon and Label */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-3xl">{metric.icon}</span>
-                    <span className="text-sm font-medium text-[var(--text-secondary)]">{metric.label}</span>
-                  </div>
+              {/* Icon & Label */}
+              <div className="flex items-center gap-2 mb-3">
+                <motion.span
+                  className="text-xl"
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: i * 0.2 }}
+                >
+                  {metric.icon}
+                </motion.span>
+                <span className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wide">
+                  {metric.label}
+                </span>
+              </div>
 
-                  {/* Value */}
-                  <div className="text-center mb-4">
-                    <motion.span
-                      className="text-5xl font-bold"
-                      style={{ color: metric.color }}
-                    >
-                      {metric.key === 'uptime' ? value.toFixed(1) : Math.round(value)}
-                    </motion.span>
-                    <span className="text-2xl text-[var(--text-muted)]">{metric.suffix}</span>
-                  </div>
-
-                  {/* Progress Bar */}
-                  <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${percentage}%` }}
-                      className="h-full rounded-full"
-                      style={{ backgroundColor: metric.color }}
-                    />
-                  </div>
-
-                  {/* Target indicator */}
-                  <p className="text-xs text-[var(--text-muted)] text-center mt-2">
-                    Target: {metric.key === 'uptime' ? metric.target.toFixed(1) : metric.target}{metric.suffix}
-                  </p>
+              {/* Before → After */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex-1">
+                  <p className="text-[10px] text-gray-500 mb-0.5">Before</p>
+                  <motion.p
+                    className="text-sm lg:text-base font-bold text-red-400"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: phase >= 2 ? 1 : 0 }}
+                    transition={{ delay: 0.2 + i * 0.1 }}
+                  >
+                    {metric.before}
+                  </motion.p>
                 </div>
+
+                <motion.div
+                  animate={{ x: [0, 3, 0], opacity: phase >= 2 ? 1 : 0 }}
+                  transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.15 }}
+                  className="text-gray-500 text-lg"
+                >
+                  →
+                </motion.div>
+
+                <div className="flex-1 text-right">
+                  <p className="text-[10px] text-gray-500 mb-0.5">After</p>
+                  <motion.p
+                    className="text-sm lg:text-base font-bold text-emerald-400"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{
+                      opacity: phase >= 2 ? 1 : 0,
+                      scale: phase >= 2 ? 1 : 0.8
+                    }}
+                    transition={{ delay: 0.4 + i * 0.1, type: 'spring' }}
+                  >
+                    {metric.after}
+                  </motion.p>
+                </div>
+              </div>
+
+              {/* Improvement Badge */}
+              <motion.div
+                className="absolute -top-1 -right-1"
+                initial={{ scale: 0, rotate: -20 }}
+                animate={{
+                  scale: phase >= 3 ? 1 : 0,
+                  rotate: phase >= 3 ? 0 : -20
+                }}
+                transition={{ delay: 0.6 + i * 0.1, type: 'spring', stiffness: 200 }}
+              >
+                <span
+                  className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold"
+                  style={{
+                    backgroundColor: metric.color,
+                    color: '#000',
+                    boxShadow: `0 0 15px ${metric.color}60`
+                  }}
+                >
+                  {metric.badge}
+                </span>
               </motion.div>
-            );
-          })}
+            </motion.div>
+          ))}
         </div>
 
-        {/* Bottom Summary */}
+        {/* Second row - 3 cards centered */}
+        <div className="flex justify-center gap-3 lg:gap-4 mt-3 lg:mt-4">
+          {metrics.slice(4).map((metric, i) => (
+            <motion.div
+              key={metric.label}
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              animate={{
+                opacity: phase >= 1 ? 1 : 0,
+                y: phase >= 1 ? 0 : 30,
+                scale: phase >= 1 ? 1 : 0.9
+              }}
+              transition={{ delay: 0.4 + i * 0.1, type: 'spring', stiffness: 120 }}
+              className={`relative rounded-xl p-4 bg-gradient-to-br ${metric.gradient} border border-gray-700/50 overflow-hidden w-full max-w-[220px]`}
+            >
+              {/* Animated background pulse */}
+              <motion.div
+                className="absolute inset-0 bg-white/5"
+                animate={{ opacity: [0, 0.1, 0] }}
+                transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 }}
+              />
+
+              {/* Icon & Label */}
+              <div className="flex items-center gap-2 mb-3">
+                <motion.span
+                  className="text-xl"
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: i * 0.2 }}
+                >
+                  {metric.icon}
+                </motion.span>
+                <span className="text-xs font-semibold text-[var(--text-primary)] uppercase tracking-wide">
+                  {metric.label}
+                </span>
+              </div>
+
+              {/* Before → After */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex-1">
+                  <p className="text-[10px] text-gray-500 mb-0.5">Before</p>
+                  <motion.p
+                    className="text-sm lg:text-base font-bold text-red-400"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: phase >= 2 ? 1 : 0 }}
+                    transition={{ delay: 0.5 + i * 0.1 }}
+                  >
+                    {metric.before}
+                  </motion.p>
+                </div>
+
+                <motion.div
+                  animate={{ x: [0, 3, 0], opacity: phase >= 2 ? 1 : 0 }}
+                  transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.15 }}
+                  className="text-gray-500 text-lg"
+                >
+                  →
+                </motion.div>
+
+                <div className="flex-1 text-right">
+                  <p className="text-[10px] text-gray-500 mb-0.5">After</p>
+                  <motion.p
+                    className="text-sm lg:text-base font-bold text-emerald-400"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{
+                      opacity: phase >= 2 ? 1 : 0,
+                      scale: phase >= 2 ? 1 : 0.8
+                    }}
+                    transition={{ delay: 0.7 + i * 0.1, type: 'spring' }}
+                  >
+                    {metric.after}
+                  </motion.p>
+                </div>
+              </div>
+
+              {/* Improvement Badge */}
+              <motion.div
+                className="absolute -top-1 -right-1"
+                initial={{ scale: 0, rotate: -20 }}
+                animate={{
+                  scale: phase >= 3 ? 1 : 0,
+                  rotate: phase >= 3 ? 0 : -20
+                }}
+                transition={{ delay: 0.9 + i * 0.1, type: 'spring', stiffness: 200 }}
+              >
+                <span
+                  className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold"
+                  style={{
+                    backgroundColor: metric.color,
+                    color: '#000',
+                    boxShadow: `0 0 15px ${metric.color}60`
+                  }}
+                >
+                  {metric.badge}
+                </span>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Bottom Summary - Total Improvement */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : 30 }}
-          className="mt-8 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : 20 }}
+          transition={{ delay: 1.2 }}
+          className="mt-5 flex justify-center"
         >
-          <div className="inline-flex items-center gap-4 px-8 py-4 bg-gradient-to-r from-[var(--accent-cyan)]/20 to-[var(--accent-gold)]/20 border border-[var(--accent-cyan)]/50 rounded-2xl">
-            <span className="text-3xl">🚀</span>
-            <div className="text-left">
-              <p className="text-lg font-bold text-[var(--text-primary)]">From 39% to 79%+ Efficiency</p>
-              <p className="text-sm text-[var(--text-muted)]">Doubling operational capability with modern architecture</p>
+          <div className="flex items-center gap-6 px-6 py-3 rounded-2xl bg-gradient-to-r from-[var(--accent-gold)]/10 via-[var(--accent-cyan)]/10 to-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/30">
+            <motion.div
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="text-center"
+            >
+              <p className="text-xs text-gray-400">Total Reduction</p>
+              <p className="text-xl font-bold text-[var(--accent-gold)]">40%+</p>
+            </motion.div>
+            <div className="w-px h-8 bg-gray-700" />
+            <div className="text-center">
+              <p className="text-xs text-gray-400">Modern Platform</p>
+              <p className="text-sm font-semibold text-emerald-400">Enterprise Ready</p>
             </div>
           </div>
         </motion.div>
@@ -5883,582 +6633,552 @@ function ModuleConsolidation() {
   const [highlightedModule, setHighlightedModule] = useState(-1);
 
   // Always use forcePhase when provided (for both capturing and navigation)
-  // This allows the store to control the phase via left/right/space keys
   const phase = forcePhase !== undefined ? forcePhase : 0;
 
-  // Backend platforms with duplicated modules
-  const backendPlatforms = [
-    { id: 'tps', name: 'Platform A', fullName: 'Trade System', icon: '🏦', color: '#00D4FF', unique: ['Trade Execution', 'LC Processing'] },
-    { id: 'apar', name: 'Platform B', fullName: 'Accounts Platform', icon: '💳', color: '#C9A227', unique: ['Invoice Matching', 'Payment Processing'] },
+  // All 14 Trade systems (APAR and Platform A are highlighted)
+  const allTradeSystems = [
+    { id: 'tps', name: 'Platform A', highlight: true, color: '#00D4FF' },
+    { id: 'apar', name: 'Platform B', highlight: true, color: '#C9A227' },
+    { id: 'tcfe', name: 'Unified Frontend', highlight: false, color: '#6B7280' },
+    { id: 'tce', name: 'TCE', highlight: false, color: '#6B7280' },
+    { id: 'sop', name: 'Module S', highlight: false, color: '#6B7280' },
+    { id: 'dd', name: 'Module D', highlight: false, color: '#6B7280' },
+    { id: 'cleartrade', name: 'ClearTrade', highlight: false, color: '#6B7280' },
+    { id: 'tradesharp', name: 'TradeSharp - Doc Services', highlight: false, color: '#6B7280' },
+    { id: 'falcon', name: 'Falcon', highlight: false, color: '#6B7280' },
+    { id: 'inigio', name: 'Inigio', highlight: false, color: '#6B7280' },
+    { id: 'bir', name: 'BIR', highlight: false, color: '#6B7280' },
+    { id: 'arcrm', name: 'Accounts Receivable CRM', highlight: false, color: '#6B7280' },
+    { id: 'smartdx', name: 'SmartDX - Document Services', highlight: false, color: '#6B7280' },
+    { id: 'erp', name: 'ERP Integrator', highlight: false, color: '#6B7280' },
   ];
 
-  // Duplicated modules across backend systems
+  // Modules currently duplicated in Platform B that will move
   const duplicatedModules = [
-    { name: 'Billing', icon: '🧾', color: '#00D4FF' },
-    { name: 'Module P', icon: '🤝', color: '#C9A227' },
-    { name: 'Module C', icon: '👥', color: '#10B981' },
-    { name: 'Pricing', icon: '💰', color: '#8B5CF6' },
+    { name: 'Billing', icon: '🧾', color: '#00D4FF', destination: 'payment' },
+    { name: 'GL Posting', icon: '📒', color: '#10B981', destination: 'payment' },
+    { name: 'Module P', icon: '🤝', color: '#C9A227', destination: 'trade' },
+    { name: 'Pricing', icon: '💰', color: '#8B5CF6', destination: 'trade' },
   ];
 
-  // Animation phases (controlled by navigation):
-  // 0: Initial - Platform A & Platform B appear
-  // 1: Highlight duplication in Platform A & Platform B in Platform A & Platform B in Platform A & Platform B in Platform A & Platform B
-  // 2: Frontend appears on top with connections
-  // 3: Shared modules appear, modules consolidate
-  // 4: Platforms shrink, metrics appear
+  // Trade Shared modules (14 modules under Trade Org level)
+  const tradeSharedModules = [
+    { name: 'KYC', icon: '🔐' },
+    { name: 'Loan', icon: '💳' },
+    { name: 'Payments', icon: '💸' },
+    { name: 'Request Ingestion', icon: '📥' },
+    { name: 'Sanction Screening', icon: '🛡️' },
+    { name: 'Analytics', icon: '📊' },
+    { name: 'Asset Distribution', icon: '📦' },
+    { name: 'Doc Mgmt', icon: '📄' },
+    { name: 'Offer Mgmt', icon: '🎯' },
+    { name: 'Invoice Mgmt', icon: '🧾' },
+    { name: 'Doc Extraction', icon: '🔍' },
+    { name: 'AI/ML', icon: '🤖' },
+    { name: 'TBML', icon: '⚠️' },
+    { name: 'Reference Data', icon: '📋' },
+  ];
 
-  // Cycle through highlighted modules during phase 1 (skip when capturing)
+  // Payment level modules (shared at Payment Org level)
+  const paymentModules = [
+    { name: 'Billing', icon: '🧾' },
+    { name: 'GL Posting', icon: '📒' },
+    { name: 'Payment Initiation', icon: '💳' },
+    { name: 'Client Service', icon: '👥' },
+    { name: 'Navigator', icon: '🧭' },
+    { name: 'Doc Express', icon: '📄' },
+    { name: 'BRIE', icon: '🔍' },
+    { name: 'Sentry', icon: '🛡️' },
+    { name: 'PUPEE', icon: '⚙️' },
+  ];
+
+  // Animation phases:
+  // 0: Show Payment Org with modules, Trade Org with system map (14 systems)
+  // 1: Expand Platform A & Platform B to show their duplicate modules
+  // 2: Trade Shared appears, Participation & Pricing fly from APAR/TPS to Trade Shared
+  // 3: Billing & GL Posting fly from APAR/TPS to Payment
+  // 4: Platform B & Platform A collapse, remaining Trade Shared modules appear
+  // 5: Final consolidated view
+
+  const isExpanded = phase >= 1 && phase <= 3; // Keep expanded during flying animations
+  const showTradeSharedContainer = phase >= 2;
+  const showFlyingToTrade = phase === 2; // Modules flying to Trade Shared
+  const showFlyingToPayment = phase === 3; // Modules flying to Payment
+  const showAllTradeShared = phase >= 4; // All Trade Shared modules visible
+  const isConsolidated = phase >= 5;
+  const platformsCollapsed = phase >= 4; // APAR/TPS collapse after all modules fly
+
+  // Cycle through highlighted modules during phase 1
   useEffect(() => {
     if (isCapturing) {
-      // When capturing phase 1, show all highlighted
-      if (phase === 1) {
-        setHighlightedModule(0);
-      }
+      if (phase === 1) setHighlightedModule(0);
       return;
     }
 
     if (phase === 1) {
       const timer = setInterval(() => {
         setHighlightedModule(prev => (prev + 1) % duplicatedModules.length);
-      }, 500);
+      }, 600);
       return () => clearInterval(timer);
     } else {
       setHighlightedModule(-1);
     }
   }, [phase, duplicatedModules.length, isCapturing]);
 
-  const showFrontend = phase >= 2;
-  const showShared = phase >= 3;
-  const isConsolidated = phase >= 4;
-  const isExtracting = phase === 3; // Modules are moving
-
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-8">
+    <div className="w-full h-full flex flex-col items-center justify-center p-4 lg:p-8 overflow-hidden">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
+        className="text-center mb-4"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-2">
-          {phase < 2 ? 'The Duplication Problem' : phase < 4 ? 'Introducing Unified Frontend & Shared Modules' : 'Consolidation Complete'}
+        <h2 className="text-xl lg:text-2xl font-bold text-[var(--text-primary)] mb-1">
+          {phase === 0 ? 'Trade & WC Duplication' :
+           phase === 1 ? 'Trade & WC Duplication' :
+           phase === 2 ? 'Moving to Trade Shared' :
+           phase === 3 ? 'Moving to Payment Org' :
+           phase === 4 ? 'Shared Services Consolidated' :
+           'Consolidated Architecture'}
         </h2>
-        <p className="text-[var(--text-secondary)]">
-          {phase < 2
-            ? 'Same modules duplicated across Platform A & Platform B systems'
-            : phase < 4
-            ? 'Frontend connects to both platforms → Shared modules eliminate redundancy'
-            : 'Single codebase • Reduced maintenance • Direct integration'}
+        <p className="text-xs text-[var(--text-secondary)]">
+          {phase === 0 ? '14 systems under Trade Org within Payment Org' :
+           phase === 1 ? 'APAR & Platform A contain duplicate modules' :
+           phase === 2 ? 'Participation & Pricing → Trade Shared' :
+           phase === 3 ? 'Billing & GL Posting → Payment Org' :
+           phase === 4 ? '14 Trade Shared + 9 Payment Shared modules' :
+           'Clear ownership • Single source of truth'}
         </p>
       </motion.div>
 
-      {/* Main content - visualization + business metrics */}
-      <div className="flex-1 flex items-start justify-center gap-6 w-full max-w-7xl px-4">
+      {/* Main Layout - Payment Org (parent) contains Trade Org (child) - always show hierarchy */}
+      <div className="flex-1 flex flex-col items-center justify-start gap-3 w-full max-w-7xl relative pt-2">
 
-        {/* Left/Center: Main visualization */}
-        <div className="flex-1 flex flex-col items-center justify-center relative">
+        {/* PAYMENT ORG - Always visible as parent container */}
+        <motion.div
+          layout
+          className="w-full flex-1"
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        >
+          <div className="rounded-xl p-4 border-2 bg-purple-500/5 border-purple-500/40 h-full">
+            {/* Payment Org Header */}
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-2xl">💳</span>
+              <p className="text-base font-bold text-purple-400">Payment Org</p>
+              <span className="text-xs text-purple-300/60">(Parent)</span>
+              <span className="text-sm px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 ml-auto">
+                9 Shared Modules
+              </span>
+            </div>
 
-          {/* Unified Frontend - Appears in Phase 2 */}
-        <AnimatePresence>
-          {showFrontend && (
+            {/* Payment Shared Modules - Always visible from start */}
+            <div className="mb-4">
+              <div className="flex flex-wrap gap-2 relative">
+                {paymentModules.map((module, i) => {
+                  // Highlight modules that are "flying in" during phase 3
+                  const isFlyingIn = showFlyingToPayment && (module.name === 'Billing' || module.name === 'GL Posting');
+                  const hasArrived = phase >= 4 && (module.name === 'Billing' || module.name === 'GL Posting');
+                  const flyingIndex = module.name === 'Billing' ? 0 : (module.name === 'GL Posting' ? 1 : -1);
+
+                  return (
+                    <motion.div
+                      key={module.name}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{
+                        opacity: 1,
+                        scale: isFlyingIn ? [1, 1, 1.15, 1.1] : 1,
+                        y: isFlyingIn ? [0, 0, 30, 0] : 0,
+                      }}
+                      transition={{
+                        delay: isFlyingIn ? 0.8 + flyingIndex * 0.6 : 0.1 + i * 0.05,
+                        duration: isFlyingIn ? 2.0 : 0.4,
+                        ease: isFlyingIn ? [0.4, 0, 0.2, 1] : undefined,
+                        type: isFlyingIn ? 'tween' : 'spring',
+                        stiffness: isFlyingIn ? undefined : 200
+                      }}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${
+                        isFlyingIn || hasArrived
+                          ? 'bg-green-500/25 border-2 border-green-500/60 ring-2 ring-green-500/30'
+                          : isConsolidated
+                            ? 'bg-purple-500/25 border border-purple-500/50'
+                            : 'bg-purple-500/15 border border-purple-500/30'
+                      }`}
+                      style={{
+                        boxShadow: isFlyingIn || hasArrived ? '0 0 25px rgba(34, 197, 94, 0.5)' : 'none'
+                      }}
+                    >
+                      <span className="text-base">{module.icon}</span>
+                      <span className={(isFlyingIn || hasArrived) ? 'text-green-200 font-medium' : 'text-purple-200'}>{module.name}</span>
+                      {isFlyingIn && (
+                        <motion.span
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 2.5 + flyingIndex * 0.6, duration: 0.4, type: 'spring', stiffness: 300 }}
+                          className="text-green-400 ml-1 text-xs font-bold"
+                        >
+                          ✓ ARRIVED
+                        </motion.span>
+                      )}
+                      {hasArrived && !isFlyingIn && <span className="text-green-400 ml-1">✓</span>}
+                      {isConsolidated && !isFlyingIn && !hasArrived && <span className="text-green-400 ml-1">✓</span>}
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Flying modules indicator - only in phase 3 */}
+              {showFlyingToPayment && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex items-center justify-center gap-2 mt-3 text-purple-400"
+                >
+                  <motion.span
+                    animate={{ y: [-5, 5, -5] }}
+                    transition={{ duration: 0.8, repeat: Infinity }}
+                  >
+                    ⬆️
+                  </motion.span>
+                  <span className="text-xs">Billing & GL Posting arriving from APAR/TPS</span>
+                </motion.div>
+              )}
+            </div>
+
+            {/* TRADE ORG - Nested inside Payment Org */}
             <motion.div
-              initial={{ opacity: 0, y: -60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="mb-2"
+              layout
+              className="rounded-lg border-2 border-dashed border-purple-500/30 p-3 bg-[var(--bg-primary)]/30"
+              transition={{ duration: 0.5 }}
             >
-              <div className="w-[480px] bg-gradient-to-br from-emerald-900/50 to-emerald-800/30 rounded-xl p-4 border-2 border-emerald-500/60 shadow-lg shadow-emerald-500/20">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">🔄</span>
-                    <div>
-                      <h3 className="text-lg font-bold text-emerald-400">Unified Frontend</h3>
-                      <p className="text-xs text-emerald-300/70">Unified Entry Point</p>
-                    </div>
-                  </div>
-                  <span className="text-xs px-3 py-1 bg-emerald-500/20 rounded-full text-emerald-300 border border-emerald-500/30">
-                    Unified Entry Point
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-purple-300/50">↳</span>
+                <span className="text-xs text-purple-300/60">Child Org</span>
+              </div>
+
+              <div className="rounded-lg p-4 border-2 bg-[#00D4FF]/5 border-[#00D4FF]/40">
+                {/* Trade Org Header */}
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-2xl">🏦</span>
+                  <p className="text-base font-bold text-[#00D4FF]">Trade Org</p>
+                  <span className="text-sm px-3 py-1 rounded-full bg-[#00D4FF]/20 text-[#00D4FF] ml-auto">
+                    14 Systems
                   </span>
                 </div>
 
-                <div className="flex justify-center gap-3">
-                  {['Channel Routing', 'Format Conversion', 'API Gateway'].map(feat => (
-                    <div key={feat} className="px-3 py-1.5 rounded-lg text-xs bg-emerald-500/15 border border-emerald-500/30 text-emerald-200">
-                      {feat}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Connection lines from Unified Frontend to platforms */}
-        {showFrontend && (
-          <div className="relative w-[480px] h-12 mb-2">
-            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 480 48" fill="none">
-              {/* Line to Platform A (left) */}
-              <motion.path
-                d="M 160 0 L 160 24 Q 160 36 148 36 L 100 36 L 100 48"
-                stroke="url(#tcfe-tps-gradient)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                fill="none"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              />
-              {/* Line to Platform B (right) */}
-              <motion.path
-                d="M 320 0 L 320 24 Q 320 36 332 36 L 380 36 L 380 48"
-                stroke="url(#tcfe-apar-gradient)"
-                strokeWidth="2"
-                strokeLinecap="round"
-                fill="none"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              />
-              {/* Line to Shared (center) - appears in phase 3 */}
-              {showShared && (
-                <motion.path
-                  d="M 240 0 L 240 48"
-                  stroke="url(#tcfe-shared-gradient)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeDasharray="4 4"
-                  fill="none"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                />
-              )}
-              {/* Gradients */}
-              <defs>
-                <linearGradient id="tcfe-tps-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#10B981" />
-                  <stop offset="100%" stopColor="#00D4FF" />
-                </linearGradient>
-                <linearGradient id="tcfe-apar-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#10B981" />
-                  <stop offset="100%" stopColor="#C9A227" />
-                </linearGradient>
-                <linearGradient id="tcfe-shared-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#10B981" />
-                  <stop offset="100%" stopColor="#22C55E" />
-                </linearGradient>
-              </defs>
-            </svg>
-            {/* Labels */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="absolute left-[60px] bottom-0 text-[10px] text-[var(--accent-cyan)] font-medium"
-            >
-              Platform A
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              className="absolute right-[60px] bottom-0 text-[10px] text-[var(--accent-gold)] font-medium"
-            >
-              Platform B
-            </motion.div>
-            {showShared && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="absolute left-1/2 -translate-x-1/2 bottom-0 text-[10px] text-green-400 font-medium"
-              >
-                Shared ✓
-              </motion.div>
-            )}
-          </div>
-        )}
-
-        {/* Platform A & Platform B Platforms */}
-        <motion.div
-          layout
-          className="flex items-start justify-center gap-16 mb-4 relative"
-        >
-          {backendPlatforms.map((platform, pIndex) => (
-            <motion.div
-              key={platform.id}
-              layout
-              initial={{ opacity: 0, y: 40 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: pIndex * 0.2,
-                ease: 'easeOut',
-                layout: { duration: 0.6, ease: 'easeInOut' }
-              }}
-              className="flex flex-col items-center"
-            >
-              {/* Platform Box - modules removed after extraction */}
-              <motion.div
-                layout
-                transition={{ layout: { duration: 0.6, ease: 'easeInOut' } }}
-                className="w-56 bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--bg-primary)] rounded-xl p-4 border-2"
-                style={{
-                  borderColor: phase === 1 ? `${platform.color}` : showShared ? 'rgba(34, 197, 94, 0.5)' : `${platform.color}50`,
-                  boxShadow: phase === 1 ? `0 0 20px ${platform.color}40` : showShared ? '0 0 15px rgba(34, 197, 94, 0.3)' : 'none',
-                  transition: 'border-color 0.5s ease, box-shadow 0.5s ease',
-                }}
-              >
-                {/* Platform Header */}
-                <div className="text-center mb-3 pb-2 border-b" style={{ borderColor: `${platform.color}30` }}>
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="text-2xl">{platform.icon}</span>
-                    <h3 className="text-lg font-bold" style={{ color: platform.color }}>{platform.name}</h3>
-                  </div>
-                  <p className="text-xs text-[var(--text-muted)]">{platform.fullName}</p>
-                </div>
-
-                {/* Duplicated Modules - animate out during extraction */}
-                <AnimatePresence mode="wait">
-                  {!showShared ? (
+                {/* Trade Shared Level - appears in phase 2+ */}
+                <AnimatePresence>
+                  {showTradeSharedContainer && (
                     <motion.div
-                      key="modules"
-                      initial={{ opacity: 1, height: 'auto' }}
-                      exit={{
-                        opacity: 0,
-                        height: 0,
-                        transition: { duration: 0.6, ease: 'easeInOut' }
-                      }}
-                      className="space-y-1.5 mb-3 overflow-hidden"
+                      initial={{ opacity: 0, height: 0, y: 50 }}
+                      animate={{ opacity: 1, height: 'auto', y: 0 }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.6, type: 'spring', stiffness: 100 }}
+                      className="mb-4 overflow-hidden"
                     >
-                      <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-wide">
-                        Duplicated Modules:
-                      </p>
-                      {duplicatedModules.map((module, i) => {
-                        const isHighlighted = highlightedModule === i && phase === 1;
-                        return (
+                      <div className={`rounded-lg p-3 border ${
+                        isConsolidated ? 'bg-green-500/10 border-green-500/40' : 'bg-cyan-500/10 border-cyan-500/40'
+                      }`}>
+                        <div className="flex items-center gap-3 mb-3">
+                          <span className="text-xl">🔧</span>
+                          <p className={`text-sm font-bold ${isConsolidated ? 'text-green-400' : 'text-cyan-400'}`}>
+                            Trade Shared
+                          </p>
+                          <span className={`text-xs px-3 py-1 rounded-full ml-auto ${
+                            isConsolidated ? 'bg-green-500/20 text-green-300' : 'bg-cyan-500/20 text-cyan-300'
+                          }`}>
+                            {showAllTradeShared ? tradeSharedModules.length : (showFlyingToTrade || phase === 3) ? 2 : 0} Modules
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-2 relative min-h-[40px]">
+                          {/* Phase 2-3: Show flying modules (Participation & Pricing from APAR/TPS) */}
+                          {(showFlyingToTrade || phase === 3) && !showAllTradeShared && (
+                            <>
+                              {duplicatedModules.filter(m => m.destination === 'trade').map((module, i) => (
+                                <motion.div
+                                  key={module.name}
+                                  initial={{ opacity: 0, scale: 0.3, y: 100 }}
+                                  animate={{
+                                    opacity: showFlyingToTrade ? [0, 0, 0.5, 1] : 1,
+                                    scale: showFlyingToTrade ? [0.3, 0.5, 0.8, 1] : 1,
+                                    y: showFlyingToTrade ? [100, 60, 20, 0] : 0
+                                  }}
+                                  transition={{
+                                    delay: showFlyingToTrade ? 1.2 + i * 0.6 : 0,
+                                    duration: showFlyingToTrade ? 1.8 : 0.3,
+                                    ease: [0.4, 0, 0.2, 1]
+                                  }}
+                                  className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs bg-cyan-500/25 border-2 border-cyan-400/50"
+                                  style={{
+                                    boxShadow: '0 0 20px rgba(0, 212, 255, 0.4)'
+                                  }}
+                                >
+                                  <span className="text-sm">{module.icon}</span>
+                                  <span className="text-cyan-200 font-medium">{module.name}</span>
+                                  <motion.span
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: showFlyingToTrade ? 2.8 + i * 0.6 : 0, type: 'spring' }}
+                                    className="text-green-400 ml-0.5 text-xs"
+                                  >
+                                    ✓ ARRIVED
+                                  </motion.span>
+                                </motion.div>
+                              ))}
+                            </>
+                          )}
+
+                          {/* Phase 3+: Show all Trade Shared modules */}
+                          {showAllTradeShared && tradeSharedModules.map((module, i) => (
+                            <motion.div
+                              key={module.name}
+                              initial={{ opacity: 0, scale: 0.3, x: i < 2 ? 0 : 100, y: i < 2 ? 0 : 30 }}
+                              animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+                              transition={{
+                                delay: i < 2 ? 0 : 0.1 + (i - 2) * 0.05,
+                                duration: 0.5,
+                                type: 'spring',
+                                stiffness: 150,
+                                damping: 15
+                              }}
+                              className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs ${
+                                isConsolidated ? 'bg-green-500/20 border border-green-500/40' : 'bg-cyan-500/15 border border-cyan-500/30'
+                              }`}
+                            >
+                              <span className="text-sm">{module.icon}</span>
+                              <span className={isConsolidated ? 'text-green-200' : 'text-cyan-200'}>{module.name}</span>
+                              {isConsolidated && <span className="text-green-400 ml-0.5">✓</span>}
+                            </motion.div>
+                          ))}
+
+                          {/* Empty state placeholder */}
+                          {!showFlyingToTrade && phase !== 3 && !showAllTradeShared && (
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 0.5 }}
+                              className="text-xs text-gray-500 italic"
+                            >
+                              Awaiting consolidated modules...
+                            </motion.div>
+                          )}
+                        </div>
+
+                        {/* Flying indicator - only in phase 2 */}
+                        {showFlyingToTrade && (
                           <motion.div
-                            key={`${platform.id}-${module.name}`}
-                            animate={{
-                              scale: isHighlighted ? 1.05 : 1,
-                              x: isExtracting ? (pIndex === 0 ? 50 : -50) : 0,
-                              opacity: isExtracting ? 0 : 1,
-                            }}
-                            transition={{ duration: 0.5, delay: isExtracting ? i * 0.1 : 0 }}
-                            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all duration-200"
-                            style={{
-                              backgroundColor: isHighlighted ? `${module.color}40` : `${module.color}15`,
-                              border: `1px solid ${isHighlighted ? module.color : 'transparent'}`,
-                              boxShadow: isHighlighted ? `0 0 12px ${module.color}50` : 'none',
-                            }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="flex items-center justify-center gap-2 mt-3 text-cyan-400"
                           >
-                            <span>{module.icon}</span>
-                            <span className="text-[var(--text-primary)]">{module.name}</span>
-                            {isHighlighted && (
-                              <motion.span
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                className="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-red-500/30 text-red-300 font-bold"
-                              >
-                                DUPLICATE!
-                              </motion.span>
-                            )}
+                            <motion.span
+                              animate={{ y: [-5, 5, -5] }}
+                              transition={{ duration: 0.8, repeat: Infinity }}
+                            >
+                              ⬆️
+                            </motion.span>
+                            <span className="text-xs">Participation & Pricing moving from systems</span>
                           </motion.div>
-                        );
-                      })}
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="using-shared"
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{
-                        opacity: 1,
-                        height: 'auto',
-                        transition: { duration: 0.5, delay: 0.3 }
-                      }}
-                      className="mb-3 p-2 rounded-lg bg-green-500/10 border border-green-500/30 overflow-hidden"
-                    >
-                      <p className="text-[10px] text-green-400 font-medium text-center">
-                        ✓ Using Shared Modules
-                      </p>
+                        )}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
 
-                {/* Unique Features - always visible */}
-                <motion.div
-                  layout
-                  className={showShared ? '' : 'pt-2 border-t border-white/10'}
-                >
-                  <p className="text-[10px] text-[var(--text-muted)] mb-1">Core Functions:</p>
-                  {platform.unique.map(feat => (
-                    <div key={feat} className="text-xs text-[var(--text-secondary)] px-2 py-1 bg-white/5 rounded mb-1">
-                      {feat}
-                    </div>
-                  ))}
-                </motion.div>
-              </motion.div>
+                {/* Systems & Applications Box */}
+                <div className="rounded-lg border border-gray-600/50 bg-gray-800/20 p-3">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-sm">📦</span>
+                    <p className="text-xs font-medium text-gray-400">Systems & Applications</p>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-700/50 text-gray-400 ml-auto">
+                      14 Systems
+                    </span>
+                  </div>
 
-              {/* Metrics under each platform - appears after consolidation */}
-              <AnimatePresence>
+                  {/* System Map - Fluid layout with expandable Platform A & Platform B */}
+                  <motion.div
+                    layout
+                    className="flex flex-wrap gap-3 justify-center"
+                    transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                  >
+                  {allTradeSystems.map((system, i) => {
+                    // Expand during phase 1-2, collapse in phase 3+
+                    const shouldExpand = isExpanded && system.highlight && !platformsCollapsed;
+
+                    return (
+                      <motion.div
+                        key={system.id}
+                        layout
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.5,
+                          delay: i * 0.02,
+                          layout: { duration: 0.6, type: 'spring', stiffness: 120, damping: 14 }
+                        }}
+                        className={`rounded-lg border overflow-hidden ${
+                          system.highlight
+                            ? 'bg-gradient-to-br from-white/10 to-white/5'
+                            : 'bg-gray-800/50'
+                        }`}
+                        style={{
+                          borderColor: system.highlight ? system.color : '#4B5563',
+                          boxShadow: shouldExpand ? `0 0 20px ${system.color}30` : 'none',
+                          width: shouldExpand ? '220px' : 'auto',
+                          minHeight: shouldExpand ? 'auto' : 'auto',
+                        }}
+                      >
+                        {/* System header - always visible */}
+                        <motion.div
+                          layout="position"
+                          className={`flex items-center justify-center gap-2 ${shouldExpand ? 'p-3 border-b' : 'px-3 py-2'}`}
+                          style={{
+                            borderColor: shouldExpand ? `${system.color}30` : 'transparent',
+                          }}
+                        >
+                          <span
+                            className={`font-semibold whitespace-nowrap ${shouldExpand ? 'text-base' : 'text-xs'}`}
+                            style={{ color: system.highlight ? system.color : '#9CA3AF' }}
+                          >
+                            {system.name}
+                          </span>
+                          {system.highlight && !shouldExpand && (
+                            <motion.div
+                              className="w-2 h-2 rounded-full"
+                              style={{ backgroundColor: system.color }}
+                              animate={{ opacity: [0.4, 1, 0.4] }}
+                              transition={{ duration: 1.5, repeat: Infinity }}
+                            />
+                          )}
+                        </motion.div>
+
+                        {/* Expanded content - modules */}
+                        <AnimatePresence>
+                          {shouldExpand && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                              className="px-3 pb-3"
+                            >
+                              <p className="text-[10px] text-[var(--text-muted)] uppercase mb-2 mt-2">
+                                {(showFlyingToTrade || showFlyingToPayment) ? 'Modules moving to shared...' : 'Modules:'}
+                              </p>
+                              <div className="space-y-1.5">
+                                {duplicatedModules.map((module, mi) => {
+                                  const isHighlighted = highlightedModule === mi;
+                                  // Fly Trade modules in phase 2, Payment modules in phase 3
+                                  const shouldFlyNow = (module.destination === 'trade' && showFlyingToTrade) ||
+                                                       (module.destination === 'payment' && showFlyingToPayment);
+                                  // Already flown in previous phase
+                                  const hasFlown = (module.destination === 'trade' && phase >= 3) ||
+                                                   (module.destination === 'payment' && phase >= 4);
+                                  // Determine fly direction based on destination
+                                  const flyY = module.destination === 'payment' ? -200 : -100;
+
+                                  return (
+                                    <motion.div
+                                      key={`${system.id}-${module.name}`}
+                                      initial={{ opacity: 0, x: -20 }}
+                                      animate={{
+                                        opacity: shouldFlyNow ? [1, 1, 0.8, 0] : (hasFlown ? 0 : 1),
+                                        x: 0,
+                                        y: shouldFlyNow ? [0, -20, flyY * 0.5, flyY] : 0,
+                                        scale: shouldFlyNow ? [1, 1.1, 0.8, 0.3] : (isHighlighted ? 1.05 : 1),
+                                      }}
+                                      transition={{
+                                        delay: shouldFlyNow ? 0.3 + mi * 0.5 : mi * 0.08,
+                                        duration: shouldFlyNow ? 2.0 : 0.4,
+                                        ease: shouldFlyNow ? [0.4, 0, 0.2, 1] : undefined,
+                                        type: shouldFlyNow ? 'tween' : 'spring',
+                                        stiffness: shouldFlyNow ? undefined : 200,
+                                      }}
+                                      className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs"
+                                      style={{
+                                        backgroundColor: shouldFlyNow ? `${module.color}40` : (isHighlighted ? `${module.color}35` : `${module.color}15`),
+                                        border: `1px solid ${shouldFlyNow ? module.color : (isHighlighted ? module.color : 'transparent')}`,
+                                        boxShadow: shouldFlyNow ? `0 0 20px ${module.color}60` : 'none',
+                                        display: hasFlown ? 'none' : 'flex',
+                                      }}
+                                    >
+                                      <span className="text-sm">{module.icon}</span>
+                                      <span className="text-[var(--text-primary)]">{module.name}</span>
+                                      {isHighlighted && !shouldFlyNow && (
+                                        <motion.span
+                                          initial={{ scale: 0, x: 20 }}
+                                          animate={{ scale: 1, x: 0 }}
+                                          transition={{ type: 'spring', stiffness: 300 }}
+                                          className="ml-auto text-[8px] px-1.5 py-0.5 rounded bg-red-500/40 text-red-200 font-bold"
+                                        >
+                                          DUP
+                                        </motion.span>
+                                      )}
+                                      {shouldFlyNow && (
+                                        <motion.span
+                                          initial={{ opacity: 0 }}
+                                          animate={{ opacity: [0, 1, 1, 0] }}
+                                          transition={{ duration: 1.8, delay: 0.3 + mi * 0.5 }}
+                                          className="ml-auto text-[8px] px-1.5 py-0.5 rounded bg-green-500/40 text-green-200 font-bold"
+                                        >
+                                          {module.destination === 'payment' ? '↑ Payment' : '↑ Trade'}
+                                        </motion.span>
+                                      )}
+                                    </motion.div>
+                                  );
+                                })}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+
+                {/* Consolidated state message */}
                 {isConsolidated && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 + pIndex * 0.15, ease: 'easeOut' }}
-                    className="mt-3 flex flex-col items-center gap-2"
+                    transition={{ type: 'spring', stiffness: 150 }}
+                    className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/30 text-center"
                   >
-                    <motion.div
-                      initial={{ scale: 0.8 }}
-                      animate={{ scale: 1 }}
-                      transition={{ duration: 0.4, delay: 0.4 + pIndex * 0.15 }}
-                      className="px-4 py-2 bg-green-500/15 rounded-xl border border-green-500/40 text-center"
-                    >
-                      <p className="text-2xl font-bold text-green-400">-50%</p>
-                      <p className="text-[10px] text-green-300">Codebase Size</p>
-                    </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.7 + pIndex * 0.15 }}
-                      className="flex gap-2"
-                    >
-                      <div className="px-2 py-1 bg-[var(--bg-secondary)] rounded-lg border border-white/10 text-center">
-                        <p className="text-sm font-bold text-[var(--accent-cyan)]">{pIndex === 0 ? '60%' : '55%'}</p>
-                        <p className="text-[8px] text-[var(--text-muted)]">Less Testing</p>
-                      </div>
-                      <div className="px-2 py-1 bg-[var(--bg-secondary)] rounded-lg border border-white/10 text-center">
-                        <p className="text-sm font-bold text-[var(--accent-gold)]">{pIndex === 0 ? '45%' : '50%'}</p>
-                        <p className="text-[8px] text-[var(--text-muted)]">Maintenance</p>
-                      </div>
-                    </motion.div>
+                    <p className="text-sm text-green-400">✓ All systems use Trade Shared & Payment modules</p>
                   </motion.div>
                 )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-
-          {/* Flying modules animation - modules moving from platforms to shared */}
-          {isExtracting && (
-            <>
-              {duplicatedModules.map((module, i) => (
-                <React.Fragment key={`flying-${module.name}`}>
-                  {/* From Platform A (left) */}
-                  <motion.div
-                    initial={{ opacity: 1, x: -140, y: 60 + i * 32 }}
-                    animate={{ opacity: 0, x: 0, y: 180 }}
-                    transition={{ duration: 0.8, delay: i * 0.15, ease: 'easeInOut' }}
-                    className="absolute left-1/2 top-0 pointer-events-none z-20"
-                  >
-                    <div
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs"
-                      style={{
-                        backgroundColor: `${module.color}40`,
-                        border: `1px solid ${module.color}`,
-                        boxShadow: `0 0 15px ${module.color}60`,
-                      }}
-                    >
-                      <span>{module.icon}</span>
-                      <span className="text-white font-medium">{module.name}</span>
-                    </div>
-                  </motion.div>
-                  {/* From Platform B (right) */}
-                  <motion.div
-                    initial={{ opacity: 1, x: 140, y: 60 + i * 32 }}
-                    animate={{ opacity: 0, x: 0, y: 180 }}
-                    transition={{ duration: 0.8, delay: i * 0.15 + 0.1, ease: 'easeInOut' }}
-                    className="absolute left-1/2 top-0 pointer-events-none z-20"
-                  >
-                    <div
-                      className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs"
-                      style={{
-                        backgroundColor: `${module.color}40`,
-                        border: `1px solid ${module.color}`,
-                        boxShadow: `0 0 15px ${module.color}60`,
-                      }}
-                    >
-                      <span>{module.icon}</span>
-                      <span className="text-white font-medium">{module.name}</span>
-                    </div>
-                  </motion.div>
-                </React.Fragment>
-              ))}
-            </>
-          )}
-        </motion.div>
-
-        {/* Shared Modules - Appears in Phase 3 */}
-        <AnimatePresence>
-          {showShared && (
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="mb-4"
-            >
-              <div className="w-[520px] p-4 rounded-xl bg-gradient-to-br from-[var(--accent-gold)]/25 to-[var(--accent-cyan)]/25 border-2 border-[var(--accent-gold)]/60 shadow-lg">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
-                  className="text-center mb-3"
-                >
-                  <div className="flex items-center justify-center gap-2">
-                    <span className="text-2xl">🔧</span>
-                    <h3 className="text-base font-bold text-[var(--accent-gold)]">SHARED MODULAR COMPONENTS</h3>
-                  </div>
-                  <p className="text-xs text-[var(--text-muted)]">Single Source of Truth • Used by Platform A, Platform B & Frontend</p>
-                </motion.div>
-
-                <div className="grid grid-cols-4 gap-3">
-                  {duplicatedModules.map((module, i) => (
-                    <motion.div
-                      key={`shared-${module.name}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + i * 0.2, duration: 0.5, ease: 'easeOut' }}
-                      className="flex flex-col items-center gap-1 p-3 rounded-xl text-center"
-                      style={{
-                        backgroundColor: `${module.color}25`,
-                        border: `2px solid ${module.color}`,
-                      }}
-                    >
-                      <span className="text-xl">{module.icon}</span>
-                      <span className="text-sm font-medium" style={{ color: module.color }}>
-                        {module.name}
-                      </span>
-                      <motion.span
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1.2 + i * 0.15, duration: 0.3 }}
-                        className="text-green-400 text-lg"
-                      >
-                        ✓
-                      </motion.span>
-                    </motion.div>
-                  ))}
-                </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          </motion.div>
 
-        {/* Summary badge - Appears in Phase 4 */}
-        <AnimatePresence>
-          {isConsolidated && (
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8, ease: 'easeOut' }}
-              className="mt-2"
-            >
-              <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-green-500/10 border border-green-500/30">
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 1.2, duration: 0.3 }}
-                  className="text-xl"
-                >
-                  ✅
-                </motion.span>
-                <span className="text-sm font-medium text-green-400">
-                  Consolidation Complete • Single Codebase • Direct Frontend Integration
-                </span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        </div>
-
-        {/* Right: Business Impact Panel - appears after consolidation */}
-        <AnimatePresence>
-          {isConsolidated && (
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="w-72 flex-shrink-0"
-            >
+        {/* Bottom Summary - Only in final phase */}
+        {isConsolidated && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: 'spring', stiffness: 100 }}
+            className="grid grid-cols-4 gap-4 w-full mt-4"
+          >
+            {[
+              { label: 'Systems', value: '14', sub: 'Using shared' },
+              { label: 'Trade Shared', value: '14', sub: 'Modules' },
+              { label: 'Payment Shared', value: '9', sub: 'Modules' },
+              { label: 'Duplication', value: '0', sub: 'Eliminated' },
+            ].map((item, i) => (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6 }}
-                className="p-5 rounded-xl bg-gradient-to-br from-green-900/30 to-emerald-900/20 border border-green-500/30"
+                key={item.label}
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ delay: 0.2 + i * 0.1, type: 'spring', stiffness: 200 }}
+                className="bg-[var(--bg-secondary)]/50 rounded-xl border border-gray-700 p-4 text-center"
               >
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-xl">🚀</span>
-                  <h3 className="text-lg font-bold text-green-400">Business Benefits</h3>
-                </div>
-
-                <div className="space-y-3">
-                  <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 }}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20"
-                  >
-                    <span className="text-lg">👨‍💻</span>
-                    <div>
-                      <p className="text-sm font-medium text-green-300">Free Dev Resources</p>
-                      <p className="text-xs text-[var(--text-muted)]">Focus on new features</p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.9 }}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20"
-                  >
-                    <span className="text-lg">⚡</span>
-                    <div>
-                      <p className="text-sm font-medium text-emerald-300">3x Faster Releases</p>
-                      <p className="text-xs text-[var(--text-muted)]">Single codebase updates</p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.1 }}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-teal-500/10 border border-teal-500/20"
-                  >
-                    <span className="text-lg">💰</span>
-                    <div>
-                      <p className="text-sm font-medium text-teal-300">50% Less Infra Cost</p>
-                      <p className="text-xs text-[var(--text-muted)]">Shared infrastructure</p>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 1.3 }}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/20"
-                  >
-                    <span className="text-lg">🎯</span>
-                    <div>
-                      <p className="text-sm font-medium text-cyan-300">Better Quality</p>
-                      <p className="text-xs text-[var(--text-muted)]">One test suite, one standard</p>
-                    </div>
-                  </motion.div>
-                </div>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.5 }}
-                  className="mt-4 pt-3 border-t border-green-500/20 text-center"
-                >
-                  <p className="text-xs text-green-300/80">Unlock innovation capacity</p>
-                  <p className="text-lg font-bold text-green-400">Build What Matters</p>
-                </motion.div>
+                <p className="text-2xl font-bold text-green-400">{item.value}</p>
+                <p className="text-sm text-gray-400">{item.label}</p>
+                <p className="text-xs text-gray-500">{item.sub}</p>
               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            ))}
+          </motion.div>
+        )}
+          </div>
+        </motion.div>
       </div>
     </div>
   );
@@ -6931,6 +7651,10 @@ export default function InteractiveSlide({ content, slideId, forcePhase, isCaptu
         return <BranchIntelligence key={uniqueKey} />;
       case 'team-benchmarking':
         return <TeamBenchmarking key={uniqueKey} />;
+      case 'elc-architecture':
+        return <ELCArchitecture key={uniqueKey} />;
+      case 'elc-integration-patterns':
+        return <ELCIntegrationPatterns key={uniqueKey} />;
       default:
         return (
           <div className="w-full h-full flex items-center justify-center">

@@ -266,7 +266,7 @@ function LegacyProblems() {
   const problems = [
     { icon: '1', label: 'Monolithic Architecture', desc: 'Tightly coupled codebase', detail: 'Single point of failure • Cannot scale independently' },
     { icon: '2', label: 'Slow Processing', desc: 'T+2 settlement delays', detail: 'Batch processing only • Manual intervention required' },
-    { icon: '3', label: 'Integration Complexity', desc: '47+ point-to-point connections', detail: 'No standard APIs • High coordination cost' },
+    { icon: '3', label: 'Integration Complexity', desc: '100+ service-level connections', detail: '5x industry average • No standard APIs' },
     { icon: '4', label: 'Limited Visibility', desc: 'Batch-generated reports', detail: 'T-1 day data latency • Manual reconciliation' },
     { icon: '5', label: 'Technical Debt', desc: 'High maintenance burden', detail: 'Low documentation • Key-person risk' },
   ];
@@ -336,7 +336,7 @@ function LegacyProblems() {
 // Technical Challenges Visualization
 function TechnicalChallenges() {
   const challenges = [
-    { icon: '⚙️', title: 'Legacy Stack', desc: 'COBOL + Java mix', impact: '15+ years old' },
+    { icon: '⚙️', title: 'Legacy Stack', desc: 'Mule + Java mix', impact: '10+ years old' },
     { icon: '🔗', title: 'Tight Coupling', desc: 'Monolithic design', impact: 'Cannot scale' },
     { icon: '📊', title: 'Data Silos', desc: 'Fragmented data', impact: 'No single source' },
     { icon: '🔄', title: 'Manual Processes', desc: 'High touch ops', impact: '34% manual' },

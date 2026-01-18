@@ -29,16 +29,26 @@ export const tradeReimaginedDemo: Demo = {
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
     {
-      id: 'slide-3',
+      id: 'slide-5',
       order: 2,
       type: 'interactive',
       content: {
-        visualization: 'technical-challenges',
+        visualization: 'module-consolidation',
       },
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
     {
-      id: 'slide-4',
+      id: 'slide-6',
+      order: 3,
+      type: 'interactive',
+      content: {
+        visualization: 'trade-architecture',
+      },
+      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+      hidden: true, // Hidden for now - kept for future use
+    },
+    {
+      id: 'slide-3',
       order: 3,
       type: 'interactive',
       content: {
@@ -47,20 +57,22 @@ export const tradeReimaginedDemo: Demo = {
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
     {
-      id: 'slide-5',
+      id: 'slide-6b',
       order: 4,
-      type: 'interactive',
+      type: 'title',
       content: {
-        visualization: 'transformation-goals',
+        title: 'Introducing ELC',
+        subtitle: 'The Foundation for Trade Transformation',
+        text: 'Enterprise Lifecycle Components — powering the next generation of trade services',
       },
-      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+      animation: { entry: 'scale', duration: 0.6, delay: 0 },
     },
     {
-      id: 'slide-6',
+      id: 'slide-4',
       order: 5,
       type: 'interactive',
       content: {
-        visualization: 'elc-reimagination',
+        visualization: 'transformation-goals',
       },
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
@@ -69,7 +81,7 @@ export const tradeReimaginedDemo: Demo = {
       order: 6,
       type: 'interactive',
       content: {
-        visualization: 'transformation-metrics',
+        visualization: 'elc-architecture',
       },
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
@@ -78,26 +90,35 @@ export const tradeReimaginedDemo: Demo = {
       order: 7,
       type: 'interactive',
       content: {
-        visualization: 'module-consolidation',
+        visualization: 'elc-integration-patterns',
       },
-      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+      animation: { entry: 'fadeIn', duration: 0.2, delay: 0 },
     },
     {
       id: 'slide-9',
       order: 8,
       type: 'interactive',
       content: {
-        visualization: 'trade-architecture',
+        visualization: 'elc-reimagination',
       },
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+      hidden: true, // Hidden - duplicate of transformation-metrics
     },
     {
       id: 'slide-10',
       order: 9,
+      type: 'interactive',
+      content: {
+        visualization: 'transformation-metrics',
+      },
+      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+    },
+    {
+      id: 'slide-11',
+      order: 10,
       type: 'title',
       content: {
-        title: 'The Future is Now',
-        subtitle: 'Trade Processing, The Modern Way',
+        title: 'Demo Time ..',
         text: 'Ready to reimagine your trade operations?',
       },
       animation: { entry: 'scale', duration: 0.6, delay: 0 },

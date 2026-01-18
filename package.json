@@ -13,10 +13,10 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
+    "@react-three/drei": "10.7.6",
+    "@react-three/fiber": "9.4.2",
     "archiver": "^7.0.1",
-    "framer-motion": "^12.25.0",
+    "framer-motion": "12.24.12",
     "modern-screenshot": "^4.6.7",
     "next": "16.1.1",
     "pptxgenjs": "^4.0.1",

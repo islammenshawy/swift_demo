@@ -33,7 +33,9 @@ export type VisualizationType =
   | 'elc-reimagination'
   | 'transformation-metrics'
   | 'trade-architecture'
-  | 'module-consolidation';
+  | 'module-consolidation'
+  | 'elc-architecture'
+  | 'elc-integration-patterns';
 
 export type ChartType = 'bar' | 'line' | 'pie' | 'donut';
 
@@ -89,6 +91,7 @@ export interface Slide {
   animation: SlideAnimation;
   backgroundImage?: string;
   backgroundColor?: string;
+  hidden?: boolean;
 }
 
 export interface Demo {

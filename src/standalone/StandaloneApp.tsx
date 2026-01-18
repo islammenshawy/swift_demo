@@ -32,10 +32,10 @@ declare global {
 
 // Phase counts for visualizations
 const PHASE_COUNTS: Record<string, number> = {
-  'module-consolidation': 5,
-  'legacy-problems': 5,        // 5 problems to cycle through
+  'module-consolidation': 6,   // 6 phases for the consolidation animation
+  'legacy-problems': 7,        // 7 problems to cycle through
   'technical-challenges': 5,   // 5 challenges to cycle through
-  'product-opportunities': 4,  // 4 opportunities to cycle through
+  'product-opportunities': 6,  // 6 opportunities to cycle through
   'transformation-goals': 1,
   'elc-reimagination': 1,
   'transformation-metrics': 1,
@@ -207,8 +207,130 @@ const slideVariants = {
   }),
 };
 
+// Pre-slide Launcher Component
+function LauncherScreen({
+  title,
+  onStartWindowed,
+  onStartFullscreen
+}: {
+  title: string;
+  onStartWindowed: () => void;
+  onStartFullscreen: () => void;
+}) {
+  return (
+    <div className="w-screen h-screen overflow-hidden bg-[var(--bg-primary)] flex flex-col items-center justify-center relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+        <motion.div
+          initial={{ scale: 0, opacity: 0, rotate: -180 }}
+          animate={{ scale: 1, opacity: 0.1, rotate: 0 }}
+          transition={{ duration: 1.2, ease: [0.25, 0.4, 0.25, 1] }}
+          className="w-[800px] h-[800px] rounded-full border border-[var(--accent-gold)]/30"
+        />
+        <motion.div
+          initial={{ scale: 0, opacity: 0, rotate: 180 }}
+          animate={{ scale: 1, opacity: 0.15, rotate: 0 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
+          className="absolute w-[500px] h-[500px] rounded-full border border-[var(--accent-cyan)]/20"
+        />
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.1 }}
+          transition={{ duration: 1.2, delay: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
+          className="absolute w-[300px] h-[300px] rounded-full bg-gradient-to-br from-[var(--accent-gold)]/10 to-[var(--accent-cyan)]/10 blur-2xl"
+        />
+      </div>
+
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="relative z-10 text-center"
+      >
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-4xl md:text-6xl font-bold text-white mb-4"
+        >
+          {title}
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="text-lg text-[var(--text-muted)] mb-12"
+        >
+          Choose how you want to view this presentation
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.9 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          {/* Windowed Mode Button */}
+          <button
+            onClick={onStartWindowed}
+            className="group flex items-center gap-3 px-8 py-4 rounded-xl bg-gray-800/80 border border-gray-700 hover:border-[var(--accent-cyan)] hover:bg-gray-800 transition-all duration-300"
+          >
+            <svg className="w-6 h-6 text-[var(--accent-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 9h16" />
+            </svg>
+            <div className="text-left">
+              <p className="text-white font-semibold">Windowed Mode</p>
+              <p className="text-sm text-gray-400">View in browser window</p>
+            </div>
+          </button>
+
+          {/* Fullscreen Mode Button */}
+          <button
+            onClick={onStartFullscreen}
+            className="group flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[var(--accent-cyan)]/20 to-[var(--accent-gold)]/20 border border-[var(--accent-gold)]/50 hover:border-[var(--accent-gold)] hover:from-[var(--accent-cyan)]/30 hover:to-[var(--accent-gold)]/30 transition-all duration-300"
+          >
+            <svg className="w-6 h-6 text-[var(--accent-gold)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+            <div className="text-left">
+              <p className="text-white font-semibold">Full Screen</p>
+              <p className="text-sm text-gray-400">Immersive presentation</p>
+            </div>
+          </button>
+        </motion.div>
+
+        {/* Keyboard hints */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
+          className="mt-12 flex items-center justify-center gap-6 text-sm text-gray-500"
+        >
+          <span className="flex items-center gap-2">
+            <kbd className="px-2 py-1 rounded bg-gray-800 text-gray-400 text-xs">←</kbd>
+            <kbd className="px-2 py-1 rounded bg-gray-800 text-gray-400 text-xs">→</kbd>
+            <span>Navigate</span>
+          </span>
+          <span className="flex items-center gap-2">
+            <kbd className="px-2 py-1 rounded bg-gray-800 text-gray-400 text-xs">Space</kbd>
+            <span>Next</span>
+          </span>
+          <span className="flex items-center gap-2">
+            <kbd className="px-2 py-1 rounded bg-gray-800 text-gray-400 text-xs">F</kbd>
+            <span>Toggle Fullscreen</span>
+          </span>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+
 // Main App Component
 export default function StandaloneApp() {
+  const [hasStarted, setHasStarted] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentPhase, setCurrentPhase] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -254,8 +376,25 @@ export default function StandaloneApp() {
     }
   }, []);
 
-  // Keyboard navigation
+  // Start presentation handlers
+  const startWindowed = useCallback(() => {
+    setHasStarted(true);
+  }, []);
+
+  const startFullscreen = useCallback(() => {
+    document.documentElement.requestFullscreen().then(() => {
+      setIsFullscreen(true);
+      setHasStarted(true);
+    }).catch(() => {
+      // If fullscreen fails, start in windowed mode
+      setHasStarted(true);
+    });
+  }, []);
+
+  // Keyboard navigation - only active after presentation starts
   useEffect(() => {
+    if (!hasStarted) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
         case 'ArrowRight':
@@ -287,7 +426,7 @@ export default function StandaloneApp() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [next, prev, toggleFullscreen, slides.length]);
+  }, [hasStarted, next, prev, toggleFullscreen, slides.length]);
 
   // Fullscreen change listener
   useEffect(() => {
@@ -298,9 +437,9 @@ export default function StandaloneApp() {
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
 
-  // Auto-play functionality - simulates space key to trigger all animations
+  // Auto-play functionality - directly calls next() at the selected interval
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (!isAutoPlaying || !hasStarted) return;
 
     const isAtEnd = currentSlide === slides.length - 1 && currentPhase === totalPhases - 1;
     if (isAtEnd) {
@@ -309,21 +448,26 @@ export default function StandaloneApp() {
     }
 
     const timer = setTimeout(() => {
-      // Simulate space key press to trigger all animations
-      const event = new KeyboardEvent('keydown', {
-        key: ' ',
-        code: 'Space',
-        bubbles: true,
-      });
-      window.dispatchEvent(event);
+      next();
     }, autoPlayInterval * 1000);
 
     return () => clearTimeout(timer);
-  }, [isAutoPlaying, autoPlayInterval, currentSlide, currentPhase, totalPhases, slides.length]);
+  }, [isAutoPlaying, hasStarted, autoPlayInterval, currentSlide, currentPhase, totalPhases, slides.length, next]);
 
   const toggleAutoPlay = useCallback(() => {
     setIsAutoPlaying(prev => !prev);
   }, []);
+
+  // Show launcher screen if presentation hasn't started
+  if (!hasStarted) {
+    return (
+      <LauncherScreen
+        title={demo.title}
+        onStartWindowed={startWindowed}
+        onStartFullscreen={startFullscreen}
+      />
+    );
+  }
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-[var(--bg-primary)] relative">

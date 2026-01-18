@@ -4,10 +4,10 @@ import { Demo } from '@/types/demo';
 
 // Phase counts for interactive visualizations
 const VISUALIZATION_PHASE_COUNTS: Record<string, number> = {
-  'module-consolidation': 5,
-  'legacy-problems': 5,        // 5 problems to cycle through
+  'module-consolidation': 6,
+  'legacy-problems': 7,        // 7 problems to cycle through
   'technical-challenges': 5,   // 5 challenges to cycle through
-  'product-opportunities': 4,  // 4 opportunities to cycle through
+  'product-opportunities': 6,  // 6 opportunities to cycle through
   'transformation-goals': 1,
   'elc-reimagination': 1,
   'transformation-metrics': 1,
@@ -58,8 +58,14 @@ export const usePresentationStore = create<PresentationState>()(
       isFullscreen: false,
       navigationKey: 0,
 
-      setDemo: (demo) =>
-        set({ currentDemo: demo, currentSlideIndex: 0, currentPhase: 0, isPlaying: false, navigationKey: 0 }),
+      setDemo: (demo) => {
+        // Filter out hidden slides and re-index orders
+        const visibleSlides = demo.slides
+          .filter(slide => !slide.hidden)
+          .map((slide, index) => ({ ...slide, order: index }));
+        const filteredDemo = { ...demo, slides: visibleSlides };
+        set({ currentDemo: filteredDemo, currentSlideIndex: 0, currentPhase: 0, isPlaying: false, navigationKey: 0 });
+      },
 
       nextSlide: () => {
         const { currentDemo, currentSlideIndex, currentPhase, isPlaying, navigationKey } = get();
