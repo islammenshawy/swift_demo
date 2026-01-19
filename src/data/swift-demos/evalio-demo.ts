@@ -20,8 +20,17 @@ export const evalioDemo: Demo = {
       animation: { entry: 'scale', duration: 0.6, delay: 0 },
     },
     {
-      id: 'slide-2',
+      id: 'slide-1b',
       order: 1,
+      type: 'interactive',
+      content: {
+        visualization: 'engineering-score-journey',
+      },
+      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+    },
+    {
+      id: 'slide-2',
+      order: 2,
       type: 'interactive',
       content: {
         visualization: 'problem-visual',
@@ -175,11 +184,9 @@ export const evalioDemo: Demo = {
       order: 12,
       type: 'title',
       content: {
-        title: "Let's See It In Action",
-        subtitle: 'Live Demo: evalio.islam-org.work',
-        text: 'Objective performance evaluation starts here',
+        title: 'Demo Time',
       },
-      animation: { entry: 'scale', duration: 0.6, delay: 0 },
+      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
   ],
 };

@@ -35,7 +35,8 @@ export type VisualizationType =
   | 'trade-architecture'
   | 'module-consolidation'
   | 'elc-architecture'
-  | 'elc-integration-patterns';
+  | 'elc-integration-patterns'
+  | 'engineering-score-journey';
 
 export type ChartType = 'bar' | 'line' | 'pie' | 'donut';
 

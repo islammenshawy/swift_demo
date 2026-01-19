@@ -12,6 +12,7 @@ const VISUALIZATION_PHASE_COUNTS: Record<string, number> = {
   'elc-reimagination': 1,
   'transformation-metrics': 1,
   'trade-architecture': 1,
+  'engineering-score-journey': 5, // 5 phases: 0=question, 1=metrics, 2=types, 3=levels, 4=fair
 };
 
 function getPhaseCount(demo: Demo | null, slideIndex: number): number {

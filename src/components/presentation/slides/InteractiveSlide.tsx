@@ -499,6 +499,498 @@ function MemoryTrain() {
   );
 }
 
+// Engineering Score Journey - Shows metrics, types, levels, and fairness considerations
+function EngineeringScoreJourney() {
+  const { forcePhase } = React.useContext(CaptureContext);
+
+  // Use forcePhase from store (navigation handled by PresentationContainer)
+  const phase = forcePhase !== undefined ? forcePhase : 0;
+
+  // Selected level for highlighting in Phase 3
+  const [selectedLevel, setSelectedLevel] = useState<number>(0);
+  const levels = ['Junior', 'Mid', 'Senior', 'Lead'];
+
+  // The 5 metric groups with their granular metrics
+  const metricGroups = [
+    {
+      name: 'Delivery',
+      icon: '🚀',
+      color: '#4ECDC4',
+      metrics: [
+        { name: 'Story Points', type: 'Q' },
+        { name: 'Churn', type: 'Q' },
+        { name: 'Say/Do Ratio', type: 'Q' },
+        { name: 'Change Failure Rate', type: 'Q' },
+        { name: 'Time to Prod', type: 'Q' },
+        { name: 'Wall-building', type: 'O' },
+      ],
+    },
+    {
+      name: 'Reliability',
+      icon: '🛡️',
+      color: '#6495ED',
+      metrics: [
+        { name: 'Defect Closure Rate', type: 'Q' },
+        { name: 'Commitment Index', type: 'Q' },
+        { name: 'Timely Escalation', type: 'O' },
+        { name: 'Incidents Resolved', type: 'Q' },
+      ],
+    },
+    {
+      name: 'Quality',
+      icon: '✨',
+      color: '#C9A227',
+      metrics: [
+        { name: 'Defect Rate', type: 'Q' },
+        { name: 'Defect Leakage', type: 'Q' },
+        { name: 'Code Grade', type: 'O' },
+        { name: 'Test Coverage', type: 'Q' },
+      ],
+    },
+    {
+      name: 'Collaboration',
+      icon: '🤝',
+      color: '#A855F7',
+      metrics: [
+        { name: 'PR Reviews', type: 'Q' },
+        { name: 'Unplanned Work', type: 'Q' },
+        { name: 'Cross-team Help', type: 'O' },
+        { name: 'Knowledge Sharing', type: 'O' },
+      ],
+    },
+    {
+      name: 'Efficiency',
+      icon: '⚡',
+      color: '#F59E0B',
+      metrics: [
+        { name: 'AI Usage Score', type: 'Q' },
+        { name: 'Automation Index', type: 'Q' },
+        { name: 'Commit Frequency', type: 'Q' },
+        { name: 'Tool Adoption', type: 'O' },
+      ],
+    },
+  ];
+
+  // Cycle through selected levels in Phase 3
+  useEffect(() => {
+    if (phase === 3) {
+      const interval = setInterval(() => {
+        setSelectedLevel(prev => (prev + 1) % levels.length);
+      }, 1500);
+      return () => clearInterval(interval);
+    }
+  }, [phase, levels.length]);
+
+  return (
+    <div className="w-full h-full relative overflow-hidden">
+      {/* Opening Question - Phase 0 */}
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: phase === 0 ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
+        style={{ pointerEvents: phase === 0 ? 'auto' : 'none' }}
+      >
+        <div className="text-center">
+          <motion.p
+            className="text-4xl md:text-5xl text-[var(--text-primary)] font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            How do we score
+          </motion.p>
+          <motion.p
+            className="text-5xl md:text-6xl text-[var(--accent-cyan)] font-bold mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            engineering performance?
+          </motion.p>
+        </div>
+      </motion.div>
+
+      {/* Phase 1 & 2: Metrics with equation */}
+      <motion.div
+        className="absolute inset-0 flex flex-col"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: phase >= 1 && phase < 3 ? 1 : 0 }}
+        transition={{ duration: 0.4 }}
+        style={{ pointerEvents: phase >= 1 && phase < 3 ? 'auto' : 'none' }}
+      >
+        {/* Title */}
+        <div className="text-center pt-12 pb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">
+            {phase === 1 && "Too Many Metrics..."}
+            {phase === 2 && "Different Types of Data"}
+          </h2>
+        </div>
+
+        {/* Type indicators for Phase 2 */}
+        {phase === 2 && (
+          <motion.div
+            className="flex justify-center gap-10 py-4"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#4ECDC4]/10 border border-[#4ECDC4]/40">
+              <span className="text-2xl">📊</span>
+              <span className="text-base font-bold text-[#4ECDC4]">Quantitative</span>
+              <span className="text-sm text-[var(--text-muted)]">· data</span>
+            </div>
+            <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#F59E0B]/10 border border-[#F59E0B]/40">
+              <span className="text-2xl">💬</span>
+              <span className="text-base font-bold text-[#F59E0B]">Objective</span>
+              <span className="text-sm text-[var(--text-muted)]">· feedback</span>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Metric groups */}
+        <div className="flex-1 flex items-center justify-center px-8">
+          <div className="flex gap-8 items-start justify-center">
+            {metricGroups.map((group, groupIdx) => (
+              <motion.div
+                key={group.name}
+                className="flex flex-col items-center"
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ delay: 0.1 + groupIdx * 0.08, type: 'spring', stiffness: 200 }}
+              >
+                <motion.div
+                  className="w-20 h-20 rounded-full flex flex-col items-center justify-center mb-3"
+                  style={{
+                    backgroundColor: `${group.color}20`,
+                    borderWidth: 3,
+                    borderColor: group.color,
+                  }}
+                  animate={{ scale: phase === 1 ? [1, 1.05, 1] : 1 }}
+                  transition={{ duration: 1.5, repeat: Infinity, delay: groupIdx * 0.1 }}
+                >
+                  <span className="text-2xl">{group.icon}</span>
+                  <span className="text-[10px] font-bold" style={{ color: group.color }}>
+                    {group.name}
+                  </span>
+                </motion.div>
+                <div className="flex flex-col gap-1">
+                  {group.metrics.map((metric, metricIdx) => (
+                    <motion.div
+                      key={metric.name}
+                      className="px-3 py-1 rounded-full text-xs font-medium text-center whitespace-nowrap"
+                      style={{
+                        backgroundColor: phase >= 2
+                          ? (metric.type === 'Q' ? 'rgba(78, 205, 196, 0.15)' : 'rgba(245, 158, 11, 0.15)')
+                          : `${group.color}15`,
+                        borderWidth: 1,
+                        borderColor: phase >= 2
+                          ? (metric.type === 'Q' ? '#4ECDC480' : '#F59E0B80')
+                          : `${group.color}50`,
+                        color: phase >= 2
+                          ? (metric.type === 'Q' ? '#4ECDC4' : '#F59E0B')
+                          : group.color,
+                      }}
+                      initial={{ opacity: 0, x: -5 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 + groupIdx * 0.06 + metricIdx * 0.03 }}
+                    >
+                      {metric.name}
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Equation at bottom */}
+        <motion.div
+          className="flex items-center justify-center gap-2 pb-20"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+        >
+          {metricGroups.map((group, i) => (
+            <React.Fragment key={group.name}>
+              <motion.span
+                className="px-3 py-1 rounded text-sm font-bold"
+                style={{ backgroundColor: `${group.color}20`, color: group.color }}
+                animate={{ scale: [1, 1.03, 1] }}
+                transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.1 }}
+              >
+                {group.name}
+              </motion.span>
+              {i < metricGroups.length - 1 && (
+                <span className="text-base text-[var(--text-muted)]">+</span>
+              )}
+            </React.Fragment>
+          ))}
+          <span className="text-base text-[var(--text-muted)] mx-2">→</span>
+          <span className="px-3 py-1 rounded text-sm font-bold bg-gradient-to-r from-[#4ECDC4]/20 to-[#C9A227]/20 text-[var(--text-primary)]">
+            Weighted Score
+          </span>
+        </motion.div>
+      </motion.div>
+
+      {/* Phase 3: Level comparison bar charts with legend */}
+      <motion.div
+        className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--bg-primary)]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: phase === 3 ? 1 : 0 }}
+        transition={{ duration: 0.4 }}
+        style={{ pointerEvents: phase === 3 ? 'auto' : 'none' }}
+      >
+        <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
+          Different Levels, Different Averages
+        </h2>
+        <p className="text-lg text-[var(--text-muted)] mb-6">
+          Average metrics vary significantly by level
+        </p>
+
+        {/* Level Legend - clickable to highlight */}
+        <div className="flex gap-6 mb-8">
+          {[
+            { level: 'Junior', short: 'Jr', color: '#22c55e' },
+            { level: 'Mid', short: 'Mid', color: '#3b82f6' },
+            { level: 'Senior', short: 'Sr', color: '#a855f7' },
+            { level: 'Lead', short: 'Lead', color: '#f59e0b' },
+          ].map((item, i) => (
+            <motion.button
+              key={item.level}
+              className="flex items-center gap-2 px-4 py-2 rounded-full transition-all"
+              style={{
+                backgroundColor: selectedLevel === i ? `${item.color}30` : 'transparent',
+                borderWidth: 2,
+                borderColor: selectedLevel === i ? item.color : 'transparent',
+              }}
+              onClick={(e) => { e.stopPropagation(); setSelectedLevel(i); }}
+              animate={{ scale: selectedLevel === i ? 1.05 : 1 }}
+            >
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
+              <span className="text-sm font-medium" style={{ color: selectedLevel === i ? item.color : 'var(--text-muted)' }}>
+                {item.level}
+              </span>
+            </motion.button>
+          ))}
+        </div>
+
+        <div className="flex gap-16">
+          {[
+            { metric: 'Code Commits/week', values: [12, 18, 8, 4] },
+            { metric: 'PR Reviews/week', values: [3, 8, 15, 20] },
+            { metric: 'Story Points/sprint', values: [8, 13, 10, 5] },
+          ].map((item, idx) => (
+            <motion.div
+              key={item.metric}
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 + idx * 0.15 }}
+            >
+              <p className="text-base font-medium text-[var(--text-secondary)] mb-4">{item.metric}</p>
+              <div className="flex gap-3 items-end h-44">
+                {[
+                  { color: '#22c55e' },
+                  { color: '#3b82f6' },
+                  { color: '#a855f7' },
+                  { color: '#f59e0b' },
+                ].map((bar, i) => {
+                  const value = item.values[i];
+                  const isSelected = selectedLevel === i;
+                  return (
+                    <div key={i} className="flex flex-col items-center w-12">
+                      <motion.span
+                        className="text-sm font-bold mb-1"
+                        style={{ color: bar.color }}
+                        animate={{ scale: isSelected ? 1.2 : 1, opacity: isSelected ? 1 : 0.6 }}
+                      >
+                        {value}
+                      </motion.span>
+                      <motion.div
+                        className="w-full rounded-t transition-all"
+                        style={{ backgroundColor: bar.color }}
+                        initial={{ height: 0 }}
+                        animate={{
+                          height: (value / 20) * 140,
+                          opacity: isSelected ? 1 : 0.4,
+                          scale: isSelected ? 1.05 : 1,
+                        }}
+                        transition={{ delay: 0.3 + idx * 0.1 + i * 0.08, duration: 0.5, ease: 'easeOut' }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Highlight insight for selected level */}
+              <motion.div
+                className="mt-3 text-xs px-2 py-1 rounded"
+                style={{ backgroundColor: `${['#22c55e', '#3b82f6', '#a855f7', '#f59e0b'][selectedLevel]}15` }}
+                animate={{ opacity: 1 }}
+              >
+                <span style={{ color: ['#22c55e', '#3b82f6', '#a855f7', '#f59e0b'][selectedLevel] }}>
+                  {levels[selectedLevel]}: {item.values[selectedLevel]}
+                </span>
+              </motion.div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          className="mt-8 px-8 py-4 rounded-lg bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/30"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <p className="text-base text-[var(--accent-gold)]">
+            💡 {selectedLevel === 0 && "Juniors focus on code output — high commits, fewer reviews"}
+            {selectedLevel === 1 && "Mid-level engineers balance coding with collaboration"}
+            {selectedLevel === 2 && "Seniors review more PRs but commit less — mentoring focus"}
+            {selectedLevel === 3 && "Leads focus on unblocking others — lowest individual output, highest impact"}
+          </p>
+        </motion.div>
+      </motion.div>
+
+      {/* Phase 4: Fair comparison */}
+      <motion.div
+        className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--bg-primary)]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: phase === 4 ? 1 : 0 }}
+        transition={{ duration: 0.4 }}
+        style={{ pointerEvents: phase === 4 ? 'auto' : 'none' }}
+      >
+        <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-10">
+          Fair = Same Level Comparison
+        </h2>
+
+        <div className="flex gap-20 items-center">
+          <div className="text-center">
+            <motion.div
+              className="text-8xl mb-8"
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              ⚖️
+            </motion.div>
+
+            <motion.div
+              className="flex items-center gap-5 mb-6"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="w-20 h-20 rounded-full bg-purple-500/20 border-3 border-purple-500 flex items-center justify-center">
+                <span className="text-purple-400 font-bold text-base">Senior</span>
+              </div>
+              <span className="text-green-400 font-bold text-2xl">vs</span>
+              <div className="w-20 h-20 rounded-full bg-purple-500/20 border-3 border-purple-500 flex items-center justify-center">
+                <span className="text-purple-400 font-bold text-base">Senior</span>
+              </div>
+              <motion.span
+                className="text-5xl text-green-400"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.4, type: 'spring' }}
+              >
+                ✓
+              </motion.span>
+            </motion.div>
+
+            <motion.div
+              className="flex items-center gap-5 opacity-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              transition={{ delay: 0.5 }}
+            >
+              <div className="w-14 h-14 rounded-full bg-green-500/20 border-2 border-green-500 flex items-center justify-center">
+                <span className="text-green-400 font-bold text-sm">Junior</span>
+              </div>
+              <span className="text-red-400 text-lg line-through">vs</span>
+              <div className="w-14 h-14 rounded-full bg-purple-500/20 border-2 border-purple-500 flex items-center justify-center">
+                <span className="text-purple-400 font-bold text-sm">Senior</span>
+              </div>
+              <span className="text-3xl text-red-400">✗</span>
+            </motion.div>
+          </div>
+
+          <motion.div
+            className="bg-[var(--bg-secondary)] rounded-2xl p-8 border border-[var(--bg-tertiary)]"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <p className="text-base text-[var(--text-muted)] mb-6">Percentile within Senior peers</p>
+            <div className="space-y-4 w-80">
+              {[
+                { name: 'Alice', percentile: 92, highlight: true },
+                { name: 'Bob', percentile: 78, highlight: false },
+                { name: 'Carol', percentile: 65, highlight: false },
+                { name: 'Dave', percentile: 45, highlight: false },
+              ].map((person, i) => (
+                <motion.div
+                  key={person.name}
+                  className="flex items-center gap-4"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7 + i * 0.1 }}
+                >
+                  <span className="text-base text-[var(--text-muted)] w-14">{person.name}</span>
+                  <div className="flex-1 h-5 bg-[var(--bg-tertiary)] rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full rounded-full"
+                      style={{ backgroundColor: person.highlight ? '#22c55e' : '#a855f7' }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${person.percentile}%` }}
+                      transition={{ delay: 0.8 + i * 0.1, duration: 0.3 }}
+                    />
+                  </div>
+                  <span className="text-base font-bold w-12" style={{ color: person.highlight ? '#22c55e' : '#a855f7' }}>
+                    {person.percentile}%
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+            <motion.p
+              className="text-base text-green-400 mt-6 text-center font-medium"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+            >
+              ✨ Top 10% among Senior engineers
+            </motion.p>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* Bottom phase indicators - always visible */}
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4 text-[10px]">
+        {[
+          { n: 1, label: 'Metrics', color: '#4ECDC4' },
+          { n: 2, label: 'Types', color: '#F59E0B' },
+          { n: 3, label: 'Levels', color: '#a855f7' },
+          { n: 4, label: 'Fair', color: '#22c55e' },
+        ].map((item) => (
+          <motion.div
+            key={item.n}
+            className="flex items-center gap-1.5 px-2 py-1 rounded-full"
+            style={{ backgroundColor: phase === item.n ? `${item.color}15` : 'transparent' }}
+            animate={{ opacity: phase >= item.n ? 1 : 0.4 }}
+          >
+            <motion.div
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: phase >= item.n ? item.color : 'var(--bg-tertiary)' }}
+              animate={{ scale: phase === item.n ? [1, 1.3, 1] : 1 }}
+              transition={{ duration: 0.6 }}
+            />
+            <span style={{ color: phase >= item.n ? item.color : 'var(--text-muted)' }}>
+              {item.label}
+            </span>
+          </motion.div>
+        ))}
+        <span className="text-[9px] text-[var(--text-muted)] ml-2 self-center">(Space/→ to advance)</span>
+      </div>
+    </div>
+  );
+}
+
 // Score Calculation Visualization - Shows multi-framework scoring
 function ScoreCalculation() {
   const [phase, setPhase] = useState(0);
@@ -984,6 +1476,7 @@ function LevelWeights() {
 function PromotionPipeline() {
   const [phase, setPhase] = useState(0);
   const [selectedCandidate, setSelectedCandidate] = useState<number | null>(null);
+  const [animationComplete, setAnimationComplete] = useState(false);
 
   const candidates = [
     { name: 'Alex Chen', score: 4.5, level: 'Associate', yearsInRole: 2.5, status: 'ready', avatar: '👨‍💻' },
@@ -1000,14 +1493,19 @@ function PromotionPipeline() {
   ];
 
   useEffect(() => {
+    if (animationComplete) return;
+
     const timers = [
       setTimeout(() => setPhase(1), 500),
       setTimeout(() => setPhase(2), 2000),
       setTimeout(() => setPhase(3), 3500),
-      setTimeout(() => setPhase(4), 5000),
+      setTimeout(() => {
+        setPhase(4);
+        setAnimationComplete(true);
+      }, 5000),
     ];
     return () => timers.forEach(clearTimeout);
-  }, []);
+  }, [animationComplete]);
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-8">
@@ -1016,7 +1514,7 @@ function PromotionPipeline() {
         animate={{ opacity: 1, y: 0 }}
         className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-2"
       >
-        Promotion Pipeline
+        Promo Readiness Pipeline
       </motion.h2>
       <motion.p
         initial={{ opacity: 0 }}
@@ -1178,30 +1676,30 @@ function FeatureShowcase() {
   const features = [
     {
       icon: '📊',
-      title: 'Real-time Dashboards',
-      description: 'Organization and team views with live metrics',
+      title: 'Metrics Management Dashboard',
+      description: 'Organization and team views with live performance metrics',
       visual: 'dashboard',
       color: '#4ECDC4',
+    },
+    {
+      icon: '⚙️',
+      title: 'Flexible Metrics Creation',
+      description: 'Create and customize metrics on the fly to match your needs',
+      visual: 'metrics-builder',
+      color: '#6495ED',
+    },
+    {
+      icon: '🔄',
+      title: 'Automated Rescoring',
+      description: 'Scores update automatically as new data flows in',
+      visual: 'rescore',
+      color: '#FFD700',
     },
     {
       icon: '👤',
       title: 'Employee Profiles',
       description: 'Radar charts, trends, and performance history',
       visual: 'profile',
-      color: '#6495ED',
-    },
-    {
-      icon: '📥',
-      title: 'Bulk Data Import',
-      description: 'AI-powered field mapping for seamless migration',
-      visual: 'import',
-      color: '#FFD700',
-    },
-    {
-      icon: '🔐',
-      title: 'Role-Based Access',
-      description: 'Granular permissions for sensitive data',
-      visual: 'security',
       color: '#C9A227',
     },
     {
@@ -1211,6 +1709,20 @@ function FeatureShowcase() {
       visual: 'api',
       color: '#4ECDC4',
     },
+    {
+      icon: '🧠',
+      title: 'Performance Evaluation Sessions',
+      description: 'LLM-powered insights to guide manager discussions',
+      visual: 'llm-session',
+      color: '#A855F7',
+    },
+    {
+      icon: '💬',
+      title: 'LLM-Powered 360° Feedback Scoring',
+      description: 'AI analyzes employee feedback for objective scoring',
+      visual: 'feedback-360',
+      color: '#22c55e',
+    },
   ];
 
   useEffect(() => {
@@ -1218,18 +1730,9 @@ function FeatureShowcase() {
     setTimeout(() => setPhase(2), 1500);
   }, []);
 
-  useEffect(() => {
-    if (phase >= 2) {
-      const interval = setInterval(() => {
-        setActiveFeature((prev) => (prev + 1) % features.length);
-      }, 3000);
-      return () => clearInterval(interval);
-    }
-  }, [phase]);
-
   const currentFeature = features[activeFeature];
 
-  // Mini visualizations for each feature
+  // Mini visualizations for each feature - unique animations, no repeating
   const renderVisual = (type: string) => {
     switch (type) {
       case 'dashboard':
@@ -1247,6 +1750,62 @@ function FeatureShowcase() {
             ))}
           </div>
         );
+      case 'metrics-builder':
+        return (
+          <div className="flex flex-col items-center justify-center h-full gap-3">
+            {['Delivery', 'Quality', 'Collaboration'].map((metric, i) => (
+              <motion.div
+                key={metric}
+                initial={{ opacity: 0, scale: 0.8, x: -20 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.2 }}
+                className="flex items-center gap-2 px-3 py-2 bg-[#6495ED]/20 border border-[#6495ED]/50 rounded-lg"
+              >
+                <span className="text-[#6495ED] text-sm">+ {metric}</span>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: 60 }}
+                  transition={{ duration: 0.5, delay: 0.3 + i * 0.2 }}
+                  className="h-2 bg-[#6495ED] rounded"
+                />
+              </motion.div>
+            ))}
+          </div>
+        );
+      case 'rescore':
+        return (
+          <div className="flex flex-col items-center justify-center h-full gap-4">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="text-5xl"
+            >
+              🔄
+            </motion.div>
+            <div className="flex gap-2">
+              {[3.2, 3.8, 4.2].map((score, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.5 + i * 0.3 }}
+                  className="px-3 py-1 rounded bg-[#FFD700]/20 border border-[#FFD700]/50"
+                >
+                  <span className="text-[#FFD700] font-bold">{score}</span>
+                </motion.div>
+              ))}
+            </div>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5 }}
+              className="text-xs text-[var(--text-muted)]"
+            >
+              Auto-updated daily
+            </motion.span>
+          </div>
+        );
       case 'profile':
         return (
           <div className="flex items-center justify-center h-full">
@@ -1254,62 +1813,102 @@ function FeatureShowcase() {
               <motion.polygon
                 points="50,10 90,35 90,75 50,100 10,75 10,35"
                 fill="none"
-                stroke="#4ECDC420"
+                stroke="#C9A22740"
                 strokeWidth="2"
               />
               <motion.polygon
                 initial={{ points: '50,50 50,50 50,50 50,50 50,50 50,50' }}
                 animate={{ points: '50,25 75,40 75,70 50,85 25,70 25,40' }}
                 transition={{ duration: 1 }}
-                fill="#4ECDC430"
-                stroke="#4ECDC4"
+                fill="#C9A22730"
+                stroke="#C9A227"
                 strokeWidth="2"
               />
             </svg>
           </div>
         );
-      case 'import':
+      case 'api':
         return (
-          <div className="flex flex-col items-center justify-center h-full gap-2">
-            {[0, 1, 2].map((i) => (
+          <div className="flex items-center justify-center h-full gap-3">
+            {['JIRA', 'GitHub', 'HR'].map((system, i) => (
               <motion.div
-                key={i}
-                initial={{ x: -50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: i * 0.2, repeat: Infinity, repeatDelay: 2 }}
-                className="flex items-center gap-2"
+                key={system}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: i * 0.2 }}
+                className="flex flex-col items-center"
               >
-                <div className="w-16 h-2 bg-[var(--accent-cyan)]/30 rounded" />
-                <span className="text-[var(--accent-cyan)]">→</span>
-                <div className="w-16 h-2 bg-[var(--accent-cyan)] rounded" />
+                <div className="w-12 h-12 rounded-lg bg-[#4ECDC4]/20 border border-[#4ECDC4]/50 flex items-center justify-center text-xs font-bold text-[#4ECDC4]">
+                  {system}
+                </div>
+                <motion.div
+                  initial={{ height: 0 }}
+                  animate={{ height: 20 }}
+                  transition={{ duration: 0.3, delay: 0.5 + i * 0.1 }}
+                  className="w-0.5 bg-[#4ECDC4]/50"
+                />
               </motion.div>
             ))}
           </div>
         );
-      case 'security':
+      case 'llm-session':
         return (
-          <div className="flex items-center justify-center h-full">
+          <div className="flex flex-col items-center justify-center h-full gap-3">
             <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-20 h-24 bg-[var(--accent-gold)]/20 rounded-t-full rounded-b-lg border-2 border-[var(--accent-gold)] flex items-center justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-2"
             >
-              <span className="text-3xl">🔒</span>
+              <span className="text-3xl">👤</span>
+              <span className="text-[#A855F7]">↔</span>
+              <span className="text-3xl">🧠</span>
             </motion.div>
+            {['Key strengths identified', 'Areas for growth', 'Recommended actions'].map((insight, i) => (
+              <motion.div
+                key={insight}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.5 + i * 0.2 }}
+                className="text-xs px-2 py-1 bg-[#A855F7]/20 border border-[#A855F7]/30 rounded text-[#A855F7]"
+              >
+                ✓ {insight}
+              </motion.div>
+            ))}
           </div>
         );
-      case 'api':
+      case 'feedback-360':
         return (
-          <div className="flex items-center justify-center h-full gap-4">
-            <div className="w-12 h-12 rounded-lg bg-[var(--accent-cyan)]/20 flex items-center justify-center text-xl">📦</div>
+          <div className="flex flex-col items-center justify-center h-full gap-3">
+            <div className="flex gap-2">
+              {['👥', '👤', '👔'].map((icon, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: i * 0.15 }}
+                  className="w-10 h-10 rounded-full bg-[#22c55e]/20 border border-[#22c55e]/50 flex items-center justify-center"
+                >
+                  {icon}
+                </motion.div>
+              ))}
+            </div>
             <motion.div
-              animate={{ x: [0, 5, 0] }}
-              transition={{ duration: 0.5, repeat: Infinity }}
-              className="text-[var(--accent-cyan)]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="text-2xl"
             >
-              ⟷
+              ⬇️
             </motion.div>
-            <div className="w-12 h-12 rounded-lg bg-[var(--accent-cyan)]/20 flex items-center justify-center text-xl">🏢</div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8 }}
+              className="px-4 py-2 bg-[#22c55e]/20 border border-[#22c55e] rounded-lg"
+            >
+              <span className="text-[#22c55e] font-bold">Score: 4.3</span>
+            </motion.div>
           </div>
         );
       default:
@@ -1332,7 +1931,7 @@ function FeatureShowcase() {
         transition={{ delay: 0.3 }}
         className="text-[var(--text-secondary)] mb-8"
       >
-        Everything you need for fair evaluations
+        Flexible metrics management for fair evaluations
       </motion.p>
 
       <div className="w-full max-w-5xl flex gap-8">
@@ -1417,10 +2016,10 @@ function ProblemVisual() {
   const [phase, setPhase] = useState(0);
 
   const bullets = [
-    { icon: '😤', text: '73% of employees believe reviews are biased by manager relationships' },
+    { icon: '😤', text: '74% of employees believe 360-degree reviews are unfair, biased, or inaccurate' },
     { icon: '🎭', text: 'Promotions based on perception, not actual contribution' },
+    { icon: '📋', text: 'Managers lack data and recommendations to navigate performance discussions' },
     { icon: '❓', text: 'No visibility into how scores are calculated' },
-    { icon: '📊', text: 'Manual data gathering from scattered systems' },
     { icon: '🚪', text: 'High performers leave when passed over unfairly' },
   ];
 
@@ -1573,11 +2172,11 @@ function SolutionVisual() {
   const [dataParticles, setDataParticles] = useState<string[]>([]);
 
   const bullets = [
-    { icon: '🔗', text: 'Live data integration from JIRA, GitHub, Confluence' },
-    { icon: '📐', text: 'Multi-framework evaluation: DORA + SPACE + Custom metrics' },
-    { icon: '🤖', text: 'AI-powered analysis eliminates human bias' },
-    { icon: '🔍', text: 'Transparent scoring - employees see the math' },
-    { icon: '⚖️', text: 'Level-adjusted weights: Junior vs Senior expectations differ' },
+    { icon: '🔗', text: 'Objective data from JIRA, GitHub, and Confluence' },
+    { icon: '🔄', text: '360-degree feedback enriched with real work metrics' },
+    { icon: '📊', text: 'Managers get data-driven talking points and recommendations' },
+    { icon: '⚖️', text: 'Fair comparison within same level peers' },
+    { icon: '🔍', text: 'Transparent methodology based on real contributions' },
   ];
 
   useEffect(() => {
@@ -1611,7 +2210,7 @@ function SolutionVisual() {
             className="mb-6"
           >
             <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-2">The Solution</h2>
-            <p className="text-xl text-[var(--text-secondary)]">Evalio: Where work happens, scores follow</p>
+            <p className="text-xl text-[var(--text-secondary)]">Evalio: Objective data fused with 360-degree reviews</p>
           </motion.div>
 
           <div className="space-y-4">
@@ -1812,7 +2411,7 @@ function AICapabilities() {
             className="mb-6"
           >
             <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-2">AI-Powered Intelligence</h2>
-            <p className="text-xl text-[var(--text-secondary)]">Claude analyzes what humans miss</p>
+            <p className="text-xl text-[var(--text-secondary)]">LLM analyzes what humans miss</p>
           </motion.div>
 
           <div className="space-y-4">
@@ -1934,14 +2533,14 @@ function AICapabilities() {
               </svg>
             )}
 
-            {/* Claude badge */}
+            {/* LLM badge */}
             {phase >= 3 && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-4 py-2 bg-gradient-to-r from-[var(--accent-cyan)]/20 to-[var(--accent-gold)]/20 border border-[var(--accent-cyan)] rounded-full"
               >
-                <span className="text-[var(--text-primary)] text-sm font-semibold">Powered by Claude</span>
+                <span className="text-[var(--text-primary)] text-sm font-semibold">Powered by LLM</span>
               </motion.div>
             )}
           </div>
@@ -7627,6 +8226,8 @@ export default function InteractiveSlide({ content, slideId, forcePhase, isCaptu
         return <ProductOpportunities key={uniqueKey} />;
       case 'memory-train':
         return <MemoryTrain key={uniqueKey} />;
+      case 'engineering-score-journey':
+        return <EngineeringScoreJourney key={uniqueKey} />;
       case 'score-calculation':
         return <ScoreCalculation key={uniqueKey} />;
       case 'level-weights':

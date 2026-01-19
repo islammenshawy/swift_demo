@@ -237,6 +237,55 @@ export function ELCIntegrationPatterns() {
             <path d="M298,227 L298,210" fill="none" stroke="#4ECDC4" strokeWidth="1" strokeDasharray="2,2" />
             <path d="M368,227 L368,210" fill="none" stroke="#4ECDC4" strokeWidth="1" strokeDasharray="2,2" />
 
+            {/* ===== EXTERNAL LLM - Outside ELC Platform, bottom left ===== */}
+            <motion.g
+              animate={{ opacity: activePhase === 1 || activePhase === 4 ? 1 : 0.6 }}
+            >
+              {/* External LLM Box */}
+              <motion.rect
+                x="95" y="345" width="75" height="38" rx="6"
+                fill="#A855F7"
+                fillOpacity="0.15"
+                stroke="#A855F7"
+                strokeWidth="2"
+                animate={{
+                  strokeOpacity: [0.6, 1, 0.6],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              {/* Brain/AI icon animation */}
+              <motion.g transform="translate(100, 350)">
+                <motion.circle
+                  cx="12" cy="12" r="10"
+                  fill="none"
+                  stroke="#A855F7"
+                  strokeWidth="1.5"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                />
+                {/* Neural network dots */}
+                <motion.circle cx="8" cy="9" r="2" fill="#A855F7" animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 0.8, repeat: Infinity, delay: 0 }} />
+                <motion.circle cx="16" cy="9" r="2" fill="#A855F7" animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 0.8, repeat: Infinity, delay: 0.2 }} />
+                <motion.circle cx="12" cy="16" r="2" fill="#A855F7" animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 0.8, repeat: Infinity, delay: 0.4 }} />
+                {/* Connection lines between dots */}
+                <path d="M8,9 L16,9 M12,9 L12,16 M8,9 L12,16 M16,9 L12,16" stroke="#A855F7" strokeWidth="0.8" opacity="0.5" />
+              </motion.g>
+              <text x="145" y="361" textAnchor="middle" fill="#A855F7" fontSize="7" fontWeight="700">External</text>
+              <text x="145" y="373" textAnchor="middle" fill="#A855F7" fontSize="8" fontWeight="800">LLM</text>
+
+              {/* Arrow from ELC App down to External LLM */}
+              <motion.path
+                d="M128,241 L110,241 L110,330 L132,330 L132,345"
+                fill="none"
+                stroke="#A855F7"
+                strokeWidth="1.5"
+                strokeDasharray="4,2"
+                markerEnd="url(#arrow-purple)"
+                animate={{ strokeDashoffset: [0, -12] }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              />
+            </motion.g>
+
             {/* ===== DATABASES ROW ===== */}
 
             {/* DB Group Box - CDC connects here */}

@@ -53,15 +53,13 @@ export function ELCArchitecture() {
     setPanPosition({ x: 0, y: 0 });
   }, []);
 
-  // Mouse wheel zoom
+  // Mouse wheel zoom - scroll up to zoom in, scroll down to zoom out
   const handleWheel = useCallback((e: React.WheelEvent) => {
-    if (e.ctrlKey || e.metaKey) {
-      e.preventDefault();
-      if (e.deltaY < 0) {
-        handleZoomIn();
-      } else {
-        handleZoomOut();
-      }
+    e.preventDefault();
+    if (e.deltaY < 0) {
+      handleZoomIn();
+    } else {
+      handleZoomOut();
     }
   }, [handleZoomIn, handleZoomOut]);
 
