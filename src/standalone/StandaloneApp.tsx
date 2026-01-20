@@ -33,7 +33,7 @@ declare global {
 // Phase counts for visualizations
 const PHASE_COUNTS: Record<string, number> = {
   'module-consolidation': 6,   // 6 phases for the consolidation animation
-  'legacy-problems': 7,        // 7 problems to cycle through
+  'legacy-problems': 8,        // 8 problems to cycle through
   'technical-challenges': 5,   // 5 challenges to cycle through
   'product-opportunities': 6,  // 6 opportunities to cycle through
   'transformation-goals': 1,

@@ -20,8 +20,17 @@ export const tradeReimaginedDemo: Demo = {
       animation: { entry: 'scale', duration: 0.6, delay: 0 },
     },
     {
-      id: 'slide-2',
+      id: 'slide-1b',
       order: 1,
+      type: 'interactive',
+      content: {
+        visualization: 'journey-overview',
+      },
+      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+    },
+    {
+      id: 'slide-2',
+      order: 2,
       type: 'interactive',
       content: {
         visualization: 'legacy-problems',
@@ -95,8 +104,17 @@ export const tradeReimaginedDemo: Demo = {
       animation: { entry: 'fadeIn', duration: 0.2, delay: 0 },
     },
     {
-      id: 'slide-9',
+      id: 'slide-8b',
       order: 8,
+      type: 'interactive',
+      content: {
+        visualization: 'elc-roadmap',
+      },
+      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+    },
+    {
+      id: 'slide-9',
+      order: 9,
       type: 'interactive',
       content: {
         visualization: 'elc-reimagination',
@@ -114,8 +132,17 @@ export const tradeReimaginedDemo: Demo = {
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
     {
-      id: 'slide-11',
+      id: 'slide-10b',
       order: 10,
+      type: 'interactive',
+      content: {
+        visualization: 'elc-deliverables-heatmap',
+      },
+      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+    },
+    {
+      id: 'slide-11',
+      order: 11,
       type: 'title',
       content: {
         title: 'Demo Time ..',

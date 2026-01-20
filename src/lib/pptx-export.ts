@@ -130,7 +130,7 @@ const VISUALIZATION_PHASES: Record<string, AnimationPhase[]> = {
         { type: 'box', content: 'Shared', x: 2, y: 3.8, w: 6.5, h: 1.8, options: { fill: { color: 'C9A22730' }, line: { color: THEME.accentGold, pt: 2 } } },
         { type: 'text', content: '🔧 SHARED MODULAR COMPONENTS', x: 2, y: 3.9, w: 6.5, h: 0.4, options: { fontSize: 12, bold: true, color: THEME.accentGold } },
         { type: 'text', content: 'Single Source of Truth • Used by Platform A, Platform B & Frontend', x: 2, y: 4.3, w: 6.5, h: 0.3, options: { fontSize: 9, color: THEME.textMuted } },
-        { type: 'text', content: '🧾 Billing    🤝 Module P    👥 Module C    💰 Pricing', x: 2.2, y: 4.8, w: 6, h: 0.5, options: { fontSize: 12, color: THEME.textPrimary } },
+        { type: 'text', content: '🧾 Billing    🤝 Module P    👥 Module C', x: 2.2, y: 4.8, w: 6, h: 0.5, options: { fontSize: 12, color: THEME.textPrimary } },
       ],
     },
     {
@@ -156,8 +156,8 @@ const VISUALIZATION_PHASES: Record<string, AnimationPhase[]> = {
         // Shared modules
         { type: 'box', content: 'Shared', x: 1.8, y: 4, w: 4.5, h: 1.5, options: { fill: { color: 'C9A22730' }, line: { color: THEME.accentGold, pt: 2 } } },
         { type: 'text', content: '🔧 SHARED COMPONENTS', x: 1.8, y: 4.1, w: 4.5, h: 0.4, options: { fontSize: 11, bold: true, color: THEME.accentGold } },
-        { type: 'text', content: '🧾 Billing  🤝 Module P  👥 Module C  💰 Pricing', x: 1.9, y: 4.6, w: 4.3, h: 0.4, options: { fontSize: 10, color: THEME.textPrimary } },
-        { type: 'text', content: '✓ ✓ ✓ ✓', x: 1.9, y: 5, w: 4.3, h: 0.4, options: { fontSize: 14, color: THEME.green } },
+        { type: 'text', content: '🧾 Billing  🤝 Module P  👥 Module C', x: 1.9, y: 4.6, w: 4.3, h: 0.4, options: { fontSize: 10, color: THEME.textPrimary } },
+        { type: 'text', content: '✓ ✓ ✓', x: 1.9, y: 5, w: 4.3, h: 0.4, options: { fontSize: 14, color: THEME.green } },
         // Business Benefits panel
         { type: 'box', content: '', x: 6.8, y: 4, w: 3, h: 1.5, options: { fill: { color: '22C55E20' }, line: { color: THEME.green, pt: 1 } } },
         { type: 'text', content: '🚀 Business Benefits', x: 6.8, y: 4.1, w: 3, h: 0.4, options: { fontSize: 11, bold: true, color: THEME.green } },

@@ -36,7 +36,10 @@ export type VisualizationType =
   | 'module-consolidation'
   | 'elc-architecture'
   | 'elc-integration-patterns'
-  | 'engineering-score-journey';
+  | 'engineering-score-journey'
+  | 'elc-roadmap'
+  | 'elc-deliverables-heatmap'
+  | 'journey-overview';
 
 export type ChartType = 'bar' | 'line' | 'pie' | 'donut';
 

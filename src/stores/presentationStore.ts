@@ -5,7 +5,7 @@ import { Demo } from '@/types/demo';
 // Phase counts for interactive visualizations
 const VISUALIZATION_PHASE_COUNTS: Record<string, number> = {
   'module-consolidation': 6,
-  'legacy-problems': 7,        // 7 problems to cycle through
+  'legacy-problems': 8,        // 8 problems to cycle through
   'technical-challenges': 5,   // 5 challenges to cycle through
   'product-opportunities': 6,  // 6 opportunities to cycle through
   'transformation-goals': 1,

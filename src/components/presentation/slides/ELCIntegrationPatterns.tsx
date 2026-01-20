@@ -350,14 +350,14 @@ export function ELCIntegrationPatterns() {
             {/* Connection line - Notify to Kafka (horizontal) */}
             <path d="M398,241 L408,228" fill="none" stroke="#C9A227" strokeWidth="1" markerEnd="url(#arrow-gold-int)" />
 
-            {/* Redis Cache - under Kafka, above CDC arrows */}
+            {/* GemFire Cache - under Kafka, above CDC arrows */}
             <g transform="translate(408, 247)">
-              <rect x="0" y="0" width="55" height="22" rx="3" fill="#0F1F35" stroke="#dc382d" strokeWidth="1" />
-              <g transform="translate(4, 5)">
-                <ellipse cx="6" cy="5" rx="5" ry="3" fill="none" stroke="#dc382d" strokeWidth="1" />
+              <rect x="0" y="0" width="55" height="22" rx="3" fill="#0F1F35" stroke="#6DB33F" strokeWidth="1" />
+              <g transform="translate(4, 4)">
+                <polygon points="6,0 12,4 12,10 6,14 0,10 0,4" fill="none" stroke="#6DB33F" strokeWidth="1" />
               </g>
-              <text x="35" y="10" textAnchor="middle" fill="#dc382d" fontSize="5" fontWeight="600">Redis</text>
-              <text x="35" y="18" textAnchor="middle" fill="#B4C7E7" fontSize="4">Cache</text>
+              <text x="38" y="10" textAnchor="middle" fill="#6DB33F" fontSize="5" fontWeight="600">GemFire</text>
+              <text x="38" y="18" textAnchor="middle" fill="#B4C7E7" fontSize="4">Cache</text>
             </g>
 
             {/* ===== CDC - CENTRALIZED ===== */}
@@ -447,14 +447,14 @@ export function ELCIntegrationPatterns() {
             />
             {/* CDC to Oracle */}
             <motion.path
-              d="M620,290 L720,290"
+              d="M620,290 L710,290"
               fill="none" stroke="#C9A227" strokeWidth="1.5" strokeDasharray="6,3"
               markerEnd="url(#arrow-gold-int)"
               animate={{ strokeDashoffset: [0, -18] }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
             <motion.path
-              d="M720,300 L620,300"
+              d="M710,300 L620,300"
               fill="none" stroke="#C9A227" strokeWidth="1.5" strokeDasharray="6,3"
               markerEnd="url(#arrow-gold-int)"
               animate={{ strokeDashoffset: [0, 18] }}
@@ -465,45 +465,77 @@ export function ELCIntegrationPatterns() {
             <rect x="650" y="130" width="410" height="195" rx="8" fill="url(#legacyGrad)" stroke="#ef4444" strokeOpacity={activePhase === 1 || activePhase === 4 ? 0.8 : 0.3} strokeWidth={activePhase === 1 || activePhase === 4 ? 2 : 1} />
             <text x="670" y="153" fill="#ef4444" fontSize="11" fontWeight="600">TPS (Monolith)</text>
 
-            {/* TPS Core */}
-            <rect x="700" y="165" width="120" height="50" rx="4" fill="#0F1F35" stroke="#ef4444" strokeWidth="1" strokeDasharray="4,2" />
-            {/* Java icon */}
-            <g transform="translate(710, 173)">
-              <text x="10" y="14" fill="#ef4444" fontSize="12" fontWeight="700">J</text>
-              <path d="M18,4 Q22,8 18,12" fill="none" stroke="#ef4444" strokeWidth="1" />
+            {/* ===== MULESOFT - HORIZONTAL BAR ===== */}
+            <motion.rect
+              x="668" y="160" width="380" height="28" rx="4"
+              fill="#00A1E0"
+              fillOpacity="0.15"
+              stroke="#00A1E0"
+              strokeWidth="2"
+              animate={{ strokeOpacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            {/* MuleSoft M Logo */}
+            <g transform="translate(678, 166)">
+              <circle cx="10" cy="8" r="8" fill="#00A1E0" fillOpacity="0.3" stroke="#00A1E0" strokeWidth="1.5" />
+              <text x="10" y="12" textAnchor="middle" fill="#00A1E0" fontSize="10" fontWeight="800">M</text>
             </g>
-            <text x="760" y="198" textAnchor="middle" fill="#ef4444" fontSize="9" fontWeight="600">TPS Core</text>
+            <text x="780" y="178" textAnchor="middle" fill="#00A1E0" fontSize="9" fontWeight="700">MuleSoft Layer</text>
 
-            {/* Mule ESB */}
-            <rect x="880" y="165" width="110" height="50" rx="4" fill="#0F1F35" stroke="#f97316" strokeWidth="1" strokeDasharray="4,2" />
-            <g transform="translate(890, 175)">
-              <ellipse cx="10" cy="8" rx="8" ry="6" fill="none" stroke="#f97316" strokeWidth="1" />
-              <circle cx="7" cy="6" r="2" fill="#f97316" />
-              <circle cx="13" cy="6" r="2" fill="#f97316" />
+            {/* Mule ESB inside MuleSoft Layer */}
+            <rect x="900" y="164" width="90" height="20" rx="3" fill="#0F1F35" stroke="#f97316" strokeWidth="1" />
+            <g transform="translate(908, 167)">
+              <ellipse cx="7" cy="6" rx="5" ry="4" fill="none" stroke="#f97316" strokeWidth="1" />
+              <circle cx="5" cy="5" r="1.5" fill="#f97316" />
+              <circle cx="9" cy="5" r="1.5" fill="#f97316" />
             </g>
-            <text x="935" y="193" textAnchor="middle" fill="#f97316" fontSize="9" fontWeight="600">Mule ESB</text>
-            <text x="935" y="206" textAnchor="middle" fill="#B4C7E7" fontSize="7">Integration</text>
+            <text x="955" y="177" textAnchor="middle" fill="#f97316" fontSize="7" fontWeight="600">Mule ESB</text>
+
+            {/* TPS Core */}
+            <rect x="710" y="205" width="100" height="35" rx="4" fill="#0F1F35" stroke="#ef4444" strokeWidth="1" strokeDasharray="4,2" />
+            {/* Java icon */}
+            <g transform="translate(718, 210)">
+              <text x="8" y="12" fill="#ef4444" fontSize="10" fontWeight="700">J</text>
+              <path d="M14,3 Q17,6 14,9" fill="none" stroke="#ef4444" strokeWidth="1" />
+            </g>
+            <text x="760" y="230" textAnchor="middle" fill="#ef4444" fontSize="8" fontWeight="600">TPS Core</text>
+
+            {/* Arrow from TPS Core to MuleSoft Layer */}
+            <path d="M760,205 L760,188" fill="none" stroke="#00A1E0" strokeWidth="1.5" markerEnd="url(#arrow-cyan-int)" />
 
             {/* Oracle Database - Embedded - SINGLE DB FOR ALL */}
-            <g transform="translate(720, 255)">
-              <ellipse cx="90" cy="8" rx="85" ry="10" fill="url(#oracleGrad)" />
-              <rect x="5" y="8" width="170" height="45" fill="url(#oracleGrad)" />
-              <ellipse cx="90" cy="53" rx="85" ry="10" fill="#800000" />
-              <ellipse cx="90" cy="8" rx="85" ry="10" fill="none" stroke="#ff6666" strokeWidth="1.5" />
-              <text x="90" y="28" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="800">ORACLE</text>
-              <text x="90" y="42" textAnchor="middle" fill="#ffcccc" fontSize="8">Single DB for All Services</text>
+            <g transform="translate(710, 260)">
+              <ellipse cx="70" cy="6" rx="65" ry="8" fill="url(#oracleGrad)" />
+              <rect x="5" y="6" width="130" height="35" fill="url(#oracleGrad)" />
+              <ellipse cx="70" cy="41" rx="65" ry="8" fill="#800000" />
+              <ellipse cx="70" cy="6" rx="65" ry="8" fill="none" stroke="#ff6666" strokeWidth="1.5" />
+              <text x="70" y="22" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="800">ORACLE</text>
+              <text x="70" y="34" textAnchor="middle" fill="#ffcccc" fontSize="6">Single DB for All</text>
+            </g>
+
+            {/* Batch Jobs */}
+            <g transform="translate(920, 250)">
+              <rect x="0" y="0" width="80" height="35" rx="4" fill="#0F1F35" stroke="#9333ea" strokeWidth="1.5" />
+              {/* Clock icon */}
+              <g transform="translate(8, 7)">
+                <circle cx="10" cy="10" r="8" fill="none" stroke="#9333ea" strokeWidth="1.5" />
+                <path d="M10,5 L10,10 L13,12" fill="none" stroke="#9333ea" strokeWidth="1.5" strokeLinecap="round" />
+              </g>
+              <text x="50" y="15" textAnchor="middle" fill="#9333ea" fontSize="7" fontWeight="700">Batch</text>
+              <text x="50" y="26" textAnchor="middle" fill="#9333ea" fontSize="7" fontWeight="700">Jobs</text>
             </g>
 
             {/* Warning: Tight Coupling */}
-            <g transform="translate(920, 265)">
-              <rect x="0" y="0" width="120" height="40" rx="4" fill="#ef4444" fillOpacity="0.2" stroke="#ef4444" strokeWidth="1" />
-              <text x="60" y="16" textAnchor="middle" fill="#ef4444" fontSize="7" fontWeight="700">TIGHT COUPLING</text>
-              <text x="60" y="30" textAnchor="middle" fill="#ef4444" fontSize="6">Shared DB Anti-pattern</text>
+            <g transform="translate(910, 295)">
+              <rect x="0" y="0" width="100" height="24" rx="4" fill="#ef4444" fillOpacity="0.2" stroke="#ef4444" strokeWidth="1" />
+              <text x="50" y="10" textAnchor="middle" fill="#ef4444" fontSize="6" fontWeight="700">TIGHT COUPLING</text>
+              <text x="50" y="19" textAnchor="middle" fill="#ef4444" fontSize="5">Shared DB Anti-pattern</text>
             </g>
 
-            {/* All services point to single Oracle */}
-            <path d="M760,215 L810,263" fill="none" stroke="#ef4444" strokeWidth="1" strokeDasharray="3,2" markerEnd="url(#arrow-red-int)" />
-            <path d="M935,215 L810,263" fill="none" stroke="#ef4444" strokeWidth="1" strokeDasharray="3,2" markerEnd="url(#arrow-red-int)" />
+            {/* TPS Core to Oracle */}
+            <path d="M760,240 L780,260" fill="none" stroke="#ef4444" strokeWidth="1" strokeDasharray="3,2" markerEnd="url(#arrow-red-int)" />
+            {/* Connection from Batch Jobs to Oracle */}
+            <path d="M920,270 L840,270" fill="none" stroke="#9333ea" strokeWidth="1.5" strokeDasharray="3,2" markerEnd="url(#arrow-red-int)" />
           </motion.g>
 
           {/* ========== MIGRATION PATTERN HIGHLIGHT - FLOATING OVERLAY ========== */}
@@ -664,9 +696,9 @@ export function ELCIntegrationPatterns() {
               <text x="8" y="10" textAnchor="middle" fill="#fff" fontSize="4">PG</text>
             </g>
 
-            {/* Payments Service */}
+            {/* Participation Service */}
             <rect x="260" y="468" width="130" height="40" rx="4" fill="#0F1F35" stroke="#4ECDC4" strokeWidth="1" />
-            <text x="325" y="488" textAnchor="middle" fill="#4ECDC4" fontSize="9" fontWeight="600">Payments</text>
+            <text x="325" y="488" textAnchor="middle" fill="#4ECDC4" fontSize="9" fontWeight="600">Participation</text>
             <text x="325" y="500" textAnchor="middle" fill="#4ECDC4" fontSize="6">Own DB</text>
             {/* Payments DB indicator */}
             <g transform="translate(360, 482)">
@@ -693,7 +725,7 @@ export function ELCIntegrationPatterns() {
             <text x="660" y="472" textAnchor="middle" fill="#C9A227" fontSize="8" fontWeight="700">DECOUPLING STATUS</text>
             <g transform="translate(580, 478)">
               <circle cx="5" cy="5" r="3" fill="#4ECDC4" />
-              <text x="12" y="8" fill="#4ECDC4" fontSize="6">Payments, Billing: Complete</text>
+              <text x="12" y="8" fill="#4ECDC4" fontSize="6">Participation, Billing: Complete</text>
             </g>
             <g transform="translate(580, 492)">
               <circle cx="5" cy="5" r="3" fill="#ef4444" />
