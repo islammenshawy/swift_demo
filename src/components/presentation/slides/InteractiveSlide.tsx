@@ -3328,313 +3328,318 @@ function ArchitectureComparison() {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col items-center px-4 py-3 overflow-hidden">
-      {/* Title */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-3"
-      >
-        <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-1">Architecture Comparison</h2>
-        <p className="text-sm text-[var(--text-secondary)]">Current State vs Future Vision</p>
-      </motion.div>
+    <div className="w-full h-full flex flex-col items-center px-4 py-2 overflow-hidden">
+      {/* Main SVG Architecture Diagram */}
+      <div className="flex-1 w-full flex items-center justify-center">
+        <svg viewBox="0 0 900 520" className="w-full h-full" style={{ maxWidth: '1100px', maxHeight: '600px' }}>
+          <defs>
+            {/* 3D Box gradient - purple bottom */}
+            <linearGradient id="purpleGrad3D" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#9061F9" />
+              <stop offset="50%" stopColor="#7C3AED" />
+              <stop offset="100%" stopColor="#5B21B6" />
+            </linearGradient>
+            {/* Darker purple for 3D edge */}
+            <linearGradient id="purpleEdge" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#5B21B6" />
+              <stop offset="100%" stopColor="#4C1D95" />
+            </linearGradient>
+            {/* Arrow marker */}
+            <marker id="archArrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#7C3AED" />
+            </marker>
+            <marker id="archArrowGray" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#666" />
+            </marker>
+          </defs>
 
-      {/* Main Comparison */}
-      <div className="flex-1 w-full flex gap-4 items-stretch max-w-[1400px]">
-        {/* TENET APPROACH - Left */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : -30 }}
-          className="flex-1 flex flex-col"
-        >
-          {/* Header */}
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <span className="text-[var(--accent-cyan)]">→</span>
-            <h3 className="text-lg font-bold text-[var(--text-primary)]">TENET APPROACH</h3>
-            <span className="text-[var(--accent-cyan)]">←</span>
-          </div>
+          {/* ========== LEFT SIDE: TENET APPROACH ========== */}
+          <motion.g
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : -30 }}
+          >
+            {/* Header: → TENET APPROACH ← */}
+            <text x="200" y="30" textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600">→</text>
+            <text x="200" y="30" textAnchor="middle" fill="#444" fontSize="14" fontWeight="700" dx="0">
+              <tspan dx="20">TENET APPROACH</tspan>
+            </text>
+            <text x="330" y="30" textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600">←</text>
 
-          {/* Architecture Stack */}
-          <div className="flex-1 flex flex-col gap-2">
-            {/* UI/HTML Layer */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 1 ? 1 : 0, y: phase >= 1 ? 0 : -10 }}
-              className="bg-gradient-to-b from-[#7c3aed]/30 to-[#7c3aed]/10 border border-[#7c3aed]/50 rounded-lg p-3 text-center"
-              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
-            >
-              <p className="text-sm font-semibold text-[#7c3aed]">UI / HTML</p>
-              <div className="flex items-center justify-center gap-2 mt-2">
-                <div className="flex items-center gap-1 bg-[#61dafb]/20 px-2 py-1 rounded">
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="#61dafb">
-                    <circle cx="12" cy="12" r="2" />
-                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" />
-                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" transform="rotate(60 12 12)" />
-                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" transform="rotate(120 12 12)" />
-                  </svg>
-                  <span className="text-xs text-[#61dafb] font-semibold">React</span>
-                </div>
-              </div>
-            </motion.div>
+            {/* Flow arrow on left side */}
+            <path d="M70 70 L70 400" stroke="#7C3AED" strokeWidth="2" fill="none" />
+            <polygon points="70,405 65,395 75,395" fill="#7C3AED" />
+
+            {/* UI/HTML Box with React */}
+            <g transform="translate(100, 50)">
+              {/* White box */}
+              <rect x="0" y="0" width="200" height="70" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
+              {/* Purple 3D bottom */}
+              <path d="M0,70 L0,80 Q0,85 5,85 L195,85 Q200,85 200,80 L200,70 Z" fill="url(#purpleGrad3D)" />
+              {/* Content */}
+              <text x="100" y="22" textAnchor="middle" fill="#7C3AED" fontSize="13" fontWeight="600">UI / HTML</text>
+              {/* React logo */}
+              <g transform="translate(60, 32)">
+                <circle cx="20" cy="15" r="3" fill="#61DAFB" />
+                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" />
+                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(60 20 15)" />
+                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(120 20 15)" />
+              </g>
+              <text x="140" y="50" textAnchor="start" fill="#61DAFB" fontSize="14" fontWeight="600">React</text>
+            </g>
 
             {/* Arrow down */}
-            <div className="flex justify-center">
-              <span className="text-[#7c3aed]">↓</span>
-            </div>
+            <path d="M200 140 L200 155" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
 
             {/* New Adapter Layer */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : -10 }}
-              className="bg-gradient-to-b from-[#7c3aed]/40 to-[#7c3aed]/20 border border-[#7c3aed]/50 rounded-lg p-2 text-center"
-              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
-            >
-              <p className="text-sm font-semibold text-white">New Adapter Layer</p>
-            </motion.div>
+            <g transform="translate(90, 165)">
+              {/* Purple box */}
+              <rect x="0" y="0" width="220" height="35" rx="3" fill="url(#purpleGrad3D)" />
+              {/* Darker 3D bottom edge */}
+              <path d="M0,35 L10,45 L230,45 L220,35 Z" fill="url(#purpleEdge)" />
+              <text x="110" y="23" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="600">New Adapter Layer</text>
+            </g>
 
             {/* Arrow down */}
-            <div className="flex justify-center">
-              <span className="text-[#7c3aed]">↓</span>
-            </div>
+            <path d="M200 215 L200 230" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
 
-            {/* New API Layer */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : -10 }}
-              className="bg-gradient-to-b from-[#7c3aed]/30 to-[#7c3aed]/10 border border-[#7c3aed]/50 rounded-lg p-3 text-center"
-              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
-            >
-              <p className="text-sm font-semibold text-white mb-2">New API Layer</p>
-              <div className="flex items-center justify-center gap-3">
-                <div className="flex items-center gap-1">
-                  <span className="text-[#f89820] text-lg">☕</span>
-                  <span className="text-xs text-[#f89820] font-semibold">Java</span>
-                </div>
-                <div className="flex items-center gap-1 bg-[#2196F3]/20 px-2 py-1 rounded">
-                  <span className="text-xs text-[#2196F3] font-semibold">Drools</span>
-                </div>
-              </div>
-              <p className="text-xs text-[var(--text-muted)] mt-1">Rules Engine</p>
-            </motion.div>
+            {/* New API Layer Box */}
+            <g transform="translate(90, 240)">
+              {/* White box */}
+              <rect x="0" y="0" width="220" height="90" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
+              {/* Purple 3D bottom */}
+              <path d="M0,90 L10,100 L230,100 L220,90 Z" fill="url(#purpleGrad3D)" />
+              {/* Content */}
+              <text x="110" y="25" textAnchor="middle" fill="#333" fontSize="14" fontWeight="700">New</text>
+              <text x="110" y="42" textAnchor="middle" fill="#333" fontSize="14" fontWeight="700">API Layer</text>
+              {/* Java icon */}
+              <g transform="translate(40, 50)">
+                <path d="M5 0 Q2 -4 5 -7" fill="none" stroke="#E76F00" strokeWidth="1" />
+                <path d="M10 -2 Q7 -6 10 -9" fill="none" stroke="#E76F00" strokeWidth="1" />
+                <path d="M15 0 Q12 -4 15 -7" fill="none" stroke="#E76F00" strokeWidth="1" />
+                <path d="M2 2 L2 18 Q2 22 10 22 Q18 22 18 18 L18 2 Z" fill="#5382A1" />
+                <path d="M18 6 Q24 6 24 12 Q24 18 18 18" fill="none" stroke="#5382A1" strokeWidth="2" />
+              </g>
+              <text x="65" y="73" textAnchor="start" fill="#E76F00" fontSize="12" fontWeight="600">Java</text>
+              {/* Drools icon */}
+              <g transform="translate(130, 55)">
+                <circle cx="10" cy="10" r="10" fill="none" stroke="#1E88E5" strokeWidth="2" />
+                <circle cx="10" cy="10" r="4" fill="#1E88E5" />
+              </g>
+              <text x="160" y="73" textAnchor="start" fill="#1E88E5" fontSize="12" fontWeight="600">Drools</text>
+              <text x="110" y="88" textAnchor="middle" fill="#666" fontSize="10">Rules Engine</text>
+            </g>
 
             {/* Arrow down */}
-            <div className="flex justify-center">
-              <span className="text-[#00A1E0]">↓</span>
-            </div>
+            <path d="M200 345 L200 360" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
 
             {/* MuleSoft */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : -10 }}
-              className="bg-[#00A1E0]/20 border border-[#00A1E0]/50 rounded-lg p-2 flex items-center justify-center gap-2"
-            >
-              <div className="w-6 h-6 rounded-full bg-[#00A1E0] flex items-center justify-center">
-                <span className="text-white text-sm font-bold">M</span>
-              </div>
-              <span className="text-sm font-semibold text-[#00A1E0]">MuleSoft</span>
-            </motion.div>
+            <g transform="translate(115, 370)">
+              <rect x="0" y="0" width="170" height="35" rx="17" fill="#fff" stroke="#ddd" strokeWidth="1.5" />
+              <circle cx="30" cy="17" r="14" fill="#00A1E0" />
+              <text x="30" y="22" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700">M</text>
+              <text x="105" y="22" textAnchor="middle" fill="#333" fontSize="14" fontWeight="600">MuleSoft</text>
+            </g>
 
             {/* Arrow down */}
-            <div className="flex justify-center">
-              <span className="text-[#c9a227]">↓</span>
-            </div>
+            <path d="M200 410 L200 425" stroke="#666" strokeWidth="2" markerEnd="url(#archArrowGray)" />
 
             {/* Oracle + Batch Jobs */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : -10 }}
-              className="flex items-center justify-center gap-4"
-            >
-              {/* Oracle */}
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-12 bg-[#c9a227]/20 border border-[#c9a227] rounded-t-lg rounded-b-[50%] flex items-center justify-center">
-                  <span className="text-xs font-bold text-[#c9a227]">ORACLE</span>
-                </div>
-              </div>
-              <span className="text-[#c9a227]">↔</span>
+            <g transform="translate(95, 435)">
+              {/* Oracle Database Cylinder */}
+              <g transform="translate(0, 0)">
+                <ellipse cx="45" cy="8" rx="40" ry="8" fill="#E8E8E8" stroke="#999" strokeWidth="1" />
+                <rect x="5" y="8" width="80" height="45" fill="#F5F5F5" stroke="#999" strokeWidth="1" />
+                <ellipse cx="45" cy="53" rx="40" ry="8" fill="#E0E0E0" stroke="#999" strokeWidth="1" />
+                <line x1="5" y1="8" x2="5" y2="53" stroke="#999" strokeWidth="1" />
+                <line x1="85" y1="8" x2="85" y2="53" stroke="#999" strokeWidth="1" />
+                <text x="45" y="35" textAnchor="middle" fill="#C74634" fontSize="11" fontWeight="700">ORACLE</text>
+              </g>
+
+              {/* Arrow between */}
+              <path d="M95 35 L115 35" stroke="#666" strokeWidth="1.5" />
+              <polygon points="105,32 115,35 105,38" fill="#666" />
+
               {/* Batch Jobs */}
-              <div className="flex flex-col items-center">
-                <div className="bg-[#9c27b0]/20 border border-[#9c27b0]/50 rounded px-3 py-2">
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs">📋</span>
-                    <span className="text-xs text-[#9c27b0]">Batch Jobs</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
+              <g transform="translate(125, 5)">
+                <rect x="0" y="0" width="70" height="55" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
+                <rect x="12" y="10" width="46" height="6" rx="1" fill="#999" />
+                <rect x="12" y="20" width="46" height="6" rx="1" fill="#999" />
+                <rect x="12" y="30" width="46" height="6" rx="1" fill="#999" />
+                <text x="35" y="50" textAnchor="middle" fill="#666" fontSize="9">Batch Jobs</text>
+              </g>
+            </g>
+          </motion.g>
 
-        {/* Center Divider with Data Sync */}
-        <motion.div
-          initial={{ opacity: 0, scaleY: 0 }}
-          animate={{ opacity: phase >= 2 ? 1 : 0, scaleY: phase >= 2 ? 1 : 0 }}
-          className="w-1 bg-gradient-to-b from-[#7c3aed]/50 via-[#c9a227]/50 to-[#7c3aed]/50 rounded relative"
-        >
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: phase >= 4 ? 1 : 0 }}
-            className="absolute bottom-20 left-1/2 -translate-x-1/2 whitespace-nowrap"
+          {/* ========== CENTER DIVIDER ========== */}
+          <motion.g
+            initial={{ opacity: 0, scaleY: 0 }}
+            animate={{ opacity: phase >= 2 ? 1 : 0, scaleY: phase >= 2 ? 1 : 0 }}
+            style={{ transformOrigin: '450px 260px' }}
           >
-            <div className="flex items-center gap-1 bg-[var(--bg-secondary)] px-2 py-1 rounded border border-[#c9a227]/50">
-              <span className="text-[10px] text-[#c9a227]">Data Sync</span>
-              <span className="text-[#c9a227]">↔</span>
-            </div>
-          </motion.div>
-        </motion.div>
+            <rect x="445" y="50" width="10" height="420" fill="url(#purpleGrad3D)" />
 
-        {/* REIMAGINE APPROACH - Right */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : 30 }}
-          className="flex-1 flex flex-col"
-        >
-          {/* Header */}
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <span className="text-[var(--accent-cyan)]">→</span>
-            <h3 className="text-lg font-bold text-[var(--text-primary)]">REIMAGINE APPROACH</h3>
-            <span className="text-[var(--accent-cyan)]">←</span>
-          </div>
-
-          {/* Architecture Stack */}
-          <div className="flex-1 flex flex-col gap-2">
-            {/* UI/HTML Layer */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 1 ? 1 : 0, y: phase >= 1 ? 0 : -10 }}
-              className="bg-gradient-to-b from-[#7c3aed]/30 to-[#7c3aed]/10 border border-[#7c3aed]/50 rounded-lg p-3 text-center"
-              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
+            {/* Data Sync label */}
+            <motion.g
+              initial={{ opacity: 0 }}
+              animate={{ opacity: phase >= 4 ? 1 : 0 }}
             >
-              <p className="text-sm font-semibold text-[#7c3aed]">UI / HTML</p>
-              <div className="flex items-center justify-center gap-2 mt-2">
-                <div className="flex items-center gap-1 bg-[#61dafb]/20 px-2 py-1 rounded">
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="#61dafb">
-                    <circle cx="12" cy="12" r="2" />
-                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" />
-                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" transform="rotate(60 12 12)" />
-                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" transform="rotate(120 12 12)" />
-                  </svg>
-                  <span className="text-xs text-[#61dafb] font-semibold">React</span>
-                </div>
-              </div>
-            </motion.div>
+              <text x="390" y="485" fill="#666" fontSize="11">←</text>
+              <text x="450" y="485" textAnchor="middle" fill="#444" fontSize="12" fontWeight="600">Data Sync</text>
+              <text x="510" y="485" fill="#666" fontSize="11">→</text>
+            </motion.g>
+          </motion.g>
+
+          {/* ========== RIGHT SIDE: REIMAGINE APPROACH ========== */}
+          <motion.g
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : 30 }}
+          >
+            {/* Header: → REIMAGINE APPROACH ← */}
+            <text x="570" y="30" textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600">→</text>
+            <text x="700" y="30" textAnchor="middle" fill="#444" fontSize="14" fontWeight="700">REIMAGINE APPROACH</text>
+            <text x="830" y="30" textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600">←</text>
+
+            {/* Flow arrow on right side */}
+            <path d="M830 70 L830 400" stroke="#7C3AED" strokeWidth="2" fill="none" />
+            <polygon points="830,405 825,395 835,395" fill="#7C3AED" />
+
+            {/* UI/HTML Box with React */}
+            <g transform="translate(600, 50)">
+              {/* White box */}
+              <rect x="0" y="0" width="200" height="70" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
+              {/* Purple 3D bottom */}
+              <path d="M0,70 L0,80 Q0,85 5,85 L195,85 Q200,85 200,80 L200,70 Z" fill="url(#purpleGrad3D)" />
+              {/* Content */}
+              <text x="100" y="22" textAnchor="middle" fill="#7C3AED" fontSize="13" fontWeight="600">UI / HTML</text>
+              {/* React logo */}
+              <g transform="translate(60, 32)">
+                <circle cx="20" cy="15" r="3" fill="#61DAFB" />
+                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" />
+                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(60 20 15)" />
+                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(120 20 15)" />
+              </g>
+              <text x="140" y="50" textAnchor="start" fill="#61DAFB" fontSize="14" fontWeight="600">React</text>
+            </g>
 
             {/* Arrow down */}
-            <div className="flex justify-center">
-              <span className="text-[#7c3aed]">↓</span>
-            </div>
+            <path d="M700 140 L700 155" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
 
-            {/* Workflow Engine */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : -10 }}
-              className="bg-gradient-to-b from-[#7c3aed]/40 to-[#7c3aed]/20 border border-[#7c3aed]/50 rounded-lg p-2 text-center"
-              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
-            >
-              <p className="text-sm font-semibold text-white">Workflow Engine</p>
-            </motion.div>
+            {/* Workflow Engine (top) */}
+            <g transform="translate(590, 165)">
+              <rect x="0" y="0" width="220" height="35" rx="3" fill="url(#purpleGrad3D)" />
+              <path d="M0,35 L10,45 L230,45 L220,35 Z" fill="url(#purpleEdge)" />
+              <text x="110" y="23" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="600">Workflow Engine</text>
+            </g>
 
             {/* Arrow down */}
-            <div className="flex justify-center">
-              <span className="text-[#7c3aed]">↓</span>
-            </div>
+            <path d="M700 215 L700 230" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
 
-            {/* Common Capability */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : -10 }}
-              className="bg-gradient-to-b from-[#7c3aed]/30 to-[#7c3aed]/10 border border-[#7c3aed]/50 rounded-lg p-3"
-              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
-            >
-              <p className="text-sm font-semibold text-white text-center mb-2">Common Capability</p>
-              <div className="grid grid-cols-2 gap-1">
-                <div className="bg-white/10 rounded px-2 py-1 text-center">
-                  <span className="text-[10px] text-white">Ingestion</span>
-                </div>
-                <div className="bg-white/10 rounded px-2 py-1 text-center">
-                  <span className="text-[10px] text-white">Extraction</span>
-                </div>
-                <div className="bg-white/10 rounded px-2 py-1 text-center">
-                  <span className="text-[10px] text-white">Validation</span>
-                </div>
-                <div className="bg-white/10 rounded px-2 py-1 text-center">
-                  <span className="text-[10px] text-white">Booking</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-center gap-2 mt-2">
-                <span className="text-[10px] text-[#f89820]">☕ Java</span>
-                <span className="text-[10px] text-[var(--text-muted)]">REST API</span>
-                <span className="text-[10px] text-[#2196F3]">Drools</span>
-              </div>
-            </motion.div>
+            {/* Common Capability Box */}
+            <g transform="translate(570, 240)">
+              {/* White box */}
+              <rect x="0" y="0" width="260" height="115" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
+              {/* Purple 3D bottom */}
+              <path d="M0,115 L10,125 L270,125 L260,115 Z" fill="url(#purpleGrad3D)" />
+              {/* Content */}
+              <text x="130" y="22" textAnchor="middle" fill="#333" fontSize="14" fontWeight="700">Common Capability</text>
+              {/* 2x2 Grid */}
+              <rect x="20" y="32" width="100" height="26" rx="2" fill="#f9f9f9" stroke="#ddd" strokeWidth="1" />
+              <text x="70" y="50" textAnchor="middle" fill="#555" fontSize="11">Ingestion</text>
+              <rect x="140" y="32" width="100" height="26" rx="2" fill="#f9f9f9" stroke="#ddd" strokeWidth="1" />
+              <text x="190" y="50" textAnchor="middle" fill="#555" fontSize="11">Extraction</text>
+              <rect x="20" y="62" width="100" height="26" rx="2" fill="#f9f9f9" stroke="#ddd" strokeWidth="1" />
+              <text x="70" y="80" textAnchor="middle" fill="#555" fontSize="11">Validation</text>
+              <rect x="140" y="62" width="100" height="26" rx="2" fill="#f9f9f9" stroke="#ddd" strokeWidth="1" />
+              <text x="190" y="80" textAnchor="middle" fill="#555" fontSize="11">Booking</text>
+              {/* Tech icons row */}
+              <g transform="translate(25, 93)">
+                <path d="M3 0 Q0 -3 3 -5" fill="none" stroke="#E76F00" strokeWidth="0.8" />
+                <path d="M7 -1 Q4 -4 7 -6" fill="none" stroke="#E76F00" strokeWidth="0.8" />
+                <path d="M11 0 Q8 -3 11 -5" fill="none" stroke="#E76F00" strokeWidth="0.8" />
+                <path d="M1 2 L1 12 Q1 14 7 14 Q13 14 13 12 L13 2 Z" fill="#5382A1" />
+                <text x="20" y="12" fill="#E76F00" fontSize="10" fontWeight="600">Java</text>
+              </g>
+              <g transform="translate(95, 93)">
+                <circle cx="8" cy="7" r="7" fill="none" stroke="#666" strokeWidth="1.5" />
+                <text x="8" y="10" textAnchor="middle" fill="#666" fontSize="6" fontWeight="600">REST</text>
+                <text x="22" y="12" fill="#666" fontSize="10">API</text>
+              </g>
+              <g transform="translate(175, 93)">
+                <circle cx="8" cy="7" r="7" fill="none" stroke="#1E88E5" strokeWidth="1.5" />
+                <circle cx="8" cy="7" r="3" fill="#1E88E5" />
+                <text x="22" y="12" fill="#1E88E5" fontSize="10" fontWeight="600">Drools</text>
+              </g>
+            </g>
 
             {/* Arrow down */}
-            <div className="flex justify-center">
-              <span className="text-[#7c3aed]">↓</span>
-            </div>
+            <path d="M700 370 L700 385" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
 
             {/* Workflow Engine (bottom) */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : -10 }}
-              className="bg-gradient-to-b from-[#7c3aed]/40 to-[#7c3aed]/20 border border-[#7c3aed]/50 rounded-lg p-2 text-center"
-              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
-            >
-              <p className="text-sm font-semibold text-white">Workflow Engine</p>
-            </motion.div>
+            <g transform="translate(590, 395)">
+              <rect x="0" y="0" width="220" height="35" rx="3" fill="url(#purpleGrad3D)" />
+              <path d="M0,35 L10,45 L230,45 L220,35 Z" fill="url(#purpleEdge)" />
+              <text x="110" y="23" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="600">Workflow Engine</text>
+            </g>
 
             {/* Arrow down */}
-            <div className="flex justify-center">
-              <span className="text-[#4db33d]">↓</span>
-            </div>
+            <path d="M700 445 L700 455" stroke="#4DB33D" strokeWidth="2" />
+            <polygon points="700,462 695,452 705,452" fill="#4DB33D" />
 
             {/* MongoDB */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : -10 }}
-              className="flex items-center justify-center"
-            >
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-14 bg-[#4db33d]/20 border border-[#4db33d] rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <span className="text-lg">🍃</span>
-                    <p className="text-[8px] text-[#4db33d]">MongoDB</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
+            <g transform="translate(660, 468)">
+              {/* Database Cylinder */}
+              <ellipse cx="40" cy="6" rx="35" ry="6" fill="#E8E8E8" stroke="#999" strokeWidth="1" />
+              <rect x="5" y="6" width="70" height="40" fill="#F5F5F5" stroke="#999" strokeWidth="1" />
+              <ellipse cx="40" cy="46" rx="35" ry="6" fill="#E0E0E0" stroke="#999" strokeWidth="1" />
+              <line x1="5" y1="6" x2="5" y2="46" stroke="#999" strokeWidth="1" />
+              <line x1="75" y1="6" x2="75" y2="46" stroke="#999" strokeWidth="1" />
+              {/* MongoDB Leaf */}
+              <path d="M40 15 C40 15 32 22 32 32 C32 38 36 44 40 47 C44 44 48 38 48 32 C48 22 40 15 40 15 Z" fill="#4DB33D" />
+              <path d="M40 47 L40 52" stroke="#4DB33D" strokeWidth="2" />
+            </g>
+          </motion.g>
 
-      {/* Bottom - Trade AI */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: phase >= 4 ? 1 : 0, y: phase >= 4 ? 0 : 20 }}
-        className="w-full max-w-[1200px] mt-3"
-      >
-        <div className="bg-[var(--bg-secondary)]/50 border border-[var(--text-muted)]/30 rounded-lg p-3">
-          <div className="flex items-center justify-center gap-8">
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-bold text-[var(--text-primary)]">Trade AI</span>
-            </div>
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">🤖</span>
-                <span className="text-sm text-[var(--text-secondary)]">LLM</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xl">🧠</span>
-                <span className="text-sm text-[var(--text-secondary)]">Cognitive Intelligence</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xl">📄</span>
-                <span className="text-sm text-[var(--text-secondary)]">Optical Character Recognition</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+          {/* ========== BOTTOM: Trade AI Banner ========== */}
+          <motion.g
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: phase >= 4 ? 1 : 0, y: phase >= 4 ? 0 : 20 }}
+          >
+            {/* Banner box */}
+            <rect x="100" y="530" width="700" height="55" rx="5" fill="#fff" stroke="#ddd" strokeWidth="1.5" />
+
+            {/* Trade AI label */}
+            <text x="160" y="562" textAnchor="middle" fill="#333" fontSize="16" fontWeight="700">Trade AI</text>
+
+            {/* LLM */}
+            <g transform="translate(260, 540)">
+              <rect x="0" y="0" width="28" height="28" rx="3" fill="#f5f5f5" stroke="#999" strokeWidth="1" />
+              <circle cx="10" cy="12" r="3" fill="#666" />
+              <circle cx="18" cy="12" r="3" fill="#666" />
+              <path d="M8 20 L20 20" stroke="#666" strokeWidth="2" strokeLinecap="round" />
+              <text x="45" y="20" fill="#555" fontSize="12" fontWeight="500">LLM</text>
+            </g>
+
+            {/* Cognitive Intelligence */}
+            <g transform="translate(420, 540)">
+              <circle cx="14" cy="14" r="12" fill="#f5f5f5" stroke="#999" strokeWidth="1" />
+              <circle cx="14" cy="14" r="5" fill="#666" />
+              <path d="M6 6 L3 3 M22 6 L25 3 M6 22 L3 25 M22 22 L25 25" stroke="#666" strokeWidth="1.5" />
+              <text x="35" y="12" fill="#555" fontSize="11" fontWeight="500">Cognitive</text>
+              <text x="35" y="24" fill="#555" fontSize="11" fontWeight="500">Intelligence</text>
+            </g>
+
+            {/* OCR */}
+            <g transform="translate(600, 538)">
+              <rect x="0" y="0" width="24" height="32" rx="2" fill="#f5f5f5" stroke="#999" strokeWidth="1" />
+              <line x1="5" y1="8" x2="19" y2="8" stroke="#666" strokeWidth="1.5" />
+              <line x1="5" y1="14" x2="19" y2="14" stroke="#666" strokeWidth="1.5" />
+              <line x1="5" y1="20" x2="14" y2="20" stroke="#666" strokeWidth="1.5" />
+              <text x="32" y="12" fill="#555" fontSize="10" fontWeight="500">Optical Character</text>
+              <text x="32" y="24" fill="#555" fontSize="10" fontWeight="500">Recognition</text>
+            </g>
+          </motion.g>
+        </svg>
+      </div>
     </div>
   );
 }
@@ -3660,8 +3665,8 @@ function JourneyOverview() {
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-4 mt-4"
       >
-        <h2 className="text-5xl font-bold text-[var(--text-primary)] mb-2">Where are we in our journey?</h2>
-        <p className="text-xl text-[var(--text-secondary)]">Trade System — Current State</p>
+        <h2 className="text-3xl font-bold text-[var(--text-primary)] mb-2">Where are we in our journey?</h2>
+        <p className="text-base text-[var(--text-secondary)]">Trade System — Current State</p>
       </motion.div>
 
       {/* Main Content - 3 columns */}
