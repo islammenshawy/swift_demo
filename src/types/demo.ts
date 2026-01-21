@@ -39,7 +39,8 @@ export type VisualizationType =
   | 'engineering-score-journey'
   | 'elc-roadmap'
   | 'elc-deliverables-heatmap'
-  | 'journey-overview';
+  | 'journey-overview'
+  | 'architecture-comparison';
 
 export type ChartType = 'bar' | 'line' | 'pie' | 'donut';
 

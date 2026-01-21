@@ -28,7 +28,7 @@ export function ELCIntegrationPatterns() {
         }
         return prev + 1;
       });
-    }, 5000);
+    }, 2500);
 
     return () => clearInterval(interval);
   }, [autoPlay]);

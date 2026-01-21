@@ -3313,6 +3313,332 @@ function TeamBenchmarking() {
 }
 
 // Journey Overview - Shows where we are in the transformation journey
+// Architecture Comparison - TENET vs REIMAGINE
+function ArchitectureComparison() {
+  const [phase, setPhase] = useState(0);
+
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setPhase(1), 300),
+      setTimeout(() => setPhase(2), 600),
+      setTimeout(() => setPhase(3), 1000),
+      setTimeout(() => setPhase(4), 1400),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  return (
+    <div className="w-full h-full flex flex-col items-center px-4 py-3 overflow-hidden">
+      {/* Title */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-3"
+      >
+        <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-1">Architecture Comparison</h2>
+        <p className="text-sm text-[var(--text-secondary)]">Current State vs Future Vision</p>
+      </motion.div>
+
+      {/* Main Comparison */}
+      <div className="flex-1 w-full flex gap-4 items-stretch max-w-[1400px]">
+        {/* TENET APPROACH - Left */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : -30 }}
+          className="flex-1 flex flex-col"
+        >
+          {/* Header */}
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <span className="text-[var(--accent-cyan)]">→</span>
+            <h3 className="text-lg font-bold text-[var(--text-primary)]">TENET APPROACH</h3>
+            <span className="text-[var(--accent-cyan)]">←</span>
+          </div>
+
+          {/* Architecture Stack */}
+          <div className="flex-1 flex flex-col gap-2">
+            {/* UI/HTML Layer */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 1 ? 1 : 0, y: phase >= 1 ? 0 : -10 }}
+              className="bg-gradient-to-b from-[#7c3aed]/30 to-[#7c3aed]/10 border border-[#7c3aed]/50 rounded-lg p-3 text-center"
+              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
+            >
+              <p className="text-sm font-semibold text-[#7c3aed]">UI / HTML</p>
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <div className="flex items-center gap-1 bg-[#61dafb]/20 px-2 py-1 rounded">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="#61dafb">
+                    <circle cx="12" cy="12" r="2" />
+                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" />
+                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" transform="rotate(60 12 12)" />
+                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" transform="rotate(120 12 12)" />
+                  </svg>
+                  <span className="text-xs text-[#61dafb] font-semibold">React</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Arrow down */}
+            <div className="flex justify-center">
+              <span className="text-[#7c3aed]">↓</span>
+            </div>
+
+            {/* New Adapter Layer */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : -10 }}
+              className="bg-gradient-to-b from-[#7c3aed]/40 to-[#7c3aed]/20 border border-[#7c3aed]/50 rounded-lg p-2 text-center"
+              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
+            >
+              <p className="text-sm font-semibold text-white">New Adapter Layer</p>
+            </motion.div>
+
+            {/* Arrow down */}
+            <div className="flex justify-center">
+              <span className="text-[#7c3aed]">↓</span>
+            </div>
+
+            {/* New API Layer */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : -10 }}
+              className="bg-gradient-to-b from-[#7c3aed]/30 to-[#7c3aed]/10 border border-[#7c3aed]/50 rounded-lg p-3 text-center"
+              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
+            >
+              <p className="text-sm font-semibold text-white mb-2">New API Layer</p>
+              <div className="flex items-center justify-center gap-3">
+                <div className="flex items-center gap-1">
+                  <span className="text-[#f89820] text-lg">☕</span>
+                  <span className="text-xs text-[#f89820] font-semibold">Java</span>
+                </div>
+                <div className="flex items-center gap-1 bg-[#2196F3]/20 px-2 py-1 rounded">
+                  <span className="text-xs text-[#2196F3] font-semibold">Drools</span>
+                </div>
+              </div>
+              <p className="text-xs text-[var(--text-muted)] mt-1">Rules Engine</p>
+            </motion.div>
+
+            {/* Arrow down */}
+            <div className="flex justify-center">
+              <span className="text-[#00A1E0]">↓</span>
+            </div>
+
+            {/* MuleSoft */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : -10 }}
+              className="bg-[#00A1E0]/20 border border-[#00A1E0]/50 rounded-lg p-2 flex items-center justify-center gap-2"
+            >
+              <div className="w-6 h-6 rounded-full bg-[#00A1E0] flex items-center justify-center">
+                <span className="text-white text-sm font-bold">M</span>
+              </div>
+              <span className="text-sm font-semibold text-[#00A1E0]">MuleSoft</span>
+            </motion.div>
+
+            {/* Arrow down */}
+            <div className="flex justify-center">
+              <span className="text-[#c9a227]">↓</span>
+            </div>
+
+            {/* Oracle + Batch Jobs */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : -10 }}
+              className="flex items-center justify-center gap-4"
+            >
+              {/* Oracle */}
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-12 bg-[#c9a227]/20 border border-[#c9a227] rounded-t-lg rounded-b-[50%] flex items-center justify-center">
+                  <span className="text-xs font-bold text-[#c9a227]">ORACLE</span>
+                </div>
+              </div>
+              <span className="text-[#c9a227]">↔</span>
+              {/* Batch Jobs */}
+              <div className="flex flex-col items-center">
+                <div className="bg-[#9c27b0]/20 border border-[#9c27b0]/50 rounded px-3 py-2">
+                  <div className="flex items-center gap-1">
+                    <span className="text-xs">📋</span>
+                    <span className="text-xs text-[#9c27b0]">Batch Jobs</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Center Divider with Data Sync */}
+        <motion.div
+          initial={{ opacity: 0, scaleY: 0 }}
+          animate={{ opacity: phase >= 2 ? 1 : 0, scaleY: phase >= 2 ? 1 : 0 }}
+          className="w-1 bg-gradient-to-b from-[#7c3aed]/50 via-[#c9a227]/50 to-[#7c3aed]/50 rounded relative"
+        >
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: phase >= 4 ? 1 : 0 }}
+            className="absolute bottom-20 left-1/2 -translate-x-1/2 whitespace-nowrap"
+          >
+            <div className="flex items-center gap-1 bg-[var(--bg-secondary)] px-2 py-1 rounded border border-[#c9a227]/50">
+              <span className="text-[10px] text-[#c9a227]">Data Sync</span>
+              <span className="text-[#c9a227]">↔</span>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* REIMAGINE APPROACH - Right */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : 30 }}
+          className="flex-1 flex flex-col"
+        >
+          {/* Header */}
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <span className="text-[var(--accent-cyan)]">→</span>
+            <h3 className="text-lg font-bold text-[var(--text-primary)]">REIMAGINE APPROACH</h3>
+            <span className="text-[var(--accent-cyan)]">←</span>
+          </div>
+
+          {/* Architecture Stack */}
+          <div className="flex-1 flex flex-col gap-2">
+            {/* UI/HTML Layer */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 1 ? 1 : 0, y: phase >= 1 ? 0 : -10 }}
+              className="bg-gradient-to-b from-[#7c3aed]/30 to-[#7c3aed]/10 border border-[#7c3aed]/50 rounded-lg p-3 text-center"
+              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
+            >
+              <p className="text-sm font-semibold text-[#7c3aed]">UI / HTML</p>
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <div className="flex items-center gap-1 bg-[#61dafb]/20 px-2 py-1 rounded">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="#61dafb">
+                    <circle cx="12" cy="12" r="2" />
+                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" />
+                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" transform="rotate(60 12 12)" />
+                    <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61dafb" strokeWidth="1" transform="rotate(120 12 12)" />
+                  </svg>
+                  <span className="text-xs text-[#61dafb] font-semibold">React</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Arrow down */}
+            <div className="flex justify-center">
+              <span className="text-[#7c3aed]">↓</span>
+            </div>
+
+            {/* Workflow Engine */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : -10 }}
+              className="bg-gradient-to-b from-[#7c3aed]/40 to-[#7c3aed]/20 border border-[#7c3aed]/50 rounded-lg p-2 text-center"
+              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
+            >
+              <p className="text-sm font-semibold text-white">Workflow Engine</p>
+            </motion.div>
+
+            {/* Arrow down */}
+            <div className="flex justify-center">
+              <span className="text-[#7c3aed]">↓</span>
+            </div>
+
+            {/* Common Capability */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : -10 }}
+              className="bg-gradient-to-b from-[#7c3aed]/30 to-[#7c3aed]/10 border border-[#7c3aed]/50 rounded-lg p-3"
+              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
+            >
+              <p className="text-sm font-semibold text-white text-center mb-2">Common Capability</p>
+              <div className="grid grid-cols-2 gap-1">
+                <div className="bg-white/10 rounded px-2 py-1 text-center">
+                  <span className="text-[10px] text-white">Ingestion</span>
+                </div>
+                <div className="bg-white/10 rounded px-2 py-1 text-center">
+                  <span className="text-[10px] text-white">Extraction</span>
+                </div>
+                <div className="bg-white/10 rounded px-2 py-1 text-center">
+                  <span className="text-[10px] text-white">Validation</span>
+                </div>
+                <div className="bg-white/10 rounded px-2 py-1 text-center">
+                  <span className="text-[10px] text-white">Booking</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <span className="text-[10px] text-[#f89820]">☕ Java</span>
+                <span className="text-[10px] text-[var(--text-muted)]">REST API</span>
+                <span className="text-[10px] text-[#2196F3]">Drools</span>
+              </div>
+            </motion.div>
+
+            {/* Arrow down */}
+            <div className="flex justify-center">
+              <span className="text-[#7c3aed]">↓</span>
+            </div>
+
+            {/* Workflow Engine (bottom) */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : -10 }}
+              className="bg-gradient-to-b from-[#7c3aed]/40 to-[#7c3aed]/20 border border-[#7c3aed]/50 rounded-lg p-2 text-center"
+              style={{ perspective: '500px', transform: 'rotateX(5deg)' }}
+            >
+              <p className="text-sm font-semibold text-white">Workflow Engine</p>
+            </motion.div>
+
+            {/* Arrow down */}
+            <div className="flex justify-center">
+              <span className="text-[#4db33d]">↓</span>
+            </div>
+
+            {/* MongoDB */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: phase >= 3 ? 1 : 0, y: phase >= 3 ? 0 : -10 }}
+              className="flex items-center justify-center"
+            >
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-14 bg-[#4db33d]/20 border border-[#4db33d] rounded-lg flex items-center justify-center">
+                  <div className="text-center">
+                    <span className="text-lg">🍃</span>
+                    <p className="text-[8px] text-[#4db33d]">MongoDB</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Bottom - Trade AI */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: phase >= 4 ? 1 : 0, y: phase >= 4 ? 0 : 20 }}
+        className="w-full max-w-[1200px] mt-3"
+      >
+        <div className="bg-[var(--bg-secondary)]/50 border border-[var(--text-muted)]/30 rounded-lg p-3">
+          <div className="flex items-center justify-center gap-8">
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-bold text-[var(--text-primary)]">Trade AI</span>
+            </div>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">🤖</span>
+                <span className="text-sm text-[var(--text-secondary)]">LLM</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xl">🧠</span>
+                <span className="text-sm text-[var(--text-secondary)]">Cognitive Intelligence</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xl">📄</span>
+                <span className="text-sm text-[var(--text-secondary)]">Optical Character Recognition</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 function JourneyOverview() {
   const [phase, setPhase] = useState(0);
 
@@ -3371,7 +3697,6 @@ function JourneyOverview() {
             <p className="text-[11px] text-[var(--text-muted)] mb-3 italic">UI Layer Modernization</p>
             <ul className="text-xs text-[var(--text-secondary)] space-y-1.5">
               <li>• Modern React UI</li>
-              <li>• Responsive Design</li>
               <li>• Improved User Experience</li>
               <li>• Reusable Component Library</li>
               <li>• Replaced legacy GWT/Sencha</li>
@@ -3682,7 +4007,7 @@ function JourneyOverview() {
               <li>• Client heavy implementation</li>
             </ul>
             <div className="mt-3 pt-3 border-t border-[#4CAF50]/30">
-              <span className="text-xs text-[#4CAF50] font-semibold">✓ Fixed by TENET</span>
+              <span className="text-xs text-[#4CAF50] font-semibold">✓ Being fixed by TENET</span>
             </div>
           </motion.div>
 
@@ -4710,7 +5035,7 @@ function LegacyProblems() {
                 className="w-28 flex-shrink-0 flex flex-col items-center justify-center"
               >
                 <p className="text-[10px] text-gray-500 mb-1">Features Shipped</p>
-                <div className="relative w-full h-44 bg-gray-800/50 rounded-lg border border-gray-700 overflow-hidden">
+                <div className="relative w-full h-36 bg-gray-800/50 rounded-lg border border-gray-700 overflow-hidden">
                   <motion.div
                     initial={{ height: 0 }}
                     animate={{ height: animPhase >= 3 ? '15%' : 0 }}
@@ -6450,8 +6775,8 @@ function ProductOpportunities() {
             animate={{ opacity: 1, y: 0 }}
             className="absolute top-16 left-0 right-0 text-center z-10"
           >
-            <h2 className="text-2xl font-bold text-white mb-1">Scale Smarter, Not Harder</h2>
-            <p className="text-sm text-gray-400">Intelligent systems handle growth efficiently</p>
+            <h2 className="text-2xl font-bold text-white mb-1">Scalable by Design</h2>
+            <p className="text-sm text-gray-400">Architecture supports volume growth through modular components</p>
           </motion.div>
 
           <div className="w-full max-w-6xl mt-8 flex gap-8">
@@ -6661,8 +6986,8 @@ function ProductOpportunities() {
             animate={{ opacity: phase >= 3 ? 1 : 0 }}
             className="absolute bottom-16 left-0 right-0 text-center"
           >
-            <p className="text-[var(--accent-gold)] font-semibold">Scale your business, not your payroll</p>
-            <p className="text-xs text-gray-500 mt-1">Automation handles the volume — your team handles the exceptions</p>
+            <p className="text-[var(--accent-gold)] font-semibold">Volume growth without linear cost increase</p>
+            <p className="text-xs text-gray-500 mt-1">Automation handles routine processing — teams focus on exceptions</p>
           </motion.div>
         </div>
       );
@@ -7041,8 +7366,8 @@ function ProductOpportunities() {
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-4"
       >
-        <h2 className="text-5xl font-bold text-[var(--text-primary)] mb-2">Business Opportunities</h2>
-        <p className="text-xl text-[var(--text-secondary)]">Technical modernization enables business innovation</p>
+        <h2 className="text-3xl font-bold text-[var(--text-primary)] mb-2">Business Opportunities</h2>
+        <p className="text-base text-[var(--text-secondary)]">Technical modernization enables business innovation</p>
       </motion.div>
 
       <div className="flex-1 flex gap-6 min-h-0">
@@ -7155,20 +7480,23 @@ function TransformationGoals() {
   ];
 
   useEffect(() => {
-    setTimeout(() => setPhase(1), 500);
-    setTimeout(() => setPhase(2), 1200);
-    setTimeout(() => setPhase(3), 2000);
-    setTimeout(() => setPhase(4), 3000);
+    const timers = [
+      setTimeout(() => setPhase(1), 300),
+      setTimeout(() => setPhase(2), 700),
+      setTimeout(() => setPhase(3), 1200),
+      setTimeout(() => setPhase(4), 1800),
+    ];
+    return () => timers.forEach(clearTimeout);
   }, []);
 
   useEffect(() => {
-    if (phase >= 3) {
+    if (phase >= 3 && activeGoal < goals.length - 1) {
       const timer = setTimeout(() => {
-        setActiveGoal(prev => (prev + 1) % goals.length);
-      }, 1500);
+        setActiveGoal(prev => prev + 1);
+      }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [phase, activeGoal]);
+  }, [phase, activeGoal, goals.length]);
 
   return (
     <div className="w-full h-full flex items-center justify-center p-8">
@@ -8545,20 +8873,23 @@ function TradeArchitecture() {
   ];
 
   useEffect(() => {
-    setTimeout(() => setPhase(1), 500);
-    setTimeout(() => setPhase(2), 1200);
-    setTimeout(() => setPhase(3), 2000);
-    setTimeout(() => setPhase(4), 2800);
+    const timers = [
+      setTimeout(() => setPhase(1), 500),
+      setTimeout(() => setPhase(2), 1200),
+      setTimeout(() => setPhase(3), 2000),
+      setTimeout(() => setPhase(4), 2800),
+    ];
+    return () => timers.forEach(clearTimeout);
   }, []);
 
   useEffect(() => {
-    if (phase >= 4) {
+    if (phase >= 4 && activeModule < modularComponents.length - 1) {
       const timer = setTimeout(() => {
-        setActiveModule(prev => (prev + 1) % modularComponents.length);
+        setActiveModule(prev => prev + 1);
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [phase, activeModule]);
+  }, [phase, activeModule, modularComponents.length]);
 
   return (
     <div className="w-full h-full flex flex-col p-6">
@@ -8900,6 +9231,8 @@ export default function InteractiveSlide({ content, slideId, forcePhase, isCaptu
         return <MessageInbox key={uniqueKey} />;
       case 'journey-overview':
         return <JourneyOverview key={uniqueKey} />;
+      case 'architecture-comparison':
+        return <ArchitectureComparison key={uniqueKey} />;
       case 'template-comparison':
         return <TemplateComparison key={uniqueKey} />;
       case 'legacy-problems':
