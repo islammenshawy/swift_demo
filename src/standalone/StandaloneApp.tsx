@@ -40,6 +40,16 @@ const PHASE_COUNTS: Record<string, number> = {
   'elc-reimagination': 1,
   'transformation-metrics': 1,
   'trade-architecture': 1,
+  // Evalio visualizations
+  'engineering-score-journey': 5,
+  'problem-visual': 1,
+  'solution-visual': 1,
+  'score-calculation': 1,
+  'level-weights': 1,
+  'team-benchmarking': 1,
+  'ai-capabilities': 1,
+  'promotion-pipeline': 1,
+  'feature-showcase': 1,
 };
 
 function getPhaseCount(slide: StandaloneSlide): number {
@@ -338,6 +348,8 @@ export default function StandaloneApp() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [autoPlayInterval, setAutoPlayInterval] = useState(5); // seconds
   const [showSettings, setShowSettings] = useState(false);
+  const [controlsVisible, setControlsVisible] = useState(true);
+  const hideTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const demo = window.DEMO_DATA;
   const slides = demo.slides;
@@ -437,6 +449,36 @@ export default function StandaloneApp() {
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
 
+  // Auto-hide controls on mouse inactivity
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    const showControls = () => {
+      setControlsVisible(true);
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+      hideTimeoutRef.current = setTimeout(() => {
+        setControlsVisible(false);
+      }, 3000);
+    };
+
+    // Show controls initially
+    showControls();
+
+    const handleMouseMove = () => {
+      showControls();
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+    };
+  }, [hasStarted]);
+
   // Auto-play functionality - directly calls next() at the selected interval
   useEffect(() => {
     if (!isAutoPlaying || !hasStarted) return;
@@ -498,7 +540,10 @@ export default function StandaloneApp() {
       </AnimatePresence>
 
       {/* Navigation controls */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-50">
+      <div
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-50 transition-opacity duration-300"
+        style={{ opacity: controlsVisible ? 1 : 0, pointerEvents: controlsVisible ? 'auto' : 'none' }}
+      >
         <button
           onClick={prev}
           disabled={currentSlide === 0 && currentPhase === 0}

@@ -578,7 +578,7 @@ function EngineeringScoreJourney() {
     if (phase === 3) {
       const interval = setInterval(() => {
         setSelectedLevel(prev => (prev + 1) % levels.length);
-      }, 1500);
+      }, 3000);
       return () => clearInterval(interval);
     }
   }, [phase, levels.length]);
@@ -2022,7 +2022,7 @@ function ProblemVisual() {
     { icon: '🎭', text: 'Promotions based on perception, not actual contribution' },
     { icon: '📋', text: 'Managers lack data and recommendations to navigate performance discussions' },
     { icon: '❓', text: 'No visibility into how scores are calculated' },
-    { icon: '🚪', text: 'High performers leave when passed over unfairly' },
+    { icon: '🚪', text: 'Top talent attrition when advancement decisions feel arbitrary' },
   ];
 
   useEffect(() => {
@@ -2047,7 +2047,7 @@ function ProblemVisual() {
             className="mb-6"
           >
             <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-2">The Problem</h2>
-            <p className="text-xl text-[var(--text-secondary)]">Performance reviews are broken</p>
+            <p className="text-xl text-[var(--text-secondary)]">Performance reviews lack objectivity and consistency</p>
           </motion.div>
 
           <div className="space-y-4">
@@ -2174,7 +2174,7 @@ function SolutionVisual() {
   const [dataParticles, setDataParticles] = useState<string[]>([]);
 
   const bullets = [
-    { icon: '🔗', text: 'Objective data from JIRA, GitHub, and Confluence' },
+    { icon: '🔗', text: 'Quantitative data from JIRA, GitHub, and Confluence' },
     { icon: '🔄', text: '360-degree feedback enriched with real work metrics' },
     { icon: '📊', text: 'Managers get data-driven talking points and recommendations' },
     { icon: '⚖️', text: 'Fair comparison within same level peers' },
@@ -2212,7 +2212,7 @@ function SolutionVisual() {
             className="mb-6"
           >
             <h2 className="text-4xl font-bold text-[var(--text-primary)] mb-2">The Solution</h2>
-            <p className="text-xl text-[var(--text-secondary)]">Evalio: Objective data fused with 360-degree reviews</p>
+            <p className="text-xl text-[var(--text-secondary)]">Evalio: Quantitative data fused with 360-degree reviews and Objective data</p>
           </motion.div>
 
           <div className="space-y-4">
@@ -3315,330 +3315,283 @@ function TeamBenchmarking() {
 // Journey Overview - Shows where we are in the transformation journey
 // Architecture Comparison - TENET vs REIMAGINE
 function ArchitectureComparison() {
-  const [phase, setPhase] = useState(0);
+  const [activePhase, setActivePhase] = useState(4); // Default to complete view
 
-  useEffect(() => {
-    const timers = [
-      setTimeout(() => setPhase(1), 300),
-      setTimeout(() => setPhase(2), 600),
-      setTimeout(() => setPhase(3), 1000),
-      setTimeout(() => setPhase(4), 1400),
-    ];
-    return () => timers.forEach(clearTimeout);
-  }, []);
+  const phases = [
+    { id: 0, title: 'UI Layer', description: 'Modern React Frontend - Shared by Both' },
+    { id: 1, title: 'Current', description: 'Adapter → API Layer → MuleSoft → Oracle' },
+    { id: 2, title: 'Reimagine', description: 'Workflow Engine → Common Capability → MongoDB' },
+    { id: 3, title: 'Trade AI', description: 'LLM, Cognitive Intelligence, OCR' },
+    { id: 4, title: 'Complete', description: 'Full Architecture Comparison' },
+  ];
 
   return (
-    <div className="w-full h-full flex flex-col items-center px-4 py-2 overflow-hidden">
-      {/* Main SVG Architecture Diagram */}
-      <div className="flex-1 w-full flex items-center justify-center">
-        <svg viewBox="0 0 900 520" className="w-full h-full" style={{ maxWidth: '1100px', maxHeight: '600px' }}>
+    <div className="w-full h-full flex flex-col p-3 overflow-hidden bg-[var(--bg-primary)]">
+      {/* Title */}
+      <div className="text-center mb-2">
+        <h2 className="text-lg font-bold text-[var(--text-primary)]">Architecture Comparison</h2>
+        <p className="text-xs text-[var(--text-secondary)]">Current Approach vs Reimagine Approach</p>
+      </div>
+
+      {/* Phase Navigation */}
+      <div className="flex justify-center gap-2 mb-2">
+        {phases.map((phase, i) => (
+          <button
+            key={phase.id}
+            onClick={() => setActivePhase(i)}
+            className={`px-2 py-1 rounded text-xs transition-all ${
+              activePhase === i
+                ? 'bg-[var(--accent-cyan)] text-[var(--bg-primary)] font-semibold'
+                : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'
+            }`}
+          >
+            {phase.title}
+          </button>
+        ))}
+      </div>
+
+      {/* Main SVG Diagram */}
+      <div className="flex-1 relative bg-[var(--bg-secondary)] rounded-lg border border-[var(--accent-cyan)]/20 overflow-hidden">
+        <svg viewBox="0 0 960 420" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
           <defs>
-            {/* 3D Box gradient - purple bottom */}
-            <linearGradient id="purpleGrad3D" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#9061F9" />
-              <stop offset="50%" stopColor="#7C3AED" />
-              <stop offset="100%" stopColor="#5B21B6" />
-            </linearGradient>
-            {/* Darker purple for 3D edge */}
-            <linearGradient id="purpleEdge" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#5B21B6" />
-              <stop offset="100%" stopColor="#4C1D95" />
-            </linearGradient>
-            {/* Arrow marker */}
-            <marker id="archArrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill="#7C3AED" />
+            <marker id="arrow-gold" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+              <path d="M0,0 L0,5 L5,2.5 z" fill="#C9A227" />
             </marker>
-            <marker id="archArrowGray" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill="#666" />
+            <marker id="arrow-green" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+              <path d="M0,0 L0,5 L5,2.5 z" fill="#4CAF50" />
             </marker>
+            <marker id="arrow-gray" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+              <path d="M0,0 L0,5 L5,2.5 z" fill="#666" />
+            </marker>
+            <linearGradient id="currentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#C9A227" stopOpacity="0.12" />
+              <stop offset="100%" stopColor="#f97316" stopOpacity="0.04" />
+            </linearGradient>
+            <linearGradient id="reimagineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#4CAF50" stopOpacity="0.12" />
+              <stop offset="100%" stopColor="#4ECDC4" stopOpacity="0.04" />
+            </linearGradient>
+            <linearGradient id="oracleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#f80000" />
+              <stop offset="100%" stopColor="#b30000" />
+            </linearGradient>
+            <linearGradient id="mongoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#4DB33D" />
+              <stop offset="100%" stopColor="#3A8C2E" />
+            </linearGradient>
           </defs>
 
-          {/* ========== LEFT SIDE: TENET APPROACH ========== */}
-          <motion.g
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : -30 }}
-          >
-            {/* Header: → TENET APPROACH ← */}
-            <text x="200" y="30" textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600">→</text>
-            <text x="200" y="30" textAnchor="middle" fill="#444" fontSize="14" fontWeight="700" dx="0">
-              <tspan dx="20">TENET APPROACH</tspan>
-            </text>
-            <text x="330" y="30" textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600">←</text>
+          {/* Headers */}
+          <text x="230" y="20" textAnchor="middle" fill="#C9A227" fontSize="13" fontWeight="700">CURRENT APPROACH</text>
+          <text x="730" y="20" textAnchor="middle" fill="#4CAF50" fontSize="13" fontWeight="700">REIMAGINE APPROACH</text>
 
-            {/* Flow arrow on left side */}
-            <path d="M70 70 L70 400" stroke="#7C3AED" strokeWidth="2" fill="none" />
-            <polygon points="70,405 65,395 75,395" fill="#7C3AED" />
+          {/* ===== LEFT: CURRENT APPROACH ===== */}
+          <g opacity={activePhase === 1 || activePhase === 4 ? 1 : (activePhase === 0 ? 0.8 : 0.5)}>
+            <rect x="15" y="30" width="430" height="355" rx="6" fill="url(#currentGrad)" stroke="#C9A227" strokeWidth="1.5" strokeOpacity="0.5" />
 
-            {/* UI/HTML Box with React */}
-            <g transform="translate(100, 50)">
-              {/* White box */}
-              <rect x="0" y="0" width="200" height="70" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
-              {/* Purple 3D bottom */}
-              <path d="M0,70 L0,80 Q0,85 5,85 L195,85 Q200,85 200,80 L200,70 Z" fill="url(#purpleGrad3D)" />
-              {/* Content */}
-              <text x="100" y="22" textAnchor="middle" fill="#7C3AED" fontSize="13" fontWeight="600">UI / HTML</text>
-              {/* React logo */}
-              <g transform="translate(60, 32)">
-                <circle cx="20" cy="15" r="3" fill="#61DAFB" />
-                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" />
-                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(60 20 15)" />
-                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(120 20 15)" />
+            {/* UI Layer */}
+            <g opacity={activePhase >= 0 ? 1 : 0.4}>
+              <rect x="30" y="42" width="400" height="50" rx="4" fill="#0F1F35" stroke="#4CAF50" strokeWidth="1.5" />
+              <text x="230" y="62" textAnchor="middle" fill="#4CAF50" fontSize="11" fontWeight="600">UI / HTML</text>
+              <g transform="translate(190, 67)">
+                <circle cx="10" cy="8" r="2" fill="#61DAFB" />
+                <ellipse cx="10" cy="8" rx="8" ry="3" fill="none" stroke="#61DAFB" strokeWidth="0.8" />
               </g>
-              <text x="140" y="50" textAnchor="start" fill="#61DAFB" fontSize="14" fontWeight="600">React</text>
+              <text x="210" y="78" fill="#61DAFB" fontSize="9">React</text>
+              <rect x="350" y="62" width="55" height="16" rx="3" fill="#4CAF50" fillOpacity="0.2" stroke="#4CAF50" strokeWidth="0.8" />
+              <text x="378" y="73" textAnchor="middle" fill="#4CAF50" fontSize="7" fontWeight="600">✓ TENET</text>
             </g>
 
-            {/* Arrow down */}
-            <path d="M200 140 L200 155" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
+            {/* Arrow */}
+            <path d="M230 92 L230 103" stroke="#C9A227" strokeWidth="1.5" markerEnd="url(#arrow-gold)" />
 
-            {/* New Adapter Layer */}
-            <g transform="translate(90, 165)">
-              {/* Purple box */}
-              <rect x="0" y="0" width="220" height="35" rx="3" fill="url(#purpleGrad3D)" />
-              {/* Darker 3D bottom edge */}
-              <path d="M0,35 L10,45 L230,45 L220,35 Z" fill="url(#purpleEdge)" />
-              <text x="110" y="23" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="600">New Adapter Layer</text>
+            {/* Adapter Layer - simple 3D */}
+            <g opacity={activePhase === 1 || activePhase === 4 ? 1 : 0.5}>
+              <polygon points="30,110 420,110 428,118 38,118" fill="#C9A227" fillOpacity="0.25" stroke="#C9A227" strokeWidth="1" />
+              <rect x="30" y="118" width="390" height="28" fill="#C9A227" fillOpacity="0.12" stroke="#C9A227" strokeWidth="1" />
+              <polygon points="420,110 420,146 428,138 428,118" fill="#C9A227" fillOpacity="0.2" stroke="#C9A227" strokeWidth="0.5" />
+              <text x="230" y="137" textAnchor="middle" fill="#C9A227" fontSize="10" fontWeight="600">New Adapter Layer</text>
             </g>
 
-            {/* Arrow down */}
-            <path d="M200 215 L200 230" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
+            {/* Arrow */}
+            <path d="M230 148 L230 159" stroke="#C9A227" strokeWidth="1.5" markerEnd="url(#arrow-gold)" />
 
-            {/* New API Layer Box */}
-            <g transform="translate(90, 240)">
-              {/* White box */}
-              <rect x="0" y="0" width="220" height="90" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
-              {/* Purple 3D bottom */}
-              <path d="M0,90 L10,100 L230,100 L220,90 Z" fill="url(#purpleGrad3D)" />
-              {/* Content */}
-              <text x="110" y="25" textAnchor="middle" fill="#333" fontSize="14" fontWeight="700">New</text>
-              <text x="110" y="42" textAnchor="middle" fill="#333" fontSize="14" fontWeight="700">API Layer</text>
-              {/* Java icon */}
-              <g transform="translate(40, 50)">
-                <path d="M5 0 Q2 -4 5 -7" fill="none" stroke="#E76F00" strokeWidth="1" />
-                <path d="M10 -2 Q7 -6 10 -9" fill="none" stroke="#E76F00" strokeWidth="1" />
-                <path d="M15 0 Q12 -4 15 -7" fill="none" stroke="#E76F00" strokeWidth="1" />
-                <path d="M2 2 L2 18 Q2 22 10 22 Q18 22 18 18 L18 2 Z" fill="#5382A1" />
-                <path d="M18 6 Q24 6 24 12 Q24 18 18 18" fill="none" stroke="#5382A1" strokeWidth="2" />
+            {/* API Layer */}
+            <g opacity={activePhase === 1 || activePhase === 4 ? 1 : 0.5}>
+              <rect x="30" y="165" width="400" height="60" rx="4" fill="#0F1F35" stroke="#9c27b0" strokeWidth="0.8" strokeOpacity="0.5" strokeDasharray="3 2" />
+              <text x="230" y="182" textAnchor="middle" fill="var(--text-primary)" fontSize="11" fontWeight="700">New API Layer</text>
+              {/* Java */}
+              <g transform="translate(100, 188)">
+                <rect width="40" height="30" rx="3" fill="#f89820" fillOpacity="0.1" stroke="#f89820" strokeWidth="0.5" />
+                <path d="M16 8 L16 18 Q16 22 20 22 Q24 22 24 18 L24 8" fill="#5382a1" />
+                <text x="20" y="29" textAnchor="middle" fill="#f89820" fontSize="7" fontWeight="600">Java</text>
               </g>
-              <text x="65" y="73" textAnchor="start" fill="#E76F00" fontSize="12" fontWeight="600">Java</text>
-              {/* Drools icon */}
-              <g transform="translate(130, 55)">
-                <circle cx="10" cy="10" r="10" fill="none" stroke="#1E88E5" strokeWidth="2" />
-                <circle cx="10" cy="10" r="4" fill="#1E88E5" />
-              </g>
-              <text x="160" y="73" textAnchor="start" fill="#1E88E5" fontSize="12" fontWeight="600">Drools</text>
-              <text x="110" y="88" textAnchor="middle" fill="#666" fontSize="10">Rules Engine</text>
-            </g>
-
-            {/* Arrow down */}
-            <path d="M200 345 L200 360" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
-
-            {/* MuleSoft */}
-            <g transform="translate(115, 370)">
-              <rect x="0" y="0" width="170" height="35" rx="17" fill="#fff" stroke="#ddd" strokeWidth="1.5" />
-              <circle cx="30" cy="17" r="14" fill="#00A1E0" />
-              <text x="30" y="22" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700">M</text>
-              <text x="105" y="22" textAnchor="middle" fill="#333" fontSize="14" fontWeight="600">MuleSoft</text>
-            </g>
-
-            {/* Arrow down */}
-            <path d="M200 410 L200 425" stroke="#666" strokeWidth="2" markerEnd="url(#archArrowGray)" />
-
-            {/* Oracle + Batch Jobs */}
-            <g transform="translate(95, 435)">
-              {/* Oracle Database Cylinder */}
-              <g transform="translate(0, 0)">
-                <ellipse cx="45" cy="8" rx="40" ry="8" fill="#E8E8E8" stroke="#999" strokeWidth="1" />
-                <rect x="5" y="8" width="80" height="45" fill="#F5F5F5" stroke="#999" strokeWidth="1" />
-                <ellipse cx="45" cy="53" rx="40" ry="8" fill="#E0E0E0" stroke="#999" strokeWidth="1" />
-                <line x1="5" y1="8" x2="5" y2="53" stroke="#999" strokeWidth="1" />
-                <line x1="85" y1="8" x2="85" y2="53" stroke="#999" strokeWidth="1" />
-                <text x="45" y="35" textAnchor="middle" fill="#C74634" fontSize="11" fontWeight="700">ORACLE</text>
-              </g>
-
-              {/* Arrow between */}
-              <path d="M95 35 L115 35" stroke="#666" strokeWidth="1.5" />
-              <polygon points="105,32 115,35 105,38" fill="#666" />
-
-              {/* Batch Jobs */}
-              <g transform="translate(125, 5)">
-                <rect x="0" y="0" width="70" height="55" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
-                <rect x="12" y="10" width="46" height="6" rx="1" fill="#999" />
-                <rect x="12" y="20" width="46" height="6" rx="1" fill="#999" />
-                <rect x="12" y="30" width="46" height="6" rx="1" fill="#999" />
-                <text x="35" y="50" textAnchor="middle" fill="#666" fontSize="9">Batch Jobs</text>
-              </g>
-            </g>
-          </motion.g>
-
-          {/* ========== CENTER DIVIDER ========== */}
-          <motion.g
-            initial={{ opacity: 0, scaleY: 0 }}
-            animate={{ opacity: phase >= 2 ? 1 : 0, scaleY: phase >= 2 ? 1 : 0 }}
-            style={{ transformOrigin: '450px 260px' }}
-          >
-            <rect x="445" y="50" width="10" height="420" fill="url(#purpleGrad3D)" />
-
-            {/* Data Sync label */}
-            <motion.g
-              initial={{ opacity: 0 }}
-              animate={{ opacity: phase >= 4 ? 1 : 0 }}
-            >
-              <text x="390" y="485" fill="#666" fontSize="11">←</text>
-              <text x="450" y="485" textAnchor="middle" fill="#444" fontSize="12" fontWeight="600">Data Sync</text>
-              <text x="510" y="485" fill="#666" fontSize="11">→</text>
-            </motion.g>
-          </motion.g>
-
-          {/* ========== RIGHT SIDE: REIMAGINE APPROACH ========== */}
-          <motion.g
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : 30 }}
-          >
-            {/* Header: → REIMAGINE APPROACH ← */}
-            <text x="570" y="30" textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600">→</text>
-            <text x="700" y="30" textAnchor="middle" fill="#444" fontSize="14" fontWeight="700">REIMAGINE APPROACH</text>
-            <text x="830" y="30" textAnchor="middle" fill="#7C3AED" fontSize="11" fontWeight="600">←</text>
-
-            {/* Flow arrow on right side */}
-            <path d="M830 70 L830 400" stroke="#7C3AED" strokeWidth="2" fill="none" />
-            <polygon points="830,405 825,395 835,395" fill="#7C3AED" />
-
-            {/* UI/HTML Box with React */}
-            <g transform="translate(600, 50)">
-              {/* White box */}
-              <rect x="0" y="0" width="200" height="70" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
-              {/* Purple 3D bottom */}
-              <path d="M0,70 L0,80 Q0,85 5,85 L195,85 Q200,85 200,80 L200,70 Z" fill="url(#purpleGrad3D)" />
-              {/* Content */}
-              <text x="100" y="22" textAnchor="middle" fill="#7C3AED" fontSize="13" fontWeight="600">UI / HTML</text>
-              {/* React logo */}
-              <g transform="translate(60, 32)">
-                <circle cx="20" cy="15" r="3" fill="#61DAFB" />
-                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" />
-                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(60 20 15)" />
-                <ellipse cx="20" cy="15" rx="15" ry="6" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(120 20 15)" />
-              </g>
-              <text x="140" y="50" textAnchor="start" fill="#61DAFB" fontSize="14" fontWeight="600">React</text>
-            </g>
-
-            {/* Arrow down */}
-            <path d="M700 140 L700 155" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
-
-            {/* Workflow Engine (top) */}
-            <g transform="translate(590, 165)">
-              <rect x="0" y="0" width="220" height="35" rx="3" fill="url(#purpleGrad3D)" />
-              <path d="M0,35 L10,45 L230,45 L220,35 Z" fill="url(#purpleEdge)" />
-              <text x="110" y="23" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="600">Workflow Engine</text>
-            </g>
-
-            {/* Arrow down */}
-            <path d="M700 215 L700 230" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
-
-            {/* Common Capability Box */}
-            <g transform="translate(570, 240)">
-              {/* White box */}
-              <rect x="0" y="0" width="260" height="115" rx="3" fill="#fff" stroke="#ddd" strokeWidth="1" />
-              {/* Purple 3D bottom */}
-              <path d="M0,115 L10,125 L270,125 L260,115 Z" fill="url(#purpleGrad3D)" />
-              {/* Content */}
-              <text x="130" y="22" textAnchor="middle" fill="#333" fontSize="14" fontWeight="700">Common Capability</text>
-              {/* 2x2 Grid */}
-              <rect x="20" y="32" width="100" height="26" rx="2" fill="#f9f9f9" stroke="#ddd" strokeWidth="1" />
-              <text x="70" y="50" textAnchor="middle" fill="#555" fontSize="11">Ingestion</text>
-              <rect x="140" y="32" width="100" height="26" rx="2" fill="#f9f9f9" stroke="#ddd" strokeWidth="1" />
-              <text x="190" y="50" textAnchor="middle" fill="#555" fontSize="11">Extraction</text>
-              <rect x="20" y="62" width="100" height="26" rx="2" fill="#f9f9f9" stroke="#ddd" strokeWidth="1" />
-              <text x="70" y="80" textAnchor="middle" fill="#555" fontSize="11">Validation</text>
-              <rect x="140" y="62" width="100" height="26" rx="2" fill="#f9f9f9" stroke="#ddd" strokeWidth="1" />
-              <text x="190" y="80" textAnchor="middle" fill="#555" fontSize="11">Booking</text>
-              {/* Tech icons row */}
-              <g transform="translate(25, 93)">
-                <path d="M3 0 Q0 -3 3 -5" fill="none" stroke="#E76F00" strokeWidth="0.8" />
-                <path d="M7 -1 Q4 -4 7 -6" fill="none" stroke="#E76F00" strokeWidth="0.8" />
-                <path d="M11 0 Q8 -3 11 -5" fill="none" stroke="#E76F00" strokeWidth="0.8" />
-                <path d="M1 2 L1 12 Q1 14 7 14 Q13 14 13 12 L13 2 Z" fill="#5382A1" />
-                <text x="20" y="12" fill="#E76F00" fontSize="10" fontWeight="600">Java</text>
-              </g>
-              <g transform="translate(95, 93)">
-                <circle cx="8" cy="7" r="7" fill="none" stroke="#666" strokeWidth="1.5" />
-                <text x="8" y="10" textAnchor="middle" fill="#666" fontSize="6" fontWeight="600">REST</text>
-                <text x="22" y="12" fill="#666" fontSize="10">API</text>
-              </g>
-              <g transform="translate(175, 93)">
-                <circle cx="8" cy="7" r="7" fill="none" stroke="#1E88E5" strokeWidth="1.5" />
-                <circle cx="8" cy="7" r="3" fill="#1E88E5" />
-                <text x="22" y="12" fill="#1E88E5" fontSize="10" fontWeight="600">Drools</text>
+              {/* Drools */}
+              <g transform="translate(170, 188)">
+                <rect width="70" height="30" rx="3" fill="#2196F3" fillOpacity="0.1" stroke="#2196F3" strokeWidth="0.5" />
+                <circle cx="15" cy="13" r="7" fill="#2196F3" opacity="0.3" />
+                <text x="15" y="16" textAnchor="middle" fill="#2196F3" fontSize="8" fontWeight="700">D</text>
+                <text x="45" y="12" fill="#2196F3" fontSize="8" fontWeight="600">Drools</text>
+                <text x="45" y="22" fill="#888" fontSize="6">Rules Engine</text>
               </g>
             </g>
 
-            {/* Arrow down */}
-            <path d="M700 370 L700 385" stroke="#7C3AED" strokeWidth="2" markerEnd="url(#archArrow)" />
+            {/* Arrow */}
+            <path d="M230 228 L230 239" stroke="#C9A227" strokeWidth="1.5" markerEnd="url(#arrow-gold)" />
 
-            {/* Workflow Engine (bottom) */}
-            <g transform="translate(590, 395)">
-              <rect x="0" y="0" width="220" height="35" rx="3" fill="url(#purpleGrad3D)" />
-              <path d="M0,35 L10,45 L230,45 L220,35 Z" fill="url(#purpleEdge)" />
-              <text x="110" y="23" textAnchor="middle" fill="#fff" fontSize="13" fontWeight="600">Workflow Engine</text>
+            {/* MuleSoft - Solid 3D Platform (Left tilt) */}
+            <g opacity={activePhase === 1 || activePhase === 4 ? 1 : 0.5}>
+              {/* Shadow */}
+              <ellipse cx="225" cy="290" rx="195" ry="5" fill="#000" fillOpacity="0.2" />
+              {/* Left side face - darker blue for depth */}
+              <polygon points="22,256 30,248 30,286 22,294" fill="#006C9C" />
+              {/* Top face - lighter blue */}
+              <polygon points="22,256 30,248 420,248 412,256" fill="#4DC8F0" />
+              {/* Front face - main MuleSoft blue */}
+              <rect x="22" y="256" width="390" height="30" fill="#00A1E0" />
+              {/* Top edge highlight */}
+              <line x1="30" y1="248" x2="420" y2="248" stroke="#7DD8F7" strokeWidth="1" />
+              {/* Front face inner details */}
+              <line x1="22" y1="258" x2="412" y2="258" stroke="#4DC8F0" strokeWidth="0.5" />
+              {/* MuleSoft Logo */}
+              <circle cx="55" cy="271" r="11" fill="#fff" />
+              <circle cx="55" cy="271" r="9" fill="#00A1E0" />
+              <text x="55" y="275" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="700">M</text>
+              {/* Text */}
+              <text x="195" y="276" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700">MuleSoft</text>
+              <text x="325" y="276" textAnchor="middle" fill="#B8E8FA" fontSize="8">Integration Platform</text>
             </g>
 
-            {/* Arrow down */}
-            <path d="M700 445 L700 455" stroke="#4DB33D" strokeWidth="2" />
-            <polygon points="700,462 695,452 705,452" fill="#4DB33D" />
+            {/* Arrow */}
+            <path d="M230 288 L230 299" stroke="#666" strokeWidth="1.5" markerEnd="url(#arrow-gray)" />
+
+            {/* Oracle + Batch */}
+            <g opacity={activePhase === 1 || activePhase === 4 ? 1 : 0.5}>
+              <g transform="translate(45, 305)">
+                <ellipse cx="50" cy="5" rx="42" ry="5" fill="url(#oracleGrad)" />
+                <rect x="8" y="5" width="84" height="30" fill="url(#oracleGrad)" />
+                <ellipse cx="50" cy="35" rx="42" ry="5" fill="#800000" />
+                <text x="50" y="23" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="700">ORACLE</text>
+              </g>
+              <path d="M145 330 L175 330" stroke="#666" strokeWidth="1" markerEnd="url(#arrow-gray)" />
+              <g transform="translate(185, 305)">
+                <rect width="120" height="38" rx="3" fill="#0F1F35" stroke="#9c27b0" strokeWidth="0.8" />
+                <line x1="12" y1="10" x2="75" y2="10" stroke="#9c27b0" strokeWidth="0.8" strokeOpacity="0.6" />
+                <line x1="12" y1="18" x2="75" y2="18" stroke="#9c27b0" strokeWidth="0.8" strokeOpacity="0.6" />
+                <line x1="12" y1="26" x2="55" y2="26" stroke="#9c27b0" strokeWidth="0.8" strokeOpacity="0.6" />
+                <circle cx="98" cy="19" r="8" fill="none" stroke="#9c27b0" strokeWidth="0.8" />
+                <path d="M98 13 L98 19 L101 22" stroke="#9c27b0" strokeWidth="0.8" />
+                <text x="60" y="37" textAnchor="middle" fill="#9c27b0" fontSize="6">Batch Jobs</text>
+              </g>
+            </g>
+          </g>
+
+          {/* ===== CENTER DIVIDER ===== */}
+          <g opacity={activePhase >= 1 ? 1 : 0.3}>
+            <rect x="457" y="35" width="6" height="345" rx="3" fill="#00D4FF" fillOpacity="0.4" />
+            <text x="460" y="395" textAnchor="middle" fill="#00D4FF" fontSize="9" fontWeight="600">Data Sync</text>
+          </g>
+
+          {/* ===== RIGHT: REIMAGINE APPROACH ===== */}
+          <g opacity={activePhase === 2 || activePhase === 4 ? 1 : (activePhase === 0 ? 0.8 : 0.5)}>
+            <rect x="515" y="30" width="430" height="355" rx="6" fill="url(#reimagineGrad)" stroke="#4CAF50" strokeWidth="1.5" strokeOpacity="0.5" />
+
+            {/* UI Layer */}
+            <g opacity={activePhase >= 0 ? 1 : 0.4}>
+              <rect x="530" y="42" width="400" height="50" rx="4" fill="#0F1F35" stroke="#4CAF50" strokeWidth="1.5" />
+              <text x="730" y="62" textAnchor="middle" fill="#4CAF50" fontSize="11" fontWeight="600">UI / HTML</text>
+              <g transform="translate(690, 67)">
+                <circle cx="10" cy="8" r="2" fill="#61DAFB" />
+                <ellipse cx="10" cy="8" rx="8" ry="3" fill="none" stroke="#61DAFB" strokeWidth="0.8" />
+              </g>
+              <text x="710" y="78" fill="#61DAFB" fontSize="9">React</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M730 92 L730 103" stroke="#4CAF50" strokeWidth="1.5" markerEnd="url(#arrow-green)" />
+
+            {/* Workflow Engine (top) - simple 3D */}
+            <g opacity={activePhase === 2 || activePhase === 4 ? 1 : 0.5}>
+              <polygon points="530,110 920,110 928,118 538,118" fill="#4CAF50" fillOpacity="0.25" stroke="#4CAF50" strokeWidth="1" />
+              <rect x="530" y="118" width="390" height="28" fill="#4CAF50" fillOpacity="0.15" stroke="#4CAF50" strokeWidth="1" />
+              <polygon points="920,110 920,146 928,138 928,118" fill="#4CAF50" fillOpacity="0.2" stroke="#4CAF50" strokeWidth="0.5" />
+              <circle cx="555" cy="132" r="8" fill="none" stroke="#4CAF50" strokeWidth="1" />
+              <circle cx="555" cy="132" r="3" fill="#4CAF50" />
+              <text x="730" y="137" textAnchor="middle" fill="#4CAF50" fontSize="10" fontWeight="600">Workflow Engine</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M730 148 L730 159" stroke="#4CAF50" strokeWidth="1.5" markerEnd="url(#arrow-green)" />
+
+            {/* Common Capability */}
+            <g opacity={activePhase === 2 || activePhase === 4 ? 1 : 0.5}>
+              <rect x="530" y="165" width="400" height="75" rx="4" fill="#0F1F35" stroke="#4CAF50" strokeWidth="0.8" strokeOpacity="0.5" strokeDasharray="3 2" />
+              <text x="730" y="180" textAnchor="middle" fill="var(--text-primary)" fontSize="10" fontWeight="700">Common Capability</text>
+              {/* 2x2 Grid - adjusted to fit within container */}
+              <rect x="545" y="188" width="85" height="20" rx="3" fill="#4CAF50" fillOpacity="0.1" stroke="#4CAF50" strokeWidth="0.4" />
+              <text x="587" y="202" textAnchor="middle" fill="var(--text-secondary)" fontSize="8">Ingestion</text>
+              <rect x="640" y="188" width="85" height="20" rx="3" fill="#4CAF50" fillOpacity="0.1" stroke="#4CAF50" strokeWidth="0.4" />
+              <text x="682" y="202" textAnchor="middle" fill="var(--text-secondary)" fontSize="8">Extraction</text>
+              <rect x="735" y="188" width="85" height="20" rx="3" fill="#4CAF50" fillOpacity="0.1" stroke="#4CAF50" strokeWidth="0.4" />
+              <text x="777" y="202" textAnchor="middle" fill="var(--text-secondary)" fontSize="8">Validation</text>
+              <rect x="830" y="188" width="85" height="20" rx="3" fill="#4CAF50" fillOpacity="0.1" stroke="#4CAF50" strokeWidth="0.4" />
+              <text x="872" y="202" textAnchor="middle" fill="var(--text-secondary)" fontSize="8">Booking</text>
+              {/* Tech badges inline */}
+              <rect x="570" y="215" width="35" height="18" rx="2" fill="#f89820" fillOpacity="0.1" stroke="#f89820" strokeWidth="0.4" />
+              <text x="587" y="227" textAnchor="middle" fill="#f89820" fontSize="7">Java</text>
+              <rect x="615" y="215" width="55" height="18" rx="2" fill="#2196F3" fillOpacity="0.1" stroke="#2196F3" strokeWidth="0.4" />
+              <text x="642" y="227" textAnchor="middle" fill="#2196F3" fontSize="7">Drools</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M730 243 L730 254" stroke="#4CAF50" strokeWidth="1.5" markerEnd="url(#arrow-green)" />
+
+            {/* Workflow Engine (bottom) - simple 3D */}
+            <g opacity={activePhase === 2 || activePhase === 4 ? 1 : 0.5}>
+              <polygon points="530,261 920,261 928,269 538,269" fill="#4CAF50" fillOpacity="0.25" stroke="#4CAF50" strokeWidth="1" />
+              <rect x="530" y="269" width="390" height="28" fill="#4CAF50" fillOpacity="0.15" stroke="#4CAF50" strokeWidth="1" />
+              <polygon points="920,261 920,297 928,289 928,269" fill="#4CAF50" fillOpacity="0.2" stroke="#4CAF50" strokeWidth="0.5" />
+              <circle cx="555" cy="283" r="8" fill="none" stroke="#4CAF50" strokeWidth="1" />
+              <circle cx="555" cy="283" r="3" fill="#4CAF50" />
+              <text x="730" y="288" textAnchor="middle" fill="#4CAF50" fontSize="10" fontWeight="600">Workflow Engine</text>
+            </g>
+
+            {/* Arrow */}
+            <path d="M730 300 L730 311" stroke="#4CAF50" strokeWidth="1.5" markerEnd="url(#arrow-green)" />
 
             {/* MongoDB */}
-            <g transform="translate(660, 468)">
-              {/* Database Cylinder */}
-              <ellipse cx="40" cy="6" rx="35" ry="6" fill="#E8E8E8" stroke="#999" strokeWidth="1" />
-              <rect x="5" y="6" width="70" height="40" fill="#F5F5F5" stroke="#999" strokeWidth="1" />
-              <ellipse cx="40" cy="46" rx="35" ry="6" fill="#E0E0E0" stroke="#999" strokeWidth="1" />
-              <line x1="5" y1="6" x2="5" y2="46" stroke="#999" strokeWidth="1" />
-              <line x1="75" y1="6" x2="75" y2="46" stroke="#999" strokeWidth="1" />
-              {/* MongoDB Leaf */}
-              <path d="M40 15 C40 15 32 22 32 32 C32 38 36 44 40 47 C44 44 48 38 48 32 C48 22 40 15 40 15 Z" fill="#4DB33D" />
-              <path d="M40 47 L40 52" stroke="#4DB33D" strokeWidth="2" />
+            <g opacity={activePhase === 2 || activePhase === 4 ? 1 : 0.5}>
+              <g transform="translate(665, 318)">
+                <ellipse cx="60" cy="5" rx="55" ry="6" fill="url(#mongoGrad)" />
+                <rect x="5" y="5" width="110" height="30" fill="url(#mongoGrad)" />
+                <ellipse cx="60" cy="35" rx="55" ry="6" fill="#3A8C2E" />
+                <ellipse cx="60" cy="5" rx="55" ry="6" fill="none" stroke="#6FCF5A" strokeWidth="0.8" />
+                <path d="M60 10 C60 10 52 16 52 22 C52 26 56 30 60 32 C64 30 68 26 68 22 C68 16 60 10 60 10 Z" fill="#C8F7C0" />
+                <text x="60" y="25" textAnchor="middle" fill="#fff" fontSize="8" fontWeight="600">MongoDB</text>
+              </g>
             </g>
-          </motion.g>
+          </g>
 
-          {/* ========== BOTTOM: Trade AI Banner ========== */}
-          <motion.g
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: phase >= 4 ? 1 : 0, y: phase >= 4 ? 0 : 20 }}
-          >
-            {/* Banner box */}
-            <rect x="100" y="530" width="700" height="55" rx="5" fill="#fff" stroke="#ddd" strokeWidth="1.5" />
-
-            {/* Trade AI label */}
-            <text x="160" y="562" textAnchor="middle" fill="#333" fontSize="16" fontWeight="700">Trade AI</text>
-
-            {/* LLM */}
-            <g transform="translate(260, 540)">
-              <rect x="0" y="0" width="28" height="28" rx="3" fill="#f5f5f5" stroke="#999" strokeWidth="1" />
-              <circle cx="10" cy="12" r="3" fill="#666" />
-              <circle cx="18" cy="12" r="3" fill="#666" />
-              <path d="M8 20 L20 20" stroke="#666" strokeWidth="2" strokeLinecap="round" />
-              <text x="45" y="20" fill="#555" fontSize="12" fontWeight="500">LLM</text>
-            </g>
-
-            {/* Cognitive Intelligence */}
-            <g transform="translate(420, 540)">
-              <circle cx="14" cy="14" r="12" fill="#f5f5f5" stroke="#999" strokeWidth="1" />
-              <circle cx="14" cy="14" r="5" fill="#666" />
-              <path d="M6 6 L3 3 M22 6 L25 3 M6 22 L3 25 M22 22 L25 25" stroke="#666" strokeWidth="1.5" />
-              <text x="35" y="12" fill="#555" fontSize="11" fontWeight="500">Cognitive</text>
-              <text x="35" y="24" fill="#555" fontSize="11" fontWeight="500">Intelligence</text>
-            </g>
-
-            {/* OCR */}
-            <g transform="translate(600, 538)">
-              <rect x="0" y="0" width="24" height="32" rx="2" fill="#f5f5f5" stroke="#999" strokeWidth="1" />
-              <line x1="5" y1="8" x2="19" y2="8" stroke="#666" strokeWidth="1.5" />
-              <line x1="5" y1="14" x2="19" y2="14" stroke="#666" strokeWidth="1.5" />
-              <line x1="5" y1="20" x2="14" y2="20" stroke="#666" strokeWidth="1.5" />
-              <text x="32" y="12" fill="#555" fontSize="10" fontWeight="500">Optical Character</text>
-              <text x="32" y="24" fill="#555" fontSize="10" fontWeight="500">Recognition</text>
-            </g>
-          </motion.g>
+          {/* ===== BOTTOM: Trade AI Banner ===== */}
+          <g opacity={activePhase >= 3 ? 1 : 0.3}>
+            <rect x="150" y="392" width="660" height="26" rx="4" fill="#0F1F35" stroke="#00D4FF" strokeWidth={activePhase === 3 || activePhase === 4 ? 1.5 : 0.8} strokeOpacity={activePhase === 3 || activePhase === 4 ? 0.8 : 0.3} />
+            <text x="200" y="409" textAnchor="middle" fill="#00D4FF" fontSize="10" fontWeight="700">Trade AI</text>
+            <rect x="250" y="398" width="16" height="14" rx="2" fill="#00D4FF" fillOpacity="0.15" stroke="#00D4FF" strokeWidth="0.4" />
+            <text x="258" y="408" textAnchor="middle" fill="#00D4FF" fontSize="7">🤖</text>
+            <text x="285" y="408" fill="var(--text-secondary)" fontSize="8">LLM</text>
+            <circle cx="360" cy="405" r="7" fill="#00D4FF" fillOpacity="0.15" stroke="#00D4FF" strokeWidth="0.4" />
+            <text x="385" y="403" fill="var(--text-secondary)" fontSize="7">Cognitive</text>
+            <text x="385" y="411" fill="var(--text-secondary)" fontSize="7">Intelligence</text>
+            <rect x="480" y="398" width="12" height="14" rx="2" fill="#00D4FF" fillOpacity="0.15" stroke="#00D4FF" strokeWidth="0.4" />
+            <text x="505" y="408" fill="var(--text-secondary)" fontSize="7">OCR</text>
+          </g>
         </svg>
+      </div>
+
+      {/* Phase Description */}
+      <div className="mt-1 text-center">
+        <p className="text-xs text-[var(--accent-cyan)] font-semibold">{phases[activePhase].title}</p>
+        <p className="text-xs text-[var(--text-secondary)]">{phases[activePhase].description}</p>
       </div>
     </div>
   );

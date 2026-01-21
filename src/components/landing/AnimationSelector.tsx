@@ -67,7 +67,7 @@ export default function AnimationSelector({ onExport }: AnimationSelectorProps) 
 
     const interval = setInterval(() => {
       rotateToNext();
-    }, 5000); // 5 seconds per animation
+    }, 10000); // 10 seconds per animation
 
     return () => clearInterval(interval);
   }, [isAutoRotating, rotateToNext]);

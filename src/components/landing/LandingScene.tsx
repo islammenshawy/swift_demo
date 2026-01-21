@@ -106,32 +106,6 @@ export default function LandingScene({ onEnterPresentation }: LandingSceneProps)
     }
   }, [animationStyle]);
 
-  // Export as interactive HTML (uses the standalone export API)
-  const handleExportHtml = useCallback(async () => {
-    setExportStatus('exporting');
-    try {
-      const response = await fetch(`/api/export-standalone?demoId=landing-page&animationStyle=${animationStyle}`);
-      if (!response.ok) {
-        throw new Error('Export failed');
-      }
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `landing-page-${animationStyle}.html`;
-      link.click();
-      URL.revokeObjectURL(url);
-      setExportStatus('done');
-      setTimeout(() => {
-        setShowExportDialog(false);
-        setExportStatus('idle');
-      }, 1500);
-    } catch (err) {
-      console.error('HTML export failed:', err);
-      setExportStatus('error');
-    }
-  }, [animationStyle]);
-
   return (
     <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-[var(--bg-primary)]">
       {/* 3D Canvas */}
@@ -266,9 +240,8 @@ export default function LandingScene({ onEnterPresentation }: LandingSceneProps)
                       </div>
                     </button>
 
-                    <button
-                      onClick={handleExportHtml}
-                      className="w-full p-4 rounded-xl border-2 border-white/10 hover:border-[var(--accent-cyan)] hover:bg-[var(--accent-cyan)]/10 transition-all text-left"
+                    <div
+                      className="w-full p-4 rounded-xl border-2 border-white/10 opacity-50 cursor-not-allowed text-left"
                     >
                       <div className="flex items-start gap-4">
                         <div className="p-2 rounded-lg bg-white/5 text-[var(--text-muted)]">
@@ -280,12 +253,11 @@ export default function LandingScene({ onEnterPresentation }: LandingSceneProps)
                         <div>
                           <div className="flex items-center gap-2">
                             <h3 className="font-semibold text-[var(--text-primary)]">Interactive HTML</h3>
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--accent-gold)]/20 text-[var(--accent-gold)]">Recommended</span>
                           </div>
-                          <p className="text-sm text-[var(--text-muted)] mt-1">Full animations, works offline</p>
+                          <p className="text-sm text-[var(--text-muted)] mt-1">Not available for 3D animations</p>
                         </div>
                       </div>
-                    </button>
+                    </div>
                   </div>
                 </>
               )}

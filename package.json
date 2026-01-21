@@ -17,6 +17,7 @@
     "@react-three/fiber": "9.4.2",
     "archiver": "^7.0.1",
     "framer-motion": "12.24.12",
+    "html2canvas": "^1.4.1",
     "modern-screenshot": "^4.6.7",
     "next": "16.1.1",
     "pptxgenjs": "^4.0.1",
