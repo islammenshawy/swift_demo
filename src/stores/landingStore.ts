@@ -18,7 +18,7 @@ export const useLandingStore = create<LandingState>()(
   devtools(
     persist(
       (set) => ({
-        animationStyle: 'particles',
+        animationStyle: 'globe',
         isTransitioning: false,
         mousePosition: { x: 0, y: 0 },
         shouldExit: false,
