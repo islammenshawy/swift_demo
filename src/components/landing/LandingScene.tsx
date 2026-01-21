@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState, useCallback, useRef } from 'react';
+import React, { Suspense, useEffect, useState, useCallback, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Preload } from '@react-three/drei';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,10 +19,10 @@ function AnimationContent() {
       <pointLight position={[10, 10, 10]} intensity={1} color="#00D4FF" />
       <pointLight position={[-10, -10, -10]} intensity={0.5} color="#C9A227" />
 
-      {/* Direct conditional rendering - AnimatePresence doesn't work with R3F */}
-      {animationStyle === 'particles' && <ParticleSystem />}
-      {animationStyle === 'globe' && <GlobeNetwork />}
-      {animationStyle === 'dataStreams' && <DataStreams />}
+      {/* Direct conditional rendering */}
+      {animationStyle === 'particles' && <ParticleSystem key="particles" />}
+      {animationStyle === 'globe' && <GlobeNetwork key="globe" />}
+      {animationStyle === 'dataStreams' && <DataStreams key="dataStreams" />}
 
       <OrbitControls
         enableZoom={false}
@@ -51,6 +51,8 @@ export default function LandingScene({ onEnterPresentation }: LandingSceneProps)
   const [showExportDialog, setShowExportDialog] = useState(false);
   const [exportStatus, setExportStatus] = useState<'idle' | 'exporting' | 'done' | 'error'>('idle');
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const prevAnimationRef = useRef(animationStyle);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -63,6 +65,18 @@ export default function LandingScene({ onEnterPresentation }: LandingSceneProps)
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [setMousePosition]);
+
+  // Smooth transition effect when animation style changes
+  useEffect(() => {
+    if (prevAnimationRef.current !== animationStyle) {
+      setIsTransitioning(true);
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+      }, 800); // Match the CSS transition duration
+      prevAnimationRef.current = animationStyle;
+      return () => clearTimeout(timer);
+    }
+  }, [animationStyle]);
 
   // Export as screenshot
   const handleExportScreenshot = useCallback(async () => {
@@ -131,6 +145,14 @@ export default function LandingScene({ onEnterPresentation }: LandingSceneProps)
           <Preload all />
         </Suspense>
       </Canvas>
+
+      {/* Smooth transition overlay */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isTransitioning ? 1 : 0 }}
+        transition={{ duration: 0.4, ease: 'easeInOut' }}
+        className="absolute inset-0 bg-[var(--bg-primary)] pointer-events-none z-10"
+      />
 
       {/* Overlay Content - positioned at edges to not block animation */}
       <div className="absolute inset-0 pointer-events-none">
