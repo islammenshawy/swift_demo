@@ -4488,6 +4488,7 @@ function LegacyProblems() {
                     </div>
                     <p className="text-sm text-gray-400 mb-2">Reports run via stored procedures at application level</p>
                     <div className="flex flex-col gap-1 text-xs">
+                      <span className="text-gray-500">• <span className="text-orange-400">Batch-based processing</span></span>
                       <span className="text-gray-500">• <span className="text-orange-400">Tightly coupled</span> — hard to modify or extend</span>
                     </div>
                   </motion.div>
