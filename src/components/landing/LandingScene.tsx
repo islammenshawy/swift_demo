@@ -146,12 +146,12 @@ export default function LandingScene({ onEnterPresentation }: LandingSceneProps)
         </Suspense>
       </Canvas>
 
-      {/* Smooth transition overlay */}
+      {/* Subtle dim transition overlay */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: isTransitioning ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: 'easeInOut' }}
-        className="absolute inset-0 bg-[var(--bg-primary)] pointer-events-none z-10"
+        animate={{ opacity: isTransitioning ? 0.15 : 0 }}
+        transition={{ duration: 1, ease: 'easeInOut' }}
+        className="absolute inset-0 bg-black pointer-events-none z-10"
       />
 
       {/* Overlay Content - positioned at edges to not block animation */}
