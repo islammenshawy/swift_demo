@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useLandingStore } from '@/stores/landingStore';
 import { AnimationStyle } from '@/types/demo';
@@ -19,6 +19,8 @@ export default function AnimationSelector({ onExport }: AnimationSelectorProps) 
   const { animationStyle, setAnimationStyle } = useLandingStore();
   const [isAutoRotating, setIsAutoRotating] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Track fullscreen state
   useEffect(() => {
@@ -70,11 +72,50 @@ export default function AnimationSelector({ onExport }: AnimationSelectorProps) 
     return () => clearInterval(interval);
   }, [isAutoRotating, rotateToNext]);
 
+  // Auto-hide when in play mode, show on mouse move
+  useEffect(() => {
+    if (!isAutoRotating) {
+      setIsVisible(true);
+      return;
+    }
+
+    // Hide after 2 seconds when auto-rotating
+    const hideControls = () => {
+      hideTimeoutRef.current = setTimeout(() => {
+        setIsVisible(false);
+      }, 2000);
+    };
+
+    const showControls = () => {
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+      setIsVisible(true);
+      hideControls();
+    };
+
+    // Initial hide
+    hideControls();
+
+    // Show on mouse move
+    document.addEventListener('mousemove', showControls);
+
+    return () => {
+      document.removeEventListener('mousemove', showControls);
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+    };
+  }, [isAutoRotating]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1, duration: 0.5 }}
+      animate={{
+        opacity: isVisible ? 1 : 0,
+        y: isVisible ? 0 : 20
+      }}
+      transition={{ duration: 0.3 }}
       className="fixed bottom-8 right-8 z-50"
     >
       <div className="flex gap-2 p-2 rounded-full bg-[var(--bg-secondary)]/80 backdrop-blur-md border border-[var(--accent-cyan)]/20">
