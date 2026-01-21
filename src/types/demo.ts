@@ -1,4 +1,4 @@
-export type AnimationStyle = 'particles' | 'globe' | 'dataStreams' | 'minimalist';
+export type AnimationStyle = 'particles' | 'globe' | 'dataStreams';
 
 export type SlideType =
   | 'title'

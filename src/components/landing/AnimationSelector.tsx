@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useLandingStore } from '@/stores/landingStore';
 import { AnimationStyle } from '@/types/demo';
@@ -8,11 +9,32 @@ const animationOptions: { value: AnimationStyle; label: string; icon: string }[]
   { value: 'particles', label: 'Particles', icon: '✦' },
   { value: 'globe', label: 'Globe', icon: '🌐' },
   { value: 'dataStreams', label: 'Data Flow', icon: '〰' },
-  { value: 'minimalist', label: 'Minimal', icon: '◇' },
 ];
 
-export default function AnimationSelector() {
+interface AnimationSelectorProps {
+  onExport?: () => void;
+}
+
+export default function AnimationSelector({ onExport }: AnimationSelectorProps) {
   const { animationStyle, setAnimationStyle } = useLandingStore();
+  const [isAutoRotating, setIsAutoRotating] = useState(false);
+
+  const rotateToNext = useCallback(() => {
+    const currentIndex = animationOptions.findIndex(opt => opt.value === animationStyle);
+    const nextIndex = (currentIndex + 1) % animationOptions.length;
+    setAnimationStyle(animationOptions[nextIndex].value);
+  }, [animationStyle, setAnimationStyle]);
+
+  // Auto-rotate effect
+  useEffect(() => {
+    if (!isAutoRotating) return;
+
+    const interval = setInterval(() => {
+      rotateToNext();
+    }, 5000); // 5 seconds per animation
+
+    return () => clearInterval(interval);
+  }, [isAutoRotating, rotateToNext]);
 
   return (
     <motion.div
@@ -22,10 +44,42 @@ export default function AnimationSelector() {
       className="fixed bottom-8 right-8 z-50"
     >
       <div className="flex gap-2 p-2 rounded-full bg-[var(--bg-secondary)]/80 backdrop-blur-md border border-[var(--accent-cyan)]/20">
+        {/* Auto-rotate button */}
+        <button
+          onClick={() => setIsAutoRotating(!isAutoRotating)}
+          className={`
+            relative px-3 py-2 rounded-full text-sm font-medium transition-all duration-300
+            ${isAutoRotating
+              ? 'text-[var(--bg-primary)] bg-[var(--accent-cyan)]'
+              : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+            }
+          `}
+          title={isAutoRotating ? 'Stop auto-rotate' : 'Auto-rotate views'}
+        >
+          <span className="flex items-center gap-1">
+            {isAutoRotating ? (
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <rect x="6" y="4" width="4" height="16" rx="1" />
+                <rect x="14" y="4" width="4" height="16" rx="1" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
+          </span>
+        </button>
+
+        <div className="w-px bg-[var(--accent-cyan)]/30" />
+
+        {/* Animation options */}
         {animationOptions.map((option) => (
           <button
             key={option.value}
-            onClick={() => setAnimationStyle(option.value)}
+            onClick={() => {
+              setAnimationStyle(option.value);
+              setIsAutoRotating(false); // Stop auto-rotate when manually selecting
+            }}
             className={`
               relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
               ${
@@ -48,6 +102,24 @@ export default function AnimationSelector() {
             </span>
           </button>
         ))}
+
+        {/* Export button */}
+        {onExport && (
+          <>
+            <div className="w-px bg-[var(--accent-cyan)]/30" />
+            <button
+              onClick={onExport}
+              className="relative px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+              title="Export landing page"
+            >
+              <span className="flex items-center gap-1">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+              </span>
+            </button>
+          </>
+        )}
       </div>
     </motion.div>
   );

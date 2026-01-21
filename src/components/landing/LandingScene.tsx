@@ -1,14 +1,13 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState, useCallback, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Preload } from '@react-three/drei';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLandingStore } from '@/stores/landingStore';
 import ParticleSystem from './ParticleSystem';
 import GlobeNetwork from './GlobeNetwork';
 import DataStreams from './DataStreams';
-import MinimalistMotion from './MinimalistMotion';
 import AnimationSelector from './AnimationSelector';
 
 function AnimationContent() {
@@ -24,7 +23,6 @@ function AnimationContent() {
       {animationStyle === 'particles' && <ParticleSystem />}
       {animationStyle === 'globe' && <GlobeNetwork />}
       {animationStyle === 'dataStreams' && <DataStreams />}
-      {animationStyle === 'minimalist' && <MinimalistMotion />}
 
       <OrbitControls
         enableZoom={false}
@@ -49,7 +47,10 @@ interface LandingSceneProps {
 }
 
 export default function LandingScene({ onEnterPresentation }: LandingSceneProps) {
-  const { setMousePosition, shouldExit } = useLandingStore();
+  const { setMousePosition, shouldExit, animationStyle } = useLandingStore();
+  const [showExportDialog, setShowExportDialog] = useState(false);
+  const [exportStatus, setExportStatus] = useState<'idle' | 'exporting' | 'done' | 'error'>('idle');
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -63,8 +64,62 @@ export default function LandingScene({ onEnterPresentation }: LandingSceneProps)
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [setMousePosition]);
 
+  // Export as screenshot
+  const handleExportScreenshot = useCallback(async () => {
+    setExportStatus('exporting');
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      if (containerRef.current) {
+        const canvas = await html2canvas(containerRef.current, {
+          backgroundColor: '#0A1628',
+          scale: 2,
+          useCORS: true,
+          logging: false,
+        });
+        const link = document.createElement('a');
+        link.download = `landing-${animationStyle}-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        setExportStatus('done');
+        setTimeout(() => {
+          setShowExportDialog(false);
+          setExportStatus('idle');
+        }, 1500);
+      }
+    } catch (err) {
+      console.error('Export failed:', err);
+      setExportStatus('error');
+    }
+  }, [animationStyle]);
+
+  // Export as interactive HTML (uses the standalone export API)
+  const handleExportHtml = useCallback(async () => {
+    setExportStatus('exporting');
+    try {
+      const response = await fetch(`/api/export-standalone?demoId=landing-page&animationStyle=${animationStyle}`);
+      if (!response.ok) {
+        throw new Error('Export failed');
+      }
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `landing-page-${animationStyle}.html`;
+      link.click();
+      URL.revokeObjectURL(url);
+      setExportStatus('done');
+      setTimeout(() => {
+        setShowExportDialog(false);
+        setExportStatus('idle');
+      }, 1500);
+    } catch (err) {
+      console.error('HTML export failed:', err);
+      setExportStatus('error');
+    }
+  }, [animationStyle]);
+
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[var(--bg-primary)]">
+    <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-[var(--bg-primary)]">
       {/* 3D Canvas */}
       <Canvas
         camera={{ position: [0, 0, 8], fov: 60 }}
@@ -134,8 +189,128 @@ export default function LandingScene({ onEnterPresentation }: LandingSceneProps)
         </motion.div>
       </div>
 
-      {/* Animation selector */}
-      <AnimationSelector />
+      {/* Animation selector with export */}
+      <AnimationSelector onExport={() => setShowExportDialog(true)} />
+
+      {/* Export Dialog */}
+      <AnimatePresence>
+        {showExportDialog && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm"
+            onClick={(e) => e.target === e.currentTarget && exportStatus === 'idle' && setShowExportDialog(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-[var(--bg-secondary)] rounded-2xl p-6 max-w-md w-full mx-4 border border-[var(--accent-cyan)]/20 shadow-2xl"
+            >
+              {exportStatus === 'idle' && (
+                <>
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-bold text-[var(--text-primary)]">Export Landing Page</h2>
+                    <button
+                      onClick={() => setShowExportDialog(false)}
+                      className="p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+                    >
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <p className="text-[var(--text-secondary)] mb-4">
+                    Export the current view as an image or interactive HTML file.
+                  </p>
+
+                  <div className="space-y-3">
+                    <button
+                      onClick={handleExportScreenshot}
+                      className="w-full p-4 rounded-xl border-2 border-white/10 hover:border-[var(--accent-cyan)] hover:bg-[var(--accent-cyan)]/10 transition-all text-left"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="p-2 rounded-lg bg-white/5 text-[var(--text-muted)]">
+                          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-[var(--text-primary)]">Screenshot (PNG)</h3>
+                          <p className="text-sm text-[var(--text-muted)] mt-1">High-quality image of the current view</p>
+                        </div>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={handleExportHtml}
+                      className="w-full p-4 rounded-xl border-2 border-white/10 hover:border-[var(--accent-cyan)] hover:bg-[var(--accent-cyan)]/10 transition-all text-left"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="p-2 rounded-lg bg-white/5 text-[var(--text-muted)]">
+                          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-semibold text-[var(--text-primary)]">Interactive HTML</h3>
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--accent-gold)]/20 text-[var(--accent-gold)]">Recommended</span>
+                          </div>
+                          <p className="text-sm text-[var(--text-muted)] mt-1">Full animations, works offline</p>
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {exportStatus === 'exporting' && (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[var(--accent-gold)]/10 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-[var(--accent-gold)] animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                  </div>
+                  <p className="text-[var(--text-primary)] font-medium">Exporting...</p>
+                </div>
+              )}
+
+              {exportStatus === 'done' && (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/10 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <p className="text-[var(--text-primary)] font-medium">Export Complete!</p>
+                </div>
+              )}
+
+              {exportStatus === 'error' && (
+                <div className="text-center py-8">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/10 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </div>
+                  <p className="text-[var(--text-primary)] font-medium mb-4">Export Failed</p>
+                  <button
+                    onClick={() => setExportStatus('idle')}
+                    className="px-6 py-2 bg-[var(--accent-cyan)] text-[var(--bg-primary)] font-semibold rounded-lg"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
