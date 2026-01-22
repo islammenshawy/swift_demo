@@ -514,8 +514,8 @@ const VISUALIZATION_PHASES: Record<string, AnimationPhase[]> = {
       title: 'AI-Powered Intelligence',
       subtitle: 'LLM analyzes what humans miss',
       elements: [
-        { type: 'text', content: '✅ Narrative validation: AI checks manager stories against actual data', x: 0.5, y: 1.4, w: 9, h: 0.4, options: { fontSize: 11, color: THEME.textSecondary } },
-        { type: 'text', content: '🎯 Bias detection: Flags inconsistencies between feedback and metrics', x: 0.5, y: 1.85, w: 9, h: 0.4, options: { fontSize: 11, color: THEME.textSecondary } },
+        { type: 'text', content: '✅ Narrative validation: AI cross-references input with performance data', x: 0.5, y: 1.4, w: 9, h: 0.4, options: { fontSize: 11, color: THEME.textSecondary } },
+        { type: 'text', content: '🎯 Consistency insights: Highlights areas where feedback and metrics may differ', x: 0.5, y: 1.85, w: 9, h: 0.4, options: { fontSize: 11, color: THEME.textSecondary } },
         { type: 'text', content: '📈 Promotion readiness: Objective assessment with development recommendations', x: 0.5, y: 2.3, w: 9, h: 0.4, options: { fontSize: 11, color: THEME.textSecondary } },
         { type: 'text', content: '💬 Conversational insights: Ask questions in natural language', x: 0.5, y: 2.75, w: 9, h: 0.4, options: { fontSize: 11, color: THEME.textSecondary } },
         { type: 'text', content: '👥 Comparative analysis: How does Employee A compare to their peers?', x: 0.5, y: 3.2, w: 9, h: 0.4, options: { fontSize: 11, color: THEME.textSecondary } },

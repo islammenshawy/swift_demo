@@ -17,13 +17,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 // Demo data will be injected here
 const DEMO_DATA = __DEMO_DATA__;
 
-// Visualization phase counts
+// Visualization phase counts (must match presentationStore.ts)
 const PHASE_COUNTS = {
-  'module-consolidation': 5,
-  'legacy-problems': 1,
-  'technical-challenges': 1,
-  'product-opportunities': 1,
+  'module-consolidation': 6,
+  'legacy-problems': 8,
+  'technical-challenges': 5,
+  'product-opportunities': 6,
   'transformation-goals': 1,
+  'elc-reimagination': 1,
+  'transformation-metrics': 1,
+  'trade-architecture': 1,
   'engineering-score-journey': 5,
   'problem-visual': 1,
   'solution-visual': 1,
@@ -32,7 +35,7 @@ const PHASE_COUNTS = {
   'team-benchmarking': 1,
   'ai-capabilities': 1,
   'promotion-pipeline': 1,
-  'feature-showcase': 1,
+  'feature-showcase': 9,
 };
 
 function getPhaseCount(slide) {
@@ -936,8 +939,8 @@ function TeamBenchmarking() {
 function AICapabilities() {
   const [phase, setPhase] = useState(0);
   const bullets = [
-    { icon: '✅', text: 'Narrative validation: AI checks manager stories against actual data', color: '#4ECDC4' },
-    { icon: '🎯', text: 'Bias detection: Flags inconsistencies between feedback and metrics', color: '#ef4444' },
+    { icon: '✅', text: 'Narrative validation: AI cross-references input with performance data', color: '#4ECDC4' },
+    { icon: '🎯', text: 'Consistency insights: Highlights areas where feedback and metrics may differ', color: '#ef4444' },
     { icon: '📈', text: 'Promotion readiness: Objective assessment with development recommendations', color: '#FFD700' },
     { icon: '💬', text: 'Conversational insights: Ask questions in natural language', color: '#6495ED' },
     { icon: '👥', text: 'Comparative analysis: How does Employee A compare to their peers?', color: '#C9A227' },
@@ -1011,8 +1014,19 @@ function PromotionPipeline() {
 }
 
 // Feature Showcase
-function FeatureShowcase() {
-  const [activeFeature, setActiveFeature] = useState(0);
+function FeatureShowcase({ phase = 0 }: { phase?: number }) {
+  const [autoPhase, setAutoPhase] = useState(0);
+
+  // Auto-trigger initial animations
+  useEffect(() => {
+    const timer1 = setTimeout(() => setAutoPhase(1), 500);
+    const timer2 = setTimeout(() => setAutoPhase(2), 1200);
+    return () => { clearTimeout(timer1); clearTimeout(timer2); };
+  }, []);
+
+  // Effective phase: max of provided phase and auto phase
+  const effectivePhase = Math.max(phase, autoPhase);
+
   const features = [
     { icon: '📊', title: 'Metrics Management Dashboard', description: 'Organization and team views with live performance metrics', color: '#4ECDC4' },
     { icon: '⚙️', title: 'Flexible Metrics Creation', description: 'Create and customize metrics on the fly', color: '#6495ED' },
@@ -1020,7 +1034,10 @@ function FeatureShowcase() {
     { icon: '👤', title: 'Employee Profiles', description: 'Radar charts, trends, and performance history', color: '#C9A227' },
     { icon: '🔌', title: 'API Integrations', description: 'Connect to your existing HR systems', color: '#4ECDC4' },
     { icon: '🧠', title: 'Performance Evaluation Sessions', description: 'LLM-powered insights to guide manager discussions', color: '#A855F7' },
+    { icon: '💬', title: 'LLM-Powered 360° Feedback Scoring', description: 'AI analyzes employee feedback for objective scoring', color: '#22c55e' },
   ];
+  // Active feature based on phase (phases 2+ cycle through features)
+  const activeFeature = effectivePhase >= 2 ? Math.min(effectivePhase - 2, features.length - 1) : 0;
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-8">
       <motion.h2 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-bold text-white mb-2">Key Features</motion.h2>
@@ -1112,7 +1129,7 @@ function SlideRenderer({ slide, phase }) {
     if (viz === 'team-benchmarking') return <TeamBenchmarking />;
     if (viz === 'ai-capabilities') return <AICapabilities />;
     if (viz === 'promotion-pipeline') return <PromotionPipeline />;
-    if (viz === 'feature-showcase') return <FeatureShowcase />;
+    if (viz === 'feature-showcase') return <FeatureShowcase phase={phase} />;
     // Fallback for unknown visualizations
     return <div className="w-full h-full flex items-center justify-center"><p className="text-2xl text-gray-400">{viz}</p></div>;
   }

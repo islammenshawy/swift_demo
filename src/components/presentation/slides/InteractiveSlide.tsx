@@ -1672,8 +1672,25 @@ function PromotionPipeline() {
 
 // Feature Showcase Visualization - Animated feature cards
 function FeatureShowcase() {
+  // Get capture context for navigation control
+  const { forcePhase, isCapturing } = React.useContext(CaptureContext);
+
   const [activeFeature, setActiveFeature] = useState(0);
-  const [phase, setPhase] = useState(0);
+  const [autoPhase, setAutoPhase] = useState(0);
+
+  // Auto-trigger initial animations (features list and preview panel)
+  useEffect(() => {
+    if (isCapturing) return; // Skip auto-animation during capture
+    const timer1 = setTimeout(() => setAutoPhase(1), 500);  // Show features list
+    const timer2 = setTimeout(() => setAutoPhase(2), 1200); // Show preview panel
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, [isCapturing]);
+
+  // Use forcePhase from store, but ensure auto phases 1-2 happen automatically
+  const phase = forcePhase !== undefined ? Math.max(forcePhase, autoPhase) : autoPhase;
 
   const features = [
     {
@@ -1727,10 +1744,13 @@ function FeatureShowcase() {
     },
   ];
 
+  // Update active feature based on phase (phases 2+ cycle through features)
   useEffect(() => {
-    setTimeout(() => setPhase(1), 500);
-    setTimeout(() => setPhase(2), 1500);
-  }, []);
+    if (phase >= 2) {
+      const featureIndex = Math.min(phase - 2, features.length - 1);
+      setActiveFeature(featureIndex);
+    }
+  }, [phase, features.length]);
 
   const currentFeature = features[activeFeature];
 
@@ -2375,8 +2395,8 @@ function AICapabilities() {
   const [pulseRings, setPulseRings] = useState<number[]>([]);
 
   const bullets = [
-    { icon: '✅', text: 'Narrative validation: AI checks manager stories against actual data', color: '#4ECDC4' },
-    { icon: '🎯', text: 'Bias detection: Flags inconsistencies between feedback and metrics', color: '#ef4444' },
+    { icon: '✅', text: 'Narrative validation: AI cross-references input with performance data', color: '#4ECDC4' },
+    { icon: '🎯', text: 'Consistency insights: Highlights areas where feedback and metrics may differ', color: '#ef4444' },
     { icon: '📈', text: 'Promotion readiness: Objective assessment with development recommendations', color: '#FFD700' },
     { icon: '💬', text: 'Conversational insights: Ask questions in natural language', color: '#6495ED' },
     { icon: '👥', text: 'Comparative analysis: How does Employee A compare to their peers?', color: '#C9A227' },
@@ -3312,287 +3332,575 @@ function TeamBenchmarking() {
   );
 }
 
-// Journey Overview - Shows where we are in the transformation journey
-// Architecture Comparison - TENET vs REIMAGINE
+// Architecture Comparison - TENET vs REIMAGINE with animations
 function ArchitectureComparison() {
-  const [activePhase, setActivePhase] = useState(4); // Default to complete view
+  const [animPhase, setAnimPhase] = useState(0);
 
-  const phases = [
-    { id: 0, title: 'UI Layer', description: 'Modern React Frontend - Shared by Both' },
-    { id: 1, title: 'Current', description: 'Adapter → API Layer → MuleSoft → Oracle' },
-    { id: 2, title: 'Reimagine', description: 'Workflow Engine → Common Capability → MongoDB' },
-    { id: 3, title: 'Trade AI', description: 'LLM, Cognitive Intelligence, OCR' },
-    { id: 4, title: 'Complete', description: 'Full Architecture Comparison' },
-  ];
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setAnimPhase(1), 400),
+      setTimeout(() => setAnimPhase(2), 800),
+      setTimeout(() => setAnimPhase(3), 1200),
+      setTimeout(() => setAnimPhase(4), 1600),
+      setTimeout(() => setAnimPhase(5), 2000),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  // React Logo SVG
+  const ReactLogo = () => (
+    <svg className="w-6 h-6" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="2" fill="#61DAFB"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(60 12 12)"/>
+      <ellipse cx="12" cy="12" rx="10" ry="4" fill="none" stroke="#61DAFB" strokeWidth="1" transform="rotate(120 12 12)"/>
+    </svg>
+  );
+
+  // Java Logo SVG
+  const JavaLogo = () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24">
+      <path fill="#E76F00" d="M8.851 18.56s-.917.534.653.714c1.902.218 2.874.187 4.969-.211 0 0 .552.346 1.321.646-4.699 2.013-10.633-.118-6.943-1.149M8.276 15.933s-1.028.761.542.924c2.032.209 3.636.227 6.413-.308 0 0 .384.389.987.602-5.679 1.661-12.007.13-7.942-1.218"/>
+      <path fill="#E76F00" d="M13.116 11.475c1.158 1.333-.304 2.533-.304 2.533s2.939-1.518 1.589-3.418c-1.261-1.772-2.228-2.652 3.007-5.688 0-.001-8.216 2.051-4.292 6.573"/>
+      <path fill="#E76F00" d="M18.503 20.525s.679.559-.747.991c-2.712.822-11.288 1.069-13.669.033-.856-.373.75-.89 1.254-.998.527-.114.828-.093.828-.093-.953-.671-6.156 1.317-2.643 1.887 9.58 1.553 17.462-.7 14.977-1.82"/>
+    </svg>
+  );
+
+  // Drools Logo
+  const DroolsLogo = () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" fill="#2196F3" opacity="0.2"/>
+      <circle cx="12" cy="12" r="7" fill="none" stroke="#2196F3" strokeWidth="1.5"/>
+      <text x="12" y="16" textAnchor="middle" fill="#2196F3" fontSize="10" fontWeight="bold">D</text>
+    </svg>
+  );
+
+  // 3D Block Component - using CSS transitions to avoid flicker
+  const Block3D = ({ children, visible, color = 'purple' }: { children: React.ReactNode; visible: boolean; color?: string }) => {
+    const colors = {
+      purple: { top: 'from-purple-400 to-purple-500', front: 'from-purple-500 to-purple-700', side: 'bg-purple-800' },
+      blue: { top: 'from-blue-400 to-blue-500', front: 'from-blue-500 to-blue-700', side: 'bg-blue-800' },
+    };
+    const c = colors[color as keyof typeof colors] || colors.purple;
+
+    return (
+      <div
+        className="w-full max-w-[300px] transition-all duration-400 ease-out"
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(20px)',
+        }}
+      >
+        <div className="relative transform-gpu" style={{ perspective: '1000px' }}>
+          {/* Top face */}
+          <div className={`absolute -top-3 left-2 right-2 h-4 bg-gradient-to-r ${c.top} rounded-t`}
+               style={{ transform: 'perspective(500px) rotateX(45deg)', transformOrigin: 'bottom' }}/>
+          {/* Front face */}
+          <div className={`relative bg-gradient-to-b ${c.front} rounded-lg px-4 py-2 shadow-xl`}>
+            {children}
+          </div>
+          {/* Right face */}
+          <div className={`absolute -right-2 top-2 bottom-1 w-3 ${c.side} rounded-r`}
+               style={{ transform: 'perspective(500px) rotateY(-45deg)', transformOrigin: 'left' }}/>
+        </div>
+      </div>
+    );
+  };
+
+  // Arrow Component
+  const Arrow = ({ delay }: { delay: number }) => (
+    <motion.div
+      initial={{ opacity: 0, scaleY: 0 }}
+      animate={{ opacity: animPhase >= delay ? 1 : 0, scaleY: animPhase >= delay ? 1 : 0 }}
+      transition={{ duration: 0.3 }}
+      className="py-0"
+    >
+      <svg width="20" height="18" viewBox="0 0 24 24">
+        <path d="M12 4 L12 14 M7 10 L12 16 L17 10" stroke="#9333ea" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </motion.div>
+  );
 
   return (
-    <div className="w-full h-full flex flex-col p-3 overflow-hidden bg-[var(--bg-primary)]">
+    <div className="w-full h-full flex flex-col items-center p-6 overflow-hidden bg-[var(--bg-primary)]">
       {/* Title */}
-      <div className="text-center mb-2">
-        <h2 className="text-lg font-bold text-[var(--text-primary)]">Architecture Comparison</h2>
-        <p className="text-xs text-[var(--text-secondary)]">Current Approach vs Reimagine Approach</p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-3"
+      >
+        <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+          Architecture Comparison
+        </h2>
+      </motion.div>
 
-      {/* Phase Navigation */}
-      <div className="flex justify-center gap-2 mb-2">
-        {phases.map((phase, i) => (
-          <button
-            key={phase.id}
-            onClick={() => setActivePhase(i)}
-            className={`px-2 py-1 rounded text-xs transition-all ${
-              activePhase === i
-                ? 'bg-[var(--accent-cyan)] text-[var(--bg-primary)] font-semibold'
-                : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'
-            }`}
+      {/* Main Content */}
+      <div className="flex-1 flex gap-6 justify-center max-w-6xl w-full">
+        {/* TENET APPROACH - Left */}
+        <div className="flex-1 flex flex-col items-center relative">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 mt-2 text-center"
           >
-            {phase.title}
-          </button>
-        ))}
-      </div>
+            <span className="text-xl font-bold text-red-400 tracking-wider uppercase">TENET APPROACH</span>
+            <div className="h-0.5 mt-1 bg-gradient-to-r from-transparent via-red-500 to-transparent"/>
+          </motion.div>
 
-      {/* Main SVG Diagram */}
-      <div className="flex-1 relative bg-[var(--bg-secondary)] rounded-lg border border-[var(--accent-cyan)]/20 overflow-hidden">
-        <svg viewBox="0 0 960 420" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <marker id="arrow-gold" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
-              <path d="M0,0 L0,5 L5,2.5 z" fill="#C9A227" />
-            </marker>
-            <marker id="arrow-green" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
-              <path d="M0,0 L0,5 L5,2.5 z" fill="#4CAF50" />
-            </marker>
-            <marker id="arrow-gray" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
-              <path d="M0,0 L0,5 L5,2.5 z" fill="#666" />
-            </marker>
-            <linearGradient id="currentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#C9A227" stopOpacity="0.12" />
-              <stop offset="100%" stopColor="#f97316" stopOpacity="0.04" />
-            </linearGradient>
-            <linearGradient id="reimagineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#4CAF50" stopOpacity="0.12" />
-              <stop offset="100%" stopColor="#4ECDC4" stopOpacity="0.04" />
-            </linearGradient>
-            <linearGradient id="oracleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#f80000" />
-              <stop offset="100%" stopColor="#b30000" />
-            </linearGradient>
-            <linearGradient id="mongoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#4DB33D" />
-              <stop offset="100%" stopColor="#3A8C2E" />
-            </linearGradient>
-          </defs>
+          <div className="flex-1 flex flex-col items-center justify-between py-2 relative max-h-[600px]">
+            {/* Arrow Overlay - positioned within the content area */}
+            <svg
+              className="absolute -left-4 top-0 w-[calc(100%+16px)] h-full pointer-events-none z-10"
+              viewBox="-10 0 120 100"
+              preserveAspectRatio="none"
+            >
+              {/* Arrow from New Adapter Layer to New API Layer - single solid path with arrowhead */}
+              <motion.g
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : -5 }}
+                transition={{ duration: 0.4, ease: 'easeOut', delay: 0.3 }}
+              >
+                <line x1="55" y1="34" x2="55" y2="41" stroke="#9333ea" strokeWidth="1" vectorEffect="non-scaling-stroke"/>
+                <polygon points="55,43 53,40 57,40" fill="#9333ea"/>
+              </motion.g>
 
-          {/* Headers */}
-          <text x="230" y="20" textAnchor="middle" fill="#C9A227" fontSize="13" fontWeight="700">CURRENT APPROACH</text>
-          <text x="730" y="20" textAnchor="middle" fill="#4CAF50" fontSize="13" fontWeight="700">REIMAGINE APPROACH</text>
+              {/* Bypass arrow: from New API Layer around MuleSoft to Oracle - single solid path */}
+              <motion.g
+                initial={{ opacity: 0 }}
+                animate={{ opacity: animPhase >= 4 ? 1 : 0 }}
+                transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
+              >
+                <path
+                  d="M 2 50 L -8 50 L -8 93 L 0 93"
+                  stroke="#9333ea"
+                  strokeWidth="1"
+                  fill="none"
+                  vectorEffect="non-scaling-stroke"
+                />
+                <polygon points="2,93 -1,91 -1,95" fill="#9333ea"/>
+              </motion.g>
+            </svg>
+            {/* UI/HTML + React */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: animPhase >= 1 ? 1 : 0, y: animPhase >= 1 ? 0 : -20 }}
+              className="w-full max-w-[300px]"
+            >
+              <div className="bg-gradient-to-b from-purple-900/50 to-purple-950/50 border-2 border-purple-500/60 rounded-xl p-3 text-center backdrop-blur">
+                <div className="text-purple-200 font-bold text-base mb-2">UI / HTML</div>
+                <div className="flex items-center justify-center gap-3 bg-white/10 rounded-lg px-4 py-2">
+                  <ReactLogo />
+                  <span className="text-cyan-300 font-semibold">React</span>
+                </div>
+              </div>
+            </motion.div>
 
-          {/* ===== LEFT: CURRENT APPROACH ===== */}
-          <g opacity={activePhase === 1 || activePhase === 4 ? 1 : (activePhase === 0 ? 0.8 : 0.5)}>
-            <rect x="15" y="30" width="430" height="355" rx="6" fill="url(#currentGrad)" stroke="#C9A227" strokeWidth="1.5" strokeOpacity="0.5" />
+            {/* New Adapter Layer - 3D SVG Style */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: animPhase >= 2 ? 1 : 0, y: animPhase >= 2 ? 0 : 20 }}
+              className="w-full max-w-[300px]"
+            >
+              <svg viewBox="0 0 220 50" className="w-full">
+                {/* 3D platform */}
+                <polygon points="10,12 190,12 210,2 30,2" fill="#9333ea" fillOpacity="0.3" stroke="#9333ea" strokeWidth="1" />
+                <rect x="10" y="12" width="180" height="32" fill="#9333ea" fillOpacity="0.2" stroke="#9333ea" strokeWidth="1" />
+                <polygon points="190,12 190,44 210,34 210,2" fill="#9333ea" fillOpacity="0.35" stroke="#9333ea" strokeWidth="1" />
+                <text x="100" y="33" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700">New Adapter Layer</text>
+              </svg>
+            </motion.div>
 
-            {/* UI Layer */}
-            <g opacity={activePhase >= 0 ? 1 : 0.4}>
-              <rect x="30" y="42" width="400" height="50" rx="4" fill="#0F1F35" stroke="#4CAF50" strokeWidth="1.5" />
-              <text x="230" y="62" textAnchor="middle" fill="#4CAF50" fontSize="11" fontWeight="600">UI / HTML</text>
-              <g transform="translate(190, 67)">
-                <circle cx="10" cy="8" r="2" fill="#61DAFB" />
-                <ellipse cx="10" cy="8" rx="8" ry="3" fill="none" stroke="#61DAFB" strokeWidth="0.8" />
-              </g>
-              <text x="210" y="78" fill="#61DAFB" fontSize="9">React</text>
-              <rect x="350" y="62" width="55" height="16" rx="3" fill="#4CAF50" fillOpacity="0.2" stroke="#4CAF50" strokeWidth="0.8" />
-              <text x="378" y="73" textAnchor="middle" fill="#4CAF50" fontSize="7" fontWeight="600">✓ TENET</text>
-            </g>
+            {/* New API Layer */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : 20 }}
+              className="w-full max-w-[300px]"
+            >
+              <div className="bg-[#0F1F35] border-2 border-purple-500/40 rounded-xl p-3">
+                <div className="text-white font-bold text-sm text-center mb-2">New API Layer</div>
+                <div className="flex items-center justify-center gap-3">
+                  <div className="flex items-center gap-2 border border-orange-400/60 rounded-lg px-3 py-1.5 bg-orange-500/10">
+                    <JavaLogo />
+                    <span className="text-orange-400 font-semibold text-sm">Java</span>
+                  </div>
+                  <div className="flex items-center gap-2 border border-blue-400/60 rounded-lg px-3 py-1.5 bg-blue-500/10">
+                    <DroolsLogo />
+                    <div>
+                      <div className="text-blue-400 font-semibold text-sm">Drools</div>
+                      <div className="text-gray-500 text-xs">Rules Engine</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
-            {/* Arrow */}
-            <path d="M230 92 L230 103" stroke="#C9A227" strokeWidth="1.5" markerEnd="url(#arrow-gold)" />
+            {/* MuleSoft - 3D SVG Style (matching "Where are we in our journey?" slide) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: animPhase >= 4 ? 1 : 0, y: animPhase >= 4 ? 0 : 20 }}
+              className="w-full max-w-[300px]"
+            >
+              <svg viewBox="0 0 220 55" className="w-full">
+                {/* 3D MuleSoft platform */}
+                {/* Top face */}
+                <polygon points="10,15 190,15 210,5 30,5" fill="#00A1E0" fillOpacity="0.3" stroke="#00A1E0" strokeWidth="1" />
+                {/* Front face */}
+                <rect x="10" y="15" width="180" height="35" fill="#00A1E0" fillOpacity="0.2" stroke="#00A1E0" strokeWidth="1" />
+                {/* Right face */}
+                <polygon points="190,15 190,50 210,40 210,5" fill="#00A1E0" fillOpacity="0.35" stroke="#00A1E0" strokeWidth="1" />
 
-            {/* Adapter Layer - simple 3D */}
-            <g opacity={activePhase === 1 || activePhase === 4 ? 1 : 0.5}>
-              <polygon points="30,110 420,110 428,118 38,118" fill="#C9A227" fillOpacity="0.25" stroke="#C9A227" strokeWidth="1" />
-              <rect x="30" y="118" width="390" height="28" fill="#C9A227" fillOpacity="0.12" stroke="#C9A227" strokeWidth="1" />
-              <polygon points="420,110 420,146 428,138 428,118" fill="#C9A227" fillOpacity="0.2" stroke="#C9A227" strokeWidth="0.5" />
-              <text x="230" y="137" textAnchor="middle" fill="#C9A227" fontSize="10" fontWeight="600">New Adapter Layer</text>
-            </g>
+                {/* MuleSoft logo circle */}
+                <circle cx="50" cy="32" r="14" fill="#00A1E0" />
+                <text x="50" y="37" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700">M</text>
 
-            {/* Arrow */}
-            <path d="M230 148 L230 159" stroke="#C9A227" strokeWidth="1.5" markerEnd="url(#arrow-gold)" />
+                {/* MuleSoft text */}
+                <text x="130" y="38" textAnchor="middle" fill="#00A1E0" fontSize="16" fontWeight="700">MuleSoft</text>
+              </svg>
+            </motion.div>
 
-            {/* API Layer */}
-            <g opacity={activePhase === 1 || activePhase === 4 ? 1 : 0.5}>
-              <rect x="30" y="165" width="400" height="60" rx="4" fill="#0F1F35" stroke="#9c27b0" strokeWidth="0.8" strokeOpacity="0.5" strokeDasharray="3 2" />
-              <text x="230" y="182" textAnchor="middle" fill="var(--text-primary)" fontSize="11" fontWeight="700">New API Layer</text>
-              {/* Java */}
-              <g transform="translate(100, 188)">
-                <rect width="40" height="30" rx="3" fill="#f89820" fillOpacity="0.1" stroke="#f89820" strokeWidth="0.5" />
-                <path d="M16 8 L16 18 Q16 22 20 22 Q24 22 24 18 L24 8" fill="#5382a1" />
-                <text x="20" y="29" textAnchor="middle" fill="#f89820" fontSize="7" fontWeight="600">Java</text>
-              </g>
-              {/* Drools */}
-              <g transform="translate(170, 188)">
-                <rect width="70" height="30" rx="3" fill="#2196F3" fillOpacity="0.1" stroke="#2196F3" strokeWidth="0.5" />
-                <circle cx="15" cy="13" r="7" fill="#2196F3" opacity="0.3" />
-                <text x="15" y="16" textAnchor="middle" fill="#2196F3" fontSize="8" fontWeight="700">D</text>
-                <text x="45" y="12" fill="#2196F3" fontSize="8" fontWeight="600">Drools</text>
-                <text x="45" y="22" fill="#888" fontSize="6">Rules Engine</text>
-              </g>
-            </g>
+            {/* Oracle + Batch Jobs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: animPhase >= 5 ? 1 : 0, y: animPhase >= 5 ? 0 : 20 }}
+              className="flex items-center gap-4"
+            >
+              {/* Oracle Database Cylinder */}
+              <div className="flex flex-col items-center">
+                <svg width="100" height="85" viewBox="0 0 80 70">
+                  {/* Top ellipse */}
+                  <ellipse cx="40" cy="12" rx="32" ry="10" fill="#c74634"/>
+                  <ellipse cx="40" cy="12" rx="32" ry="10" fill="url(#oracleTopGrad)"/>
+                  {/* Body */}
+                  <path d="M8 12 L8 52 Q8 62 40 62 Q72 62 72 52 L72 12" fill="#c74634"/>
+                  <path d="M8 12 L8 52 Q8 62 40 62 Q72 62 72 52 L72 12" fill="url(#oracleBodyGrad)"/>
+                  {/* Bottom ellipse */}
+                  <ellipse cx="40" cy="52" rx="32" ry="10" fill="#8b2d1f"/>
+                  {/* ORACLE text */}
+                  <text x="40" y="38" textAnchor="middle" fill="white" fontSize="11" fontWeight="bold" fontFamily="Arial">ORACLE</text>
+                  {/* Gradients */}
+                  <defs>
+                    <linearGradient id="oracleTopGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#d95b4b"/>
+                      <stop offset="50%" stopColor="#c74634"/>
+                      <stop offset="100%" stopColor="#a33828"/>
+                    </linearGradient>
+                    <linearGradient id="oracleBodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#d95b4b"/>
+                      <stop offset="50%" stopColor="#c74634"/>
+                      <stop offset="100%" stopColor="#a33828"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <svg width="40" height="20" viewBox="0 0 40 20">
+                <path d="M5 10 L30 10" stroke="#666" strokeWidth="2"/>
+                <path d="M25 5 L32 10 L25 15" stroke="#666" strokeWidth="2" fill="none"/>
+              </svg>
+              <div className="bg-[#0F1F35] border border-purple-500/40 rounded-xl p-3 text-center">
+                <svg className="w-6 h-6 mx-auto mb-1" viewBox="0 0 24 24" fill="none" stroke="#9333ea" strokeWidth="1.5">
+                  <rect x="4" y="4" width="16" height="4" rx="1"/>
+                  <rect x="4" y="10" width="16" height="4" rx="1"/>
+                  <rect x="4" y="16" width="16" height="4" rx="1"/>
+                  <circle cx="17" cy="6" r="1" fill="#9333ea"/>
+                  <circle cx="17" cy="12" r="1" fill="#9333ea"/>
+                </svg>
+                <div className="text-purple-400 text-sm font-medium">Batch Jobs</div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
 
-            {/* Arrow */}
-            <path d="M230 228 L230 239" stroke="#C9A227" strokeWidth="1.5" markerEnd="url(#arrow-gold)" />
+        {/* Center Divider */}
+        <div className="flex flex-col items-center justify-center px-2">
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: animPhase >= 1 ? 1 : 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="w-1 flex-1 bg-gradient-to-b from-purple-500/50 via-purple-400/30 to-purple-500/50 rounded-full origin-top"
+          />
+        </div>
 
-            {/* MuleSoft - Solid 3D Platform (Left tilt) */}
-            <g opacity={activePhase === 1 || activePhase === 4 ? 1 : 0.5}>
-              {/* Shadow */}
-              <ellipse cx="225" cy="290" rx="195" ry="5" fill="#000" fillOpacity="0.2" />
-              {/* Left side face - darker blue for depth */}
-              <polygon points="22,256 30,248 30,286 22,294" fill="#006C9C" />
-              {/* Top face - lighter blue */}
-              <polygon points="22,256 30,248 420,248 412,256" fill="#4DC8F0" />
-              {/* Front face - main MuleSoft blue */}
-              <rect x="22" y="256" width="390" height="30" fill="#00A1E0" />
-              {/* Top edge highlight */}
-              <line x1="30" y1="248" x2="420" y2="248" stroke="#7DD8F7" strokeWidth="1" />
-              {/* Front face inner details */}
-              <line x1="22" y1="258" x2="412" y2="258" stroke="#4DC8F0" strokeWidth="0.5" />
-              {/* MuleSoft Logo */}
-              <circle cx="55" cy="271" r="11" fill="#fff" />
-              <circle cx="55" cy="271" r="9" fill="#00A1E0" />
-              <text x="55" y="275" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="700">M</text>
-              {/* Text */}
-              <text x="195" y="276" textAnchor="middle" fill="#fff" fontSize="12" fontWeight="700">MuleSoft</text>
-              <text x="325" y="276" textAnchor="middle" fill="#B8E8FA" fontSize="8">Integration Platform</text>
-            </g>
+        {/* REIMAGINE APPROACH - Right */}
+        <div className="flex-1 flex flex-col items-center">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 mt-2 text-center"
+          >
+            <span className="text-xl font-bold text-green-400 tracking-wider uppercase">REIMAGINE APPROACH</span>
+            <div className="h-0.5 mt-1 bg-gradient-to-r from-transparent via-green-500 to-transparent"/>
+          </motion.div>
 
-            {/* Arrow */}
-            <path d="M230 288 L230 299" stroke="#666" strokeWidth="1.5" markerEnd="url(#arrow-gray)" />
+          <div className="flex-1 flex flex-col items-center justify-between py-2 max-h-[600px]">
+            {/* UI/HTML + React */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: animPhase >= 1 ? 1 : 0, y: animPhase >= 1 ? 0 : -20 }}
+              className="w-full max-w-[300px]"
+            >
+              <div className="bg-gradient-to-b from-purple-900/50 to-purple-950/50 border-2 border-purple-500/60 rounded-xl p-3 text-center backdrop-blur">
+                <div className="text-purple-200 font-bold text-base mb-2">UI / HTML</div>
+                <div className="flex items-center justify-center gap-3 bg-white/10 rounded-lg px-4 py-2">
+                  <ReactLogo />
+                  <span className="text-cyan-300 font-semibold">React</span>
+                </div>
+              </div>
+            </motion.div>
 
-            {/* Oracle + Batch */}
-            <g opacity={activePhase === 1 || activePhase === 4 ? 1 : 0.5}>
-              <g transform="translate(45, 305)">
-                <ellipse cx="50" cy="5" rx="42" ry="5" fill="url(#oracleGrad)" />
-                <rect x="8" y="5" width="84" height="30" fill="url(#oracleGrad)" />
-                <ellipse cx="50" cy="35" rx="42" ry="5" fill="#800000" />
-                <text x="50" y="23" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="700">ORACLE</text>
-              </g>
-              <path d="M145 330 L175 330" stroke="#666" strokeWidth="1" markerEnd="url(#arrow-gray)" />
-              <g transform="translate(185, 305)">
-                <rect width="120" height="38" rx="3" fill="#0F1F35" stroke="#9c27b0" strokeWidth="0.8" />
-                <line x1="12" y1="10" x2="75" y2="10" stroke="#9c27b0" strokeWidth="0.8" strokeOpacity="0.6" />
-                <line x1="12" y1="18" x2="75" y2="18" stroke="#9c27b0" strokeWidth="0.8" strokeOpacity="0.6" />
-                <line x1="12" y1="26" x2="55" y2="26" stroke="#9c27b0" strokeWidth="0.8" strokeOpacity="0.6" />
-                <circle cx="98" cy="19" r="8" fill="none" stroke="#9c27b0" strokeWidth="0.8" />
-                <path d="M98 13 L98 19 L101 22" stroke="#9c27b0" strokeWidth="0.8" />
-                <text x="60" y="37" textAnchor="middle" fill="#9c27b0" fontSize="6">Batch Jobs</text>
-              </g>
-            </g>
-          </g>
-
-          {/* ===== CENTER DIVIDER ===== */}
-          <g opacity={activePhase >= 1 ? 1 : 0.3}>
-            <rect x="457" y="35" width="6" height="345" rx="3" fill="#00D4FF" fillOpacity="0.4" />
-            <text x="460" y="395" textAnchor="middle" fill="#00D4FF" fontSize="9" fontWeight="600">Data Sync</text>
-          </g>
-
-          {/* ===== RIGHT: REIMAGINE APPROACH ===== */}
-          <g opacity={activePhase === 2 || activePhase === 4 ? 1 : (activePhase === 0 ? 0.8 : 0.5)}>
-            <rect x="515" y="30" width="430" height="355" rx="6" fill="url(#reimagineGrad)" stroke="#4CAF50" strokeWidth="1.5" strokeOpacity="0.5" />
-
-            {/* UI Layer */}
-            <g opacity={activePhase >= 0 ? 1 : 0.4}>
-              <rect x="530" y="42" width="400" height="50" rx="4" fill="#0F1F35" stroke="#4CAF50" strokeWidth="1.5" />
-              <text x="730" y="62" textAnchor="middle" fill="#4CAF50" fontSize="11" fontWeight="600">UI / HTML</text>
-              <g transform="translate(690, 67)">
-                <circle cx="10" cy="8" r="2" fill="#61DAFB" />
-                <ellipse cx="10" cy="8" rx="8" ry="3" fill="none" stroke="#61DAFB" strokeWidth="0.8" />
-              </g>
-              <text x="710" y="78" fill="#61DAFB" fontSize="9">React</text>
-            </g>
-
-            {/* Arrow */}
-            <path d="M730 92 L730 103" stroke="#4CAF50" strokeWidth="1.5" markerEnd="url(#arrow-green)" />
-
-            {/* Workflow Engine (top) - simple 3D */}
-            <g opacity={activePhase === 2 || activePhase === 4 ? 1 : 0.5}>
-              <polygon points="530,110 920,110 928,118 538,118" fill="#4CAF50" fillOpacity="0.25" stroke="#4CAF50" strokeWidth="1" />
-              <rect x="530" y="118" width="390" height="28" fill="#4CAF50" fillOpacity="0.15" stroke="#4CAF50" strokeWidth="1" />
-              <polygon points="920,110 920,146 928,138 928,118" fill="#4CAF50" fillOpacity="0.2" stroke="#4CAF50" strokeWidth="0.5" />
-              <circle cx="555" cy="132" r="8" fill="none" stroke="#4CAF50" strokeWidth="1" />
-              <circle cx="555" cy="132" r="3" fill="#4CAF50" />
-              <text x="730" y="137" textAnchor="middle" fill="#4CAF50" fontSize="10" fontWeight="600">Workflow Engine</text>
-            </g>
-
-            {/* Arrow */}
-            <path d="M730 148 L730 159" stroke="#4CAF50" strokeWidth="1.5" markerEnd="url(#arrow-green)" />
+            {/* Workflow Engine - 3D SVG Style */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: animPhase >= 2 ? 1 : 0, y: animPhase >= 2 ? 0 : 20 }}
+              className="w-full max-w-[300px]"
+            >
+              <svg viewBox="0 0 220 50" className="w-full">
+                <polygon points="10,12 190,12 210,2 30,2" fill="#9333ea" fillOpacity="0.3" stroke="#9333ea" strokeWidth="1" />
+                <rect x="10" y="12" width="180" height="32" fill="#9333ea" fillOpacity="0.2" stroke="#9333ea" strokeWidth="1" />
+                <polygon points="190,12 190,44 210,34 210,2" fill="#9333ea" fillOpacity="0.35" stroke="#9333ea" strokeWidth="1" />
+                <text x="100" y="33" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700">Workflow Engine</text>
+              </svg>
+            </motion.div>
 
             {/* Common Capability */}
-            <g opacity={activePhase === 2 || activePhase === 4 ? 1 : 0.5}>
-              <rect x="530" y="165" width="400" height="75" rx="4" fill="#0F1F35" stroke="#4CAF50" strokeWidth="0.8" strokeOpacity="0.5" strokeDasharray="3 2" />
-              <text x="730" y="180" textAnchor="middle" fill="var(--text-primary)" fontSize="10" fontWeight="700">Common Capability</text>
-              {/* 2x2 Grid - adjusted to fit within container */}
-              <rect x="545" y="188" width="85" height="20" rx="3" fill="#4CAF50" fillOpacity="0.1" stroke="#4CAF50" strokeWidth="0.4" />
-              <text x="587" y="202" textAnchor="middle" fill="var(--text-secondary)" fontSize="8">Ingestion</text>
-              <rect x="640" y="188" width="85" height="20" rx="3" fill="#4CAF50" fillOpacity="0.1" stroke="#4CAF50" strokeWidth="0.4" />
-              <text x="682" y="202" textAnchor="middle" fill="var(--text-secondary)" fontSize="8">Extraction</text>
-              <rect x="735" y="188" width="85" height="20" rx="3" fill="#4CAF50" fillOpacity="0.1" stroke="#4CAF50" strokeWidth="0.4" />
-              <text x="777" y="202" textAnchor="middle" fill="var(--text-secondary)" fontSize="8">Validation</text>
-              <rect x="830" y="188" width="85" height="20" rx="3" fill="#4CAF50" fillOpacity="0.1" stroke="#4CAF50" strokeWidth="0.4" />
-              <text x="872" y="202" textAnchor="middle" fill="var(--text-secondary)" fontSize="8">Booking</text>
-              {/* Tech badges inline */}
-              <rect x="570" y="215" width="35" height="18" rx="2" fill="#f89820" fillOpacity="0.1" stroke="#f89820" strokeWidth="0.4" />
-              <text x="587" y="227" textAnchor="middle" fill="#f89820" fontSize="7">Java</text>
-              <rect x="615" y="215" width="55" height="18" rx="2" fill="#2196F3" fillOpacity="0.1" stroke="#2196F3" strokeWidth="0.4" />
-              <text x="642" y="227" textAnchor="middle" fill="#2196F3" fontSize="7">Drools</text>
-            </g>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : 20 }}
+              className="w-full max-w-[300px]"
+            >
+              <div className="bg-[#0F1F35] border-2 border-purple-500/40 rounded-xl p-3">
+                <div className="text-white font-bold text-sm text-center mb-2">Common Capability</div>
+                <div className="grid grid-cols-2 gap-1.5 mb-2">
+                  {['Ingestion', 'Extraction', 'Validation', 'Booking'].map(item => (
+                    <div key={item} className="bg-white/5 border border-gray-600 rounded-lg px-2 py-1.5 text-center hover:bg-white/10 transition-colors">
+                      <span className="text-gray-200 text-xs">{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center justify-center gap-2 pt-2 border-t border-gray-700">
+                  <div className="flex items-center gap-1 border border-orange-400/50 rounded-md px-2 py-1 bg-orange-500/10">
+                    <JavaLogo />
+                    <span className="text-orange-400 text-xs font-medium">Java</span>
+                  </div>
+                  <div className="flex items-center gap-1 border border-cyan-500/50 rounded-md px-2 py-1 bg-cyan-500/10">
+                    <svg className="w-5 h-5" viewBox="0 0 24 24">
+                      {/* Cloud shape */}
+                      <path d="M6 16a4 4 0 0 1-.87-7.9A5.5 5.5 0 0 1 16.9 7 4 4 0 1 1 18 15H6z" fill="none" stroke="#06B6D4" strokeWidth="1.5"/>
+                      {/* Gear inside */}
+                      <circle cx="11" cy="11" r="2" fill="none" stroke="#06B6D4" strokeWidth="1"/>
+                      <path d="M11 7v1.5m0 5v1.5m-4-4h1.5m5 0h1.5m-6.4-2.8l1 1m4.8 4.8l1 1m-1-6.8l-1 1m-4.8 4.8l-1 1" stroke="#06B6D4" strokeWidth="0.8" strokeLinecap="round"/>
+                    </svg>
+                    <span className="text-cyan-400 text-xs font-medium">REST API</span>
+                  </div>
+                  <div className="flex items-center gap-2 border border-blue-400/60 rounded-md px-2 py-1 bg-blue-500/10">
+                    <DroolsLogo />
+                    <div>
+                      <div className="text-blue-400 font-semibold text-xs">Drools</div>
+                      <div className="text-gray-500 text-[10px]">Rules Engine</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
 
-            {/* Arrow */}
-            <path d="M730 243 L730 254" stroke="#4CAF50" strokeWidth="1.5" markerEnd="url(#arrow-green)" />
-
-            {/* Workflow Engine (bottom) - simple 3D */}
-            <g opacity={activePhase === 2 || activePhase === 4 ? 1 : 0.5}>
-              <polygon points="530,261 920,261 928,269 538,269" fill="#4CAF50" fillOpacity="0.25" stroke="#4CAF50" strokeWidth="1" />
-              <rect x="530" y="269" width="390" height="28" fill="#4CAF50" fillOpacity="0.15" stroke="#4CAF50" strokeWidth="1" />
-              <polygon points="920,261 920,297 928,289 928,269" fill="#4CAF50" fillOpacity="0.2" stroke="#4CAF50" strokeWidth="0.5" />
-              <circle cx="555" cy="283" r="8" fill="none" stroke="#4CAF50" strokeWidth="1" />
-              <circle cx="555" cy="283" r="3" fill="#4CAF50" />
-              <text x="730" y="288" textAnchor="middle" fill="#4CAF50" fontSize="10" fontWeight="600">Workflow Engine</text>
-            </g>
-
-            {/* Arrow */}
-            <path d="M730 300 L730 311" stroke="#4CAF50" strokeWidth="1.5" markerEnd="url(#arrow-green)" />
+            {/* Workflow Engine - 3D SVG Style */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: animPhase >= 4 ? 1 : 0, y: animPhase >= 4 ? 0 : 20 }}
+              className="w-full max-w-[300px]"
+            >
+              <svg viewBox="0 0 220 50" className="w-full">
+                <polygon points="10,12 190,12 210,2 30,2" fill="#9333ea" fillOpacity="0.3" stroke="#9333ea" strokeWidth="1" />
+                <rect x="10" y="12" width="180" height="32" fill="#9333ea" fillOpacity="0.2" stroke="#9333ea" strokeWidth="1" />
+                <polygon points="190,12 190,44 210,34 210,2" fill="#9333ea" fillOpacity="0.35" stroke="#9333ea" strokeWidth="1" />
+                <text x="100" y="33" textAnchor="middle" fill="#fff" fontSize="14" fontWeight="700">Workflow Engine</text>
+              </svg>
+            </motion.div>
 
             {/* MongoDB */}
-            <g opacity={activePhase === 2 || activePhase === 4 ? 1 : 0.5}>
-              <g transform="translate(665, 318)">
-                <ellipse cx="60" cy="5" rx="55" ry="6" fill="url(#mongoGrad)" />
-                <rect x="5" y="5" width="110" height="30" fill="url(#mongoGrad)" />
-                <ellipse cx="60" cy="35" rx="55" ry="6" fill="#3A8C2E" />
-                <ellipse cx="60" cy="5" rx="55" ry="6" fill="none" stroke="#6FCF5A" strokeWidth="0.8" />
-                <path d="M60 10 C60 10 52 16 52 22 C52 26 56 30 60 32 C64 30 68 26 68 22 C68 16 60 10 60 10 Z" fill="#C8F7C0" />
-                <text x="60" y="25" textAnchor="middle" fill="#fff" fontSize="8" fontWeight="600">MongoDB</text>
-              </g>
-            </g>
-          </g>
-
-          {/* ===== BOTTOM: Trade AI Banner ===== */}
-          <g opacity={activePhase >= 3 ? 1 : 0.3}>
-            <rect x="150" y="392" width="660" height="26" rx="4" fill="#0F1F35" stroke="#00D4FF" strokeWidth={activePhase === 3 || activePhase === 4 ? 1.5 : 0.8} strokeOpacity={activePhase === 3 || activePhase === 4 ? 0.8 : 0.3} />
-            <text x="200" y="409" textAnchor="middle" fill="#00D4FF" fontSize="10" fontWeight="700">Trade AI</text>
-            <rect x="250" y="398" width="16" height="14" rx="2" fill="#00D4FF" fillOpacity="0.15" stroke="#00D4FF" strokeWidth="0.4" />
-            <text x="258" y="408" textAnchor="middle" fill="#00D4FF" fontSize="7">🤖</text>
-            <text x="285" y="408" fill="var(--text-secondary)" fontSize="8">LLM</text>
-            <circle cx="360" cy="405" r="7" fill="#00D4FF" fillOpacity="0.15" stroke="#00D4FF" strokeWidth="0.4" />
-            <text x="385" y="403" fill="var(--text-secondary)" fontSize="7">Cognitive</text>
-            <text x="385" y="411" fill="var(--text-secondary)" fontSize="7">Intelligence</text>
-            <rect x="480" y="398" width="12" height="14" rx="2" fill="#00D4FF" fillOpacity="0.15" stroke="#00D4FF" strokeWidth="0.4" />
-            <text x="505" y="408" fill="var(--text-secondary)" fontSize="7">OCR</text>
-          </g>
-        </svg>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: animPhase >= 5 ? 1 : 0, y: animPhase >= 5 ? 0 : 20 }}
+              className="flex flex-col items-center"
+            >
+              {/* MongoDB Database Cylinder */}
+              <svg width="110" height="80" viewBox="0 0 90 65">
+                {/* Top ellipse */}
+                <ellipse cx="45" cy="10" rx="35" ry="8" fill="#4DB33D"/>
+                <ellipse cx="45" cy="10" rx="35" ry="8" fill="url(#mongoTopGrad)"/>
+                {/* Body */}
+                <path d="M10 10 L10 48 Q10 56 45 56 Q80 56 80 48 L80 10" fill="#4DB33D"/>
+                <path d="M10 10 L10 48 Q10 56 45 56 Q80 56 80 48 L80 10" fill="url(#mongoBodyGrad)"/>
+                {/* Bottom ellipse */}
+                <ellipse cx="45" cy="48" rx="35" ry="8" fill="#2E7D32"/>
+                {/* Leaf icon */}
+                <path d="M45 18 C45 18 38 25 38 32 C38 38 41 42 45 44 C49 42 52 38 52 32 C52 25 45 18 45 18Z" fill="white" opacity="0.9"/>
+                <path d="M45 18 C45 18 42 25 42 32 C42 38 43.5 42 45 44 L45 18Z" fill="#2E7D32" opacity="0.3"/>
+                {/* Gradients */}
+                <defs>
+                  <linearGradient id="mongoTopGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#66BB6A"/>
+                    <stop offset="50%" stopColor="#4DB33D"/>
+                    <stop offset="100%" stopColor="#388E3C"/>
+                  </linearGradient>
+                  <linearGradient id="mongoBodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#66BB6A"/>
+                    <stop offset="50%" stopColor="#4DB33D"/>
+                    <stop offset="100%" stopColor="#388E3C"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span className="text-green-400 font-bold text-sm -mt-1">MongoDB</span>
+            </motion.div>
+          </div>
+        </div>
       </div>
 
-      {/* Phase Description */}
-      <div className="mt-1 text-center">
-        <p className="text-xs text-[var(--accent-cyan)] font-semibold">{phases[activePhase].title}</p>
-        <p className="text-xs text-[var(--text-secondary)]">{phases[activePhase].description}</p>
-      </div>
+      {/* Data Sync Between Databases */}
+      <motion.div
+        initial={{ opacity: 0, scaleX: 0 }}
+        animate={{ opacity: animPhase >= 5 ? 1 : 0, scaleX: animPhase >= 5 ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="relative w-full max-w-4xl mt-auto mb-2"
+      >
+        <div className="flex items-center justify-center gap-4 py-3 px-6 bg-gradient-to-r from-red-500/10 via-purple-500/20 to-green-500/10 rounded-2xl border border-purple-500/40 shadow-lg shadow-purple-500/20">
+          {/* Oracle side indicator */}
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"/>
+            <span className="text-red-400 font-semibold text-sm">Oracle</span>
+          </div>
+
+          {/* Animated Sync Arrows */}
+          <div className="flex-1 relative h-14">
+            <svg className="w-full h-full" viewBox="0 0 300 56" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="syncGradRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#c74634"/>
+                  <stop offset="100%" stopColor="#4DB33D"/>
+                </linearGradient>
+                <linearGradient id="syncGradLeft" x1="100%" y1="0%" x2="0%" y2="0%">
+                  <stop offset="0%" stopColor="#4DB33D"/>
+                  <stop offset="100%" stopColor="#c74634"/>
+                </linearGradient>
+              </defs>
+
+              {/* Top dotted line - Oracle to MongoDB */}
+              <motion.path
+                d="M20 18 L260 18"
+                stroke="#c74634"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeDasharray="8 6"
+                initial={{ strokeDashoffset: 0 }}
+                animate={{ strokeDashoffset: -28 }}
+                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+              />
+              {/* Arrow head right */}
+              <path d="M252 12 L270 18 L252 24" fill="#4DB33D" stroke="#4DB33D" strokeWidth="1"/>
+
+              {/* Bottom dotted line - MongoDB to Oracle */}
+              <motion.path
+                d="M280 38 L40 38"
+                stroke="#4DB33D"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeDasharray="8 6"
+                initial={{ strokeDashoffset: 0 }}
+                animate={{ strokeDashoffset: -28 }}
+                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+              />
+              {/* Arrow head left */}
+              <path d="M48 32 L30 38 L48 44" fill="#c74634" stroke="#c74634" strokeWidth="1"/>
+
+              {/* Animated glowing data packets going right */}
+              <motion.circle
+                cx="20"
+                cy="18"
+                r="6"
+                fill="#c74634"
+                filter="drop-shadow(0 0 6px #c74634)"
+                animate={{ cx: [20, 260] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+              />
+              <motion.circle
+                cx="20"
+                cy="18"
+                r="6"
+                fill="#c74634"
+                filter="drop-shadow(0 0 6px #c74634)"
+                animate={{ cx: [20, 260] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear', delay: 1 }}
+              />
+
+              {/* Animated glowing data packets going left */}
+              <motion.circle
+                cx="280"
+                cy="38"
+                r="6"
+                fill="#4DB33D"
+                filter="drop-shadow(0 0 6px #4DB33D)"
+                animate={{ cx: [280, 40] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear', delay: 0.5 }}
+              />
+              <motion.circle
+                cx="280"
+                cy="38"
+                r="6"
+                fill="#4DB33D"
+                filter="drop-shadow(0 0 6px #4DB33D)"
+                animate={{ cx: [280, 40] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear', delay: 1.5 }}
+              />
+            </svg>
+
+            {/* Data Sync Label */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <motion.div
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                className="bg-purple-600/90 px-4 py-1 rounded-full shadow-lg shadow-purple-500/50"
+              >
+                <span className="text-white font-bold text-sm tracking-wide">DATA SYNC</span>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* MongoDB side indicator */}
+          <div className="flex items-center gap-2">
+            <span className="text-green-400 font-semibold text-sm">MongoDB</span>
+            <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"/>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Trade AI Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: animPhase >= 5 ? 1 : 0, y: animPhase >= 5 ? 0 : 30 }}
+        transition={{ duration: 0.5 }}
+        className="mt-2 p-3 rounded-2xl border-2 border-gray-700 bg-gradient-to-r from-[#0F1F35] to-[#1a2a40] flex items-center justify-center gap-10 max-w-4xl w-full"
+      >
+        <span className="text-white font-bold text-lg">Trade AI</span>
+        <div className="flex items-center gap-8 text-sm">
+          <div className="flex items-center gap-2 text-gray-300">
+            <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+              <span className="text-lg">🤖</span>
+            </div>
+            <span>LLM</span>
+          </div>
+          <div className="flex items-center gap-2 text-gray-300">
+            <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+              <span className="text-lg">🧠</span>
+            </div>
+            <span>Cognitive Intelligence</span>
+          </div>
+          <div className="flex items-center gap-2 text-gray-300">
+            <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+              <span className="text-lg">📄</span>
+            </div>
+            <span>Optical Character Recognition</span>
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }

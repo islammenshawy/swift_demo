@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // Import actual visualization components
 import InteractiveSlide from '@/components/presentation/slides/InteractiveSlide';
+import ChartSlide from '@/components/presentation/slides/ChartSlide';
+import TimelineSlide from '@/components/presentation/slides/TimelineSlide';
 import type { SlideContent, Slide as DemoSlide, Demo as DemoType, VisualizationType } from '@/types/demo';
 
 // Local types for standalone (JSON data may have looser types)
@@ -49,7 +51,7 @@ const PHASE_COUNTS: Record<string, number> = {
   'team-benchmarking': 1,
   'ai-capabilities': 1,
   'promotion-pipeline': 1,
-  'feature-showcase': 1,
+  'feature-showcase': 9, // phase 0-1 initial, phases 2-8 cycle through 7 features
 };
 
 function getPhaseCount(slide: StandaloneSlide): number {
@@ -197,6 +199,12 @@ function SlideRenderer({ slide, phase }: { slide: StandaloneSlide; phase: number
         isCapturing={false}
       />
     );
+  }
+  if (slide.type === 'chart') {
+    return <ChartSlide content={slide.content} />;
+  }
+  if (slide.type === 'timeline') {
+    return <TimelineSlide content={slide.content} />;
   }
   return <ContentSlide content={slide.content} />;
 }
