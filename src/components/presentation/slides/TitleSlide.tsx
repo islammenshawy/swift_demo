@@ -96,6 +96,23 @@ export default function TitleSlide({ content, isCapturing = false }: TitleSlideP
             )}
           </motion.div>
         )}
+
+        {content.footnote && (
+          <motion.div
+            {...animationProps}
+            initial={isCapturing ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: isCapturing ? 0 : 1.6, ease: [0.25, 0.4, 0.25, 1] }}
+          >
+            {isCapturing ? (
+              <p className="mt-6 text-xl md:text-2xl text-[var(--accent-gold)] max-w-2xl mx-auto italic">{content.footnote}</p>
+            ) : (
+              <TextReveal delay={1.6} className="mt-6 text-xl md:text-2xl text-[var(--accent-gold)] max-w-2xl mx-auto italic">
+                {content.footnote}
+              </TextReveal>
+            )}
+          </motion.div>
+        )}
       </div>
 
       {/* Bottom accent line with glow */}

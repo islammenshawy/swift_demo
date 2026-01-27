@@ -40,7 +40,7 @@ export function ELCArchitecture() {
 
   const handleZoomOut = useCallback(() => {
     setZoom(prev => {
-      const newZoom = Math.max(prev - 0.25, 0.5);
+      const newZoom = Math.max(prev - 0.25, 1);
       if (newZoom <= 1) {
         setPanPosition({ x: 0, y: 0 });
       }
@@ -155,12 +155,12 @@ export function ELCArchitecture() {
       <div className="flex items-center justify-center gap-6 mb-3 px-4">
         {/* Current - 6 Steps */}
         <div className="flex flex-col items-center">
-          <span className="text-[9px] text-[var(--text-muted)] mb-1 font-medium">CURRENT (6 Steps)</span>
+          <span className="text-[10px] text-[var(--text-muted)] mb-1 font-medium">CURRENT (6 Steps)</span>
           <div className="flex items-center gap-1 px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-red-500/30">
             {currentSteps.map((step, i) => (
               <div key={step} className="flex items-center">
                 <motion.span
-                  className="text-[8px] px-1.5 py-0.5 rounded whitespace-nowrap"
+                  className="text-[10px] px-1.5 py-0.5 rounded whitespace-nowrap"
                   animate={{
                     backgroundColor: activeCurrentStep >= i
                       ? 'rgba(239, 68, 68, 0.6)'
@@ -174,7 +174,7 @@ export function ELCArchitecture() {
                 </motion.span>
                 {i < currentSteps.length - 1 && (
                   <motion.span
-                    className="mx-0.5 text-[10px]"
+                    className="mx-0.5 text-xs"
                     animate={{
                       color: activeCurrentStep > i ? '#ef4444' : '#f8717150',
                       scale: activeCurrentStep === i ? 1.3 : 1,
@@ -207,17 +207,17 @@ export function ELCArchitecture() {
           >
             ⟹
           </motion.span>
-          <span className="text-[8px] text-[var(--accent-gold)]">Simplified</span>
+          <span className="text-[10px] text-[var(--accent-gold)]">Simplified</span>
         </motion.div>
 
         {/* Proposed - 4 Steps */}
         <div className="flex flex-col items-center">
-          <span className="text-[9px] text-[var(--accent-gold)] mb-1 font-medium">PROPOSED (4 Steps)</span>
+          <span className="text-[10px] text-[var(--accent-gold)] mb-1 font-medium">PROPOSED (4 Steps)</span>
           <div className="flex items-center gap-1 px-3 py-2 rounded-lg bg-[var(--bg-secondary)] border border-[var(--accent-gold)]/50">
             {proposedSteps.map((step, i) => (
               <div key={step} className="flex items-center">
                 <motion.span
-                  className="text-[9px] px-2 py-0.5 rounded font-semibold whitespace-nowrap"
+                  className="text-[11px] px-2 py-0.5 rounded font-semibold whitespace-nowrap"
                   animate={{
                     backgroundColor: activeProposedStep >= i
                       ? 'rgba(201, 162, 39, 0.7)'
@@ -234,7 +234,7 @@ export function ELCArchitecture() {
                 </motion.span>
                 {i < proposedSteps.length - 1 && (
                   <motion.span
-                    className="mx-0.5 text-[10px]"
+                    className="mx-0.5 text-xs"
                     animate={{
                       color: activeProposedStep > i ? '#C9A227' : '#C9A22750',
                       scale: activeProposedStep === i ? 1.3 : 1,
@@ -249,7 +249,7 @@ export function ELCArchitecture() {
           </div>
           {/* Step reduction indicator */}
           <motion.div
-            className="mt-1 text-[8px] text-[var(--accent-gold)] font-bold"
+            className="mt-1 text-[10px] text-[var(--accent-gold)] font-bold"
             animate={{
               opacity: cycleComplete ? 1 : 0,
               y: cycleComplete ? 0 : 5,

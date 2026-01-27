@@ -2,12 +2,13 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { SlideContent } from '@/types/demo';
 import { ELCArchitecture } from './ELCArchitectureVisualization';
 import { ELCIntegrationPatterns } from './ELCIntegrationPatterns';
 import { ELCRoadmap } from './ELCRoadmap';
 import { ELCDeliverablesHeatmap } from './ELCDeliverablesHeatmap';
+import { tpsArchitectureImage } from '@/assets/tps-architecture-base64';
 
 interface InteractiveSlideProps {
   content: SlideContent;
@@ -3430,7 +3431,7 @@ function ArchitectureComparison() {
         className="text-center mb-3"
       >
         <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
-          Architecture Comparison
+          Current Architecture/Proposed
         </h2>
       </motion.div>
 
@@ -3716,40 +3717,69 @@ function ArchitectureComparison() {
               </svg>
             </motion.div>
 
-            {/* MongoDB */}
+            {/* Multiple Database Options */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: animPhase >= 5 ? 1 : 0, y: animPhase >= 5 ? 0 : 20 }}
               className="flex flex-col items-center"
             >
-              {/* MongoDB Database Cylinder */}
-              <svg width="110" height="80" viewBox="0 0 90 65">
-                {/* Top ellipse */}
-                <ellipse cx="45" cy="10" rx="35" ry="8" fill="#4DB33D"/>
-                <ellipse cx="45" cy="10" rx="35" ry="8" fill="url(#mongoTopGrad)"/>
-                {/* Body */}
-                <path d="M10 10 L10 48 Q10 56 45 56 Q80 56 80 48 L80 10" fill="#4DB33D"/>
-                <path d="M10 10 L10 48 Q10 56 45 56 Q80 56 80 48 L80 10" fill="url(#mongoBodyGrad)"/>
-                {/* Bottom ellipse */}
-                <ellipse cx="45" cy="48" rx="35" ry="8" fill="#2E7D32"/>
-                {/* Leaf icon */}
-                <path d="M45 18 C45 18 38 25 38 32 C38 38 41 42 45 44 C49 42 52 38 52 32 C52 25 45 18 45 18Z" fill="white" opacity="0.9"/>
-                <path d="M45 18 C45 18 42 25 42 32 C42 38 43.5 42 45 44 L45 18Z" fill="#2E7D32" opacity="0.3"/>
-                {/* Gradients */}
-                <defs>
-                  <linearGradient id="mongoTopGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#66BB6A"/>
-                    <stop offset="50%" stopColor="#4DB33D"/>
-                    <stop offset="100%" stopColor="#388E3C"/>
-                  </linearGradient>
-                  <linearGradient id="mongoBodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#66BB6A"/>
-                    <stop offset="50%" stopColor="#4DB33D"/>
-                    <stop offset="100%" stopColor="#388E3C"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-              <span className="text-green-400 font-bold text-sm -mt-1">MongoDB</span>
+              <span className="text-xs text-gray-400 mb-2">Flexible Data Layer</span>
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-green-500/10 border border-green-500/30">
+                {/* PostgreSQL */}
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-lg bg-[#336791] flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" className="w-8 h-8" fill="white">
+                      <path d="M17.128 0a10.134 10.134 0 0 0-2.755.403l-.063.02a10.922 10.922 0 0 0-1.612.536l-.073.029a11.086 11.086 0 0 0-4.275-.053l-.103.015a10.873 10.873 0 0 0-4.612 2.157l-.064.053A10.908 10.908 0 0 0 .583 8.453l-.011.083a10.88 10.88 0 0 0 .86 5.469l.036.076a10.863 10.863 0 0 0 3.339 4.282l.063.048c.136.1.274.195.414.286l.056.034c.139.089.28.172.424.25l.03.016c.142.077.288.148.436.213l.02.008c.144.063.292.12.442.17l.024.008c.025.008.05.018.076.025l.018.005c.14.042.283.078.428.108l.013.003c.143.03.288.053.434.07l.018.002c.142.017.286.027.43.03h.012c.14.003.28-.001.42-.012l.022-.002c.135-.012.27-.03.404-.055l.017-.003c.13-.025.26-.056.388-.093l.024-.007c.12-.036.239-.078.356-.126l.024-.01c.109-.046.217-.098.322-.155l.022-.012a5.5 5.5 0 0 0 .295-.18l.027-.018c.087-.06.171-.125.252-.193l.022-.02c.077-.066.15-.136.22-.21l.015-.017c.066-.073.128-.15.185-.23l.012-.017c.054-.077.103-.157.148-.24l.015-.029c.04-.076.076-.155.107-.235l.007-.02c.028-.075.052-.152.071-.23l.008-.035c.015-.07.026-.14.033-.212l.002-.024c.005-.066.006-.133.003-.2v-.014a1.543 1.543 0 0 0-.037-.211l-.003-.012a1.55 1.55 0 0 0-.088-.238l-.007-.014a1.558 1.558 0 0 0-.14-.24l-.014-.02a1.565 1.565 0 0 0-.19-.224l-.026-.024a1.58 1.58 0 0 0-.231-.182l-.023-.014z"/>
+                    </svg>
+                  </div>
+                  <span className="text-[10px] text-[#336791] font-semibold mt-1">PostgreSQL</span>
+                </div>
+                {/* Vector DB */}
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-lg bg-[#8B5CF6] flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="white" strokeWidth="2">
+                      <circle cx="12" cy="12" r="3"/>
+                      <circle cx="12" cy="5" r="2"/>
+                      <circle cx="19" cy="12" r="2"/>
+                      <circle cx="12" cy="19" r="2"/>
+                      <circle cx="5" cy="12" r="2"/>
+                      <line x1="12" y1="9" x2="12" y2="7"/>
+                      <line x1="15" y1="12" x2="17" y2="12"/>
+                      <line x1="12" y1="15" x2="12" y2="17"/>
+                      <line x1="9" y1="12" x2="7" y2="12"/>
+                    </svg>
+                  </div>
+                  <span className="text-[10px] text-[#8B5CF6] font-semibold mt-1">Vector DB</span>
+                </div>
+                {/* Graph DB */}
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-lg bg-[#00B4D8] flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="white" strokeWidth="2">
+                      <circle cx="6" cy="6" r="3"/>
+                      <circle cx="18" cy="6" r="3"/>
+                      <circle cx="6" cy="18" r="3"/>
+                      <circle cx="18" cy="18" r="3"/>
+                      <line x1="9" y1="6" x2="15" y2="6"/>
+                      <line x1="6" y1="9" x2="6" y2="15"/>
+                      <line x1="18" y1="9" x2="18" y2="15"/>
+                      <line x1="9" y1="18" x2="15" y2="18"/>
+                      <line x1="8" y1="8" x2="16" y2="16"/>
+                    </svg>
+                  </div>
+                  <span className="text-[10px] text-[#00B4D8] font-semibold mt-1">Graph DB</span>
+                </div>
+                {/* MongoDB */}
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 rounded-lg bg-[#4DB33D] flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" className="w-7 h-7" fill="white">
+                      <path d="M12 2C12 2 8 6 8 12C8 16 10 20 12 22C14 20 16 16 16 12C16 6 12 2 12 2Z"/>
+                      <path d="M12 2C12 2 10 6 10 12C10 16 11 20 12 22" fill="#2E7D32" opacity="0.3"/>
+                    </svg>
+                  </div>
+                  <span className="text-[10px] text-[#4DB33D] font-semibold mt-1">MongoDB</span>
+                </div>
+              </div>
+              <span className="text-[10px] text-green-400 mt-1 italic">Choose what fits your needs</span>
             </motion.div>
           </div>
         </div>
@@ -3864,9 +3894,9 @@ function ArchitectureComparison() {
             </div>
           </div>
 
-          {/* MongoDB side indicator */}
+          {/* Modern DB side indicator */}
           <div className="flex items-center gap-2">
-            <span className="text-green-400 font-semibold text-sm">MongoDB</span>
+            <span className="text-green-400 font-semibold text-sm">Modern DBs</span>
             <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"/>
           </div>
         </div>
@@ -3954,37 +3984,73 @@ function JourneyOverview() {
               ease: "easeInOut"
             }}
           >
-            <h4 className="text-sm font-bold text-[#4CAF50] mb-2 flex items-center gap-2">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <h4 className="text-base font-bold text-[#4CAF50] mb-2 flex items-center gap-2">
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               TENET Delivered
             </h4>
-            <p className="text-[11px] text-[var(--text-muted)] mb-3 italic">UI Layer Modernization</p>
-            <ul className="text-xs text-[var(--text-secondary)] space-y-1.5">
-              <li>• Modern React UI</li>
-              <li>• Improved User Experience</li>
-              <li>• Reusable Component Library</li>
-              <li>• Replaced legacy GWT/Sencha</li>
+            <p className="text-xs text-[var(--text-muted)] mb-3 italic">UI Layer Modernization</p>
+            <ul className="text-sm text-white space-y-2">
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#4CAF50]/10">
+                <span className="text-[#4CAF50]">•</span>
+                <span>Modern React UI</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#4CAF50]/10">
+                <span className="text-[#4CAF50]">•</span>
+                <span>Improved User Experience</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#4CAF50]/10">
+                <span className="text-[#4CAF50]">•</span>
+                <span>Reusable Component Library</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#4CAF50]/10">
+                <span className="text-[#4CAF50]">•</span>
+                <span>Replaced legacy GWT/Sencha</span>
+              </li>
             </ul>
           </motion.div>
 
           {/* Infrastructure Upgrades */}
-          <div className="p-5 rounded-xl bg-[var(--bg-secondary)]/50 border border-[var(--text-muted)]/30">
-            <h4 className="text-sm font-semibold text-[var(--text-primary)] mb-3">Version Upgrades:</h4>
-            <ul className="text-xs text-[var(--text-secondary)] space-y-1.5 ml-1">
-              <li>• Drools</li>
-              <li>• Java</li>
-              <li>• Spring</li>
-              <li>• Hibernate</li>
-              <li>• Jbpm</li>
+          <div className="p-5 rounded-xl bg-[var(--bg-secondary)]/50 border-2 border-[var(--text-muted)]/30">
+            <h4 className="text-base font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+              <span className="text-lg">⚙️</span>
+              Version Upgrades
+            </h4>
+            <ul className="text-sm text-white space-y-2">
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-white/5">
+                <span className="text-[var(--accent-cyan)]">•</span>
+                <span>Drools</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-white/5">
+                <span className="text-[var(--accent-cyan)]">•</span>
+                <span>Java</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-white/5">
+                <span className="text-[var(--accent-cyan)]">•</span>
+                <span>Spring</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-white/5">
+                <span className="text-[var(--accent-cyan)]">•</span>
+                <span>Hibernate</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-white/5">
+                <span className="text-[var(--accent-cyan)]">•</span>
+                <span>Jbpm</span>
+              </li>
             </ul>
           </div>
 
           {/* Current Limitation */}
-          <div className="p-4 rounded-xl bg-[#FF9800]/10 border border-[#FF9800]/30">
-            <h4 className="text-xs font-semibold text-[#FF9800] mb-1">Known Limitation:</h4>
-            <p className="text-[11px] text-[var(--text-secondary)]">• Non-API implementation pattern still in use</p>
+          <div className="p-4 rounded-xl bg-[#FF9800]/10 border-2 border-[#FF9800]/40">
+            <h4 className="text-base font-bold text-[#FF9800] mb-3 flex items-center gap-2">
+              <span className="text-lg">⚠️</span>
+              Known Limitation
+            </h4>
+            <div className="flex items-start gap-2 p-2 rounded-lg bg-[#FF9800]/10">
+              <span className="text-[#FF9800]">•</span>
+              <span className="text-sm text-white">Non-API implementation pattern still in use</span>
+            </div>
           </div>
         </motion.div>
 
@@ -4261,33 +4327,57 @@ function JourneyOverview() {
               ease: "easeInOut"
             }}
           >
-            <h4 className="text-sm font-bold text-[#4CAF50] mb-3 flex items-center gap-2">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <h4 className="text-base font-bold text-[#4CAF50] mb-4 flex items-center gap-2">
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
               Issues Resolved
             </h4>
-            <ul className="text-xs text-[var(--text-secondary)] space-y-2">
-              <li>• Sencha and GWT out of support</li>
-              <li>• Hardcoding business rules and logic</li>
-              <li>• Client heavy implementation</li>
+            <ul className="text-sm text-white space-y-3">
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#4CAF50]/10">
+                <span className="text-[#4CAF50]">•</span>
+                <span>Sencha and GWT out of support</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#4CAF50]/10">
+                <span className="text-[#4CAF50]">•</span>
+                <span>Hardcoding business rules and logic</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#4CAF50]/10">
+                <span className="text-[#4CAF50]">•</span>
+                <span>Client heavy implementation</span>
+              </li>
             </ul>
-            <div className="mt-3 pt-3 border-t border-[#4CAF50]/30">
-              <span className="text-xs text-[#4CAF50] font-semibold">✓ Being fixed by TENET</span>
+            <div className="mt-4 pt-3 border-t border-[#4CAF50]/30">
+              <span className="text-sm text-[#4CAF50] font-bold">✓ Being fixed by TENET</span>
             </div>
           </motion.div>
 
           {/* Remaining Challenges */}
           <div className="p-5 rounded-xl bg-[#FF9800]/10 border-2 border-[#FF9800]/40">
-            <h4 className="text-sm font-bold text-[#FF9800] mb-3">Remaining Challenges</h4>
-            <ul className="text-xs text-[var(--text-secondary)] space-y-2">
-              <li>• Mule version upgrade needed</li>
-              <li>• Strong coupling & dependency with business process layer</li>
-              <li>• Non-API implementation</li>
-              <li>• Legacy DB dependencies</li>
+            <h4 className="text-base font-bold text-[#FF9800] mb-4 flex items-center gap-2">
+              <span className="text-xl">⚠️</span>
+              Remaining Challenges
+            </h4>
+            <ul className="text-sm text-white space-y-3">
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#FF9800]/10">
+                <span className="text-[#FF9800]">•</span>
+                <span>Mule version upgrade needed</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#FF9800]/10">
+                <span className="text-[#FF9800]">•</span>
+                <span>Strong coupling & dependency with business process layer</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#FF9800]/10">
+                <span className="text-[#FF9800]">•</span>
+                <span>Non-API implementation</span>
+              </li>
+              <li className="flex items-start gap-2 p-2 rounded-lg bg-[#FF9800]/10">
+                <span className="text-[#FF9800]">•</span>
+                <span>Legacy DB dependencies</span>
+              </li>
             </ul>
-            <div className="mt-3 pt-3 border-t border-[#FF9800]/30">
-              <span className="text-xs text-[#FF9800] font-semibold">⚠ Next Phase (ELC)</span>
+            <div className="mt-4 pt-3 border-t border-[#FF9800]/30">
+              <span className="text-sm text-[#FF9800] font-bold">⚠ Next Phase (ELC)</span>
             </div>
           </div>
         </motion.div>
@@ -4331,42 +4421,36 @@ function LegacyProblems() {
     },
     {
       icon: '2',
-      label: 'Slow Processing',
-      desc: 'T+2 settlement delays',
-      detail: 'Batch processing only • Manual intervention required • Queue bottlenecks',
+      label: 'Integration Complexity',
+      desc: 'No modern APIs',
+      detail: 'Mule ESB dependency • Difficult external integration • Tightly coupled systems',
     },
     {
       icon: '3',
-      label: 'Integration Complexity',
-      desc: '100+ service-level connections',
-      detail: '5x industry average • No standard APIs • High coordination cost',
-    },
-    {
-      icon: '4',
       label: 'Limited Visibility',
       desc: 'Batch-generated reports',
       detail: 'T-1 day data latency • No real-time dashboards • Manual reconciliation',
     },
     {
-      icon: '5',
+      icon: '4',
       label: 'Technical Debt',
       desc: 'High maintenance burden',
       detail: 'Low documentation • Key-person risk • 4-6 month change cycles',
     },
     {
-      icon: '6',
+      icon: '5',
       label: 'Schema Rigidity',
       desc: 'Fixed relational models',
       detail: 'Every change requires deployment • No runtime flexibility • Tightly coupled data structures',
     },
     {
-      icon: '7',
+      icon: '6',
       label: 'Quality & Defects',
       desc: 'Growing technical debt',
       detail: 'High defect backlog • Long resolution cycles • Reactive fixes over proactive quality',
     },
     {
-      icon: '8',
+      icon: '7',
       label: 'AI Coding Agents',
       desc: 'Architecture limits AI tooling adoption',
       detail: 'Monolith exceeds AI context windows • Industry moving to AI-native architectures • Domain boundaries enable AI mastery',
@@ -4376,7 +4460,9 @@ function LegacyProblems() {
   // Use forcePhase to control active problem (for standalone/export navigation)
   // Fall back to internal state for live site with up/down navigation
   const [internalActiveProblem, setInternalActiveProblem] = useState(0);
-  const activeProblem = forcePhase !== undefined ? forcePhase : internalActiveProblem;
+  const rawActiveProblem = forcePhase !== undefined ? forcePhase : internalActiveProblem;
+  // Clamp to valid range to prevent out-of-bounds access
+  const activeProblem = Math.min(Math.max(0, rawActiveProblem), problems.length - 1);
 
   // Keyboard navigation for within-slide selection (only when not using forcePhase)
   useEffect(() => {
@@ -4416,260 +4502,195 @@ function LegacyProblems() {
     switch (index) {
       case 0: // Monolithic Architecture - Professional metrics view
         return (
-          <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
-            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
-              {/* Left: Architecture Diagram */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
-                className="flex-1 min-w-0"
-              >
-                <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Current Architecture</h3>
-                <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
-                  {/* Monolith block */}
-                  <div className="bg-gray-800 rounded-lg border-2 border-red-500/50 p-4">
-                    <div className="text-center mb-4">
-                      <p className="text-red-400 font-bold text-lg">Legacy Trade Monolith</p>
-                      <p className="text-gray-500 text-sm">Single Deployable Unit</p>
+          <div className="relative w-full h-full flex flex-col p-4 lg:p-6 overflow-auto">
+            <div className="flex-1 flex items-center justify-center">
+              <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-4 lg:gap-8">
+                {/* Left: Mini Platform A Diagram Reference */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
+                  className="lg:w-96 flex-shrink-0 flex flex-col mt-8"
+                >
+                  {/* Context Banner - on top of diagram */}
+                  <div className="mb-3 px-4 py-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--accent-gold)]/30">
+                    <div className="flex items-center gap-2 justify-center">
+                      <span className="text-[var(--accent-gold)] text-base">📍</span>
+                      <span className="text-xs text-[var(--text-secondary)]">Context</span>
                     </div>
-
-                    {/* Layers stacked */}
-                    <div className="space-y-2">
-                      {[
-                        { name: 'Presentation Layer', modules: 'UI, Reports, Dashboards' },
-                        { name: 'Business Logic', modules: 'Trade Processing, Risk, Settlement' },
-                        { name: 'Integration Layer', modules: 'SWIFT, Core Banking, External APIs' },
-                        { name: 'Data Access', modules: 'ORM, Stored Procedures, Caching' },
-                        { name: 'Database', modules: 'Single Oracle Instance' },
-                      ].map((layer, i) => (
-                        <motion.div
-                          key={layer.name}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: animPhase >= 2 ? 1 : 0, y: animPhase >= 2 ? 0 : 10 }}
-                          transition={{ delay: i * 0.1 }}
-                          className="bg-gray-700/50 rounded p-3 border-l-4 border-gray-600"
-                        >
-                          <p className="text-sm text-white font-medium">{layer.name}</p>
-                          <p className="text-xs text-gray-400">{layer.modules}</p>
-                        </motion.div>
-                      ))}
-                    </div>
-
-                    {/* Coupling indicator */}
-                    {animPhase >= 3 && (
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg"
-                      >
-                        <p className="text-red-400 text-sm text-center">All layers tightly coupled — cannot be deployed independently</p>
-                      </motion.div>
-                    )}
+                    <p className="text-sm font-semibold text-white text-center mt-1">Trade System</p>
+                    <p className="text-xs text-gray-400 text-center">Current State</p>
                   </div>
-                </div>
-              </motion.div>
-
-              {/* Right: Impact Metrics */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-                className="w-full lg:w-80 flex-shrink-0"
-              >
-                <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Business Impact</h3>
-
-                <div className="space-y-4">
-                  {[
-                    { label: 'Deployment Frequency', value: '1x / month', impact: 'vs. industry 10x/day', bad: true },
-                    { label: 'Change Lead Time', value: '6-8 weeks', impact: 'vs. industry <1 week', bad: true },
-                    { label: 'Test → Dev Cycles', value: 'Multiple', impact: 'regressions bounce back to engineering', bad: true },
-                    { label: 'Regression Risk', value: 'High', impact: 'changes break unrelated areas', bad: true },
-                    { label: 'Code Dependencies', value: '2.4M lines', impact: 'in single codebase', bad: true },
-                  ].map((metric, i) => (
-                    <motion.div
-                      key={metric.label}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : 10 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="bg-[var(--bg-secondary)] rounded-lg border border-gray-700 p-4"
-                    >
-                      <div className="flex justify-between items-start">
-                        <p className="text-sm text-gray-400">{metric.label}</p>
-                        <span className="text-xs px-2 py-0.5 bg-red-500/20 text-red-400 rounded">Critical</span>
+                  <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--accent-gold)]/30 p-4">
+                    <p className="text-sm text-[var(--accent-gold)] font-semibold mb-3 text-center">TPS Architecture</p>
+                    {/* Platform A Architecture Image with UI layer greyed out */}
+                    <div className="relative">
+                      <img
+                        src={tpsArchitectureImage}
+                        alt="Trade System Architecture"
+                        className="w-full rounded-lg"
+                      />
+                      {/* Grey glass overlay for UI layer (top ~38%) */}
+                      <div
+                        className="absolute top-0 left-0 right-0 rounded-t-lg flex items-center justify-center"
+                        style={{
+                          height: '38%',
+                          background: 'rgba(80, 80, 80, 0.7)',
+                          backdropFilter: 'blur(2px)',
+                        }}
+                      >
+                        <span className="text-xs text-green-400 font-semibold">✓ Completed / In Progress</span>
                       </div>
-                      <p className="text-2xl font-bold text-white mt-1">{metric.value}</p>
-                      <p className="text-xs text-gray-500 mt-1">{metric.impact}</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        );
+                    </div>
+                    <p className="text-xs text-gray-500 text-center mt-3 italic">Tightly coupled layers</p>
+                  </div>
+                </motion.div>
 
-      case 1: // Slow Processing - Professional metrics view
-        return (
-          <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
-            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
-              {/* Left: Processing Flow Diagram */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
-                className="flex-1 min-w-0"
-              >
-                <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Current Processing Flow</h3>
-                <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
-                  {/* Timeline flow */}
+                {/* Center: Architecture Details */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: animPhase >= 1 ? 1 : 0, y: animPhase >= 1 ? 0 : 20 }}
+                  className="flex-1 min-w-0"
+                >
+                  <h3 className="text-xl font-semibold text-[var(--text-secondary)] mb-4">Current Architecture</h3>
+                  <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-5">
+                    {/* Monolith block */}
+                    <div className="bg-gray-800 rounded-lg border-2 border-red-500/50 p-5">
+                      <div className="text-center mb-4">
+                        <p className="text-red-400 font-bold text-lg">Legacy Trade Monolith</p>
+                        <p className="text-gray-500 text-sm">Single Deployable Unit</p>
+                      </div>
+
+                      {/* Layers stacked */}
+                      <div className="space-y-3">
+                        {[
+                          { name: 'Business Logic', modules: 'Trade Processing, Risk, Settlement' },
+                          { name: 'Integration Layer', modules: 'SWIFT, Core Banking, External APIs' },
+                          { name: 'Data Access', modules: 'ORM, Stored Procedures, Caching' },
+                          { name: 'Database', modules: 'Single Oracle Instance' },
+                        ].map((layer, i) => (
+                          <motion.div
+                            key={layer.name}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: animPhase >= 2 ? 1 : 0, y: animPhase >= 2 ? 0 : 10 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="bg-gray-700/50 rounded p-3 border-l-4 border-gray-600"
+                          >
+                            <p className="text-base text-white font-medium">{layer.name}</p>
+                            <p className="text-sm text-gray-400">{layer.modules}</p>
+                          </motion.div>
+                        ))}
+                      </div>
+
+                      {/* Coupling indicator */}
+                      {animPhase >= 3 && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg"
+                        >
+                          <p className="text-red-400 text-sm text-center">All layers tightly coupled — cannot be deployed independently</p>
+                        </motion.div>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Right: Impact Metrics */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
+                  className="w-full lg:w-72 flex-shrink-0"
+                >
+                  <h3 className="text-xl font-semibold text-[var(--text-secondary)] mb-4">Business Impact</h3>
+
                   <div className="space-y-3">
                     {[
-                      { step: 'Trade Submission', time: 'T+0', duration: 'Instant', status: 'ok' },
-                      { step: 'Queue Wait', time: 'T+0 to T+1', duration: '4-8 hours', status: 'warning' },
-                      { step: 'Batch Processing', time: 'T+1 (overnight)', duration: '2-4 hours', status: 'warning' },
-                      { step: 'Manual Validation', time: 'T+1 to T+2', duration: '4-6 hours', status: 'critical' },
-                      { step: 'Settlement', time: 'T+2', duration: 'Variable', status: 'critical' },
-                    ].map((item, i) => (
+                      { label: 'Deployment Frequency', value: '1x / month', impact: 'vs. industry 10x/day', bad: true },
+                      { label: 'Change Lead Time', value: '6-8 weeks', impact: 'vs. industry <1 week', bad: true },
+                      { label: 'Test → Dev Cycles', value: 'Multiple', impact: 'regressions bounce back to engineering', bad: true },
+                      { label: 'Regression Risk', value: 'High', impact: 'changes break unrelated areas', bad: true },
+                      { label: 'Code Dependencies', value: '2.4M lines', impact: 'in single codebase', bad: true },
+                      { label: 'Technology Cost Per Txn', value: '$40.7', impact: 'high cost due to legacy overhead', bad: true },
+                    ].map((metric, i) => (
                       <motion.div
-                        key={item.step}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : -10 }}
+                        key={metric.label}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : 10 }}
                         transition={{ delay: i * 0.1 }}
-                        className="flex items-center gap-4"
+                        className="bg-[var(--bg-secondary)] rounded-lg border border-gray-700 p-4"
                       >
-                        {/* Timeline dot and line */}
-                        <div className="flex flex-col items-center">
-                          <div className={`w-3 h-3 rounded-full ${
-                            item.status === 'ok' ? 'bg-green-500' :
-                            item.status === 'warning' ? 'bg-orange-500' : 'bg-red-500'
-                          }`} />
-                          {i < 4 && <div className="w-0.5 h-8 bg-gray-600" />}
+                        <div className="flex justify-between items-start">
+                          <p className="text-sm text-gray-400">{metric.label}</p>
+                          <span className="text-xs px-2 py-0.5 bg-red-500/20 text-red-400 rounded">Critical</span>
                         </div>
-
-                        {/* Step details */}
-                        <div className="flex-1 bg-gray-800/50 rounded-lg p-3 border-l-4 border-gray-600">
-                          <div className="flex justify-between items-center">
-                            <p className="text-sm text-white font-medium">{item.step}</p>
-                            <span className={`text-xs px-2 py-0.5 rounded ${
-                              item.status === 'ok' ? 'bg-green-500/20 text-green-400' :
-                              item.status === 'warning' ? 'bg-orange-500/20 text-orange-400' :
-                              'bg-red-500/20 text-red-400'
-                            }`}>{item.time}</span>
-                          </div>
-                          <p className="text-xs text-gray-400 mt-1">Duration: {item.duration}</p>
-                        </div>
+                        <p className="text-2xl font-bold text-white mt-1">{metric.value}</p>
+                        <p className="text-xs text-gray-500 mt-1">{metric.impact}</p>
                       </motion.div>
                     ))}
                   </div>
-
-                  {/* Total time indicator */}
-                  {animPhase >= 3 && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg"
-                    >
-                      <div className="flex justify-between items-center">
-                        <p className="text-red-400 text-sm">Total Processing Time</p>
-                        <p className="text-red-400 font-bold text-lg">T+2 Days</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </div>
-              </motion.div>
-
-              {/* Right: Performance Metrics */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-                className="w-full lg:w-80 flex-shrink-0"
-              >
-                <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Performance Impact</h3>
-                <div className="space-y-4">
-                  {[
-                    { label: 'Settlement Cycle', value: 'T+2', impact: 'Industry moving to T+0', bad: true },
-                    { label: 'Batch Window', value: '4 hrs/night', impact: 'Limits processing capacity', bad: true },
-                    { label: 'Queue Depth', value: '12,000+', impact: 'avg. trades waiting', bad: true },
-                    { label: 'Manual Touch', value: '34%', impact: 'of trades require intervention', bad: true },
-                    { label: 'STP Rate', value: '20%', impact: 'vs. target 90%', bad: true },
-                  ].map((metric, i) => (
-                    <motion.div
-                      key={metric.label}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : 10 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="bg-[var(--bg-secondary)] rounded-lg border border-gray-700 p-4"
-                    >
-                      <div className="flex justify-between items-start">
-                        <p className="text-sm text-gray-400">{metric.label}</p>
-                        <span className="text-xs px-2 py-0.5 bg-orange-500/20 text-orange-400 rounded">Slow</span>
-                      </div>
-                      <p className="text-2xl font-bold text-white mt-1">{metric.value}</p>
-                      <p className="text-xs text-gray-500 mt-1">{metric.impact}</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
             </div>
           </div>
         );
 
-      case 2: // Integration Chaos - Professional metrics view
+      case 1: // Integration Complexity - Professional metrics view
         return (
           <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
-            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
+            <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-6 lg:gap-12">
               {/* Left: Integration Architecture */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
                 className="flex-1 min-w-0"
               >
-                <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Current Integration Landscape</h3>
+                <h3 className="text-xl font-semibold text-[var(--text-secondary)] mb-4">Current Integration Landscape</h3>
                 <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
-                  {/* Systems grid */}
-                  <div className="grid grid-cols-3 gap-3 mb-4">
+                  {/* Integration challenges */}
+                  <div className="grid grid-cols-2 gap-4 mb-5">
                     {[
-                      { name: 'Platform A Core', connections: 12 },
-                      { name: 'Legacy System', connections: 9 },
-                      { name: 'Settlement', connections: 11 },
-                      { name: 'Risk Engine', connections: 8 },
-                      { name: 'Reporting', connections: 7 },
-                      { name: 'Compliance', connections: 6 },
-                    ].map((system, i) => (
+                      { name: 'No Modern APIs', desc: 'Legacy interfaces only' },
+                      { name: 'Mule Orchestration', desc: 'Internal middleware dependency' },
+                      { name: 'External Integration', desc: 'Complex & time-consuming' },
+                      { name: 'Tightly Coupled', desc: 'Hard to modify independently' },
+                    ].map((item, i) => (
                       <motion.div
-                        key={system.name}
+                        key={item.name}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: animPhase >= 2 ? 1 : 0, scale: animPhase >= 2 ? 1 : 0.9 }}
                         transition={{ delay: i * 0.05 }}
-                        className="bg-gray-800/50 rounded-lg p-3 border border-gray-600"
+                        className="bg-gray-800/50 rounded-lg p-4 border border-gray-600"
                       >
-                        <p className="text-xs text-white font-medium">{system.name}</p>
-                        <p className="text-xs text-red-400">{system.connections} P2P links</p>
+                        <p className="text-sm text-white font-medium">{item.name}</p>
+                        <p className="text-sm text-red-400">{item.desc}</p>
                       </motion.div>
                     ))}
                   </div>
 
-                  {/* Connection issues */}
+                  {/* Key issues */}
                   {animPhase >= 2 && (
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="border-t border-gray-700 pt-4 space-y-2"
+                      className="border-t border-gray-700 pt-4 space-y-3"
                     >
-                      <p className="text-sm text-gray-400 mb-2">Integration Issues</p>
+                      <p className="text-base text-gray-400 mb-3">Key Challenges</p>
                       {[
-                        { issue: 'Service-level connections', count: '100+', severity: 'critical' },
-                        { issue: 'Custom data formats', count: '23', severity: 'high' },
-                        { issue: 'Undocumented interfaces', count: '31', severity: 'high' },
+                        { issue: 'No RESTful APIs', severity: 'critical' },
+                        { issue: 'Heavy reliance on Mule ESB', severity: 'high' },
+                        { issue: 'Difficult external partner integration', severity: 'high' },
                       ].map((item, i) => (
                         <motion.div
                           key={item.issue}
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: animPhase >= 3 ? 1 : 0, x: animPhase >= 3 ? 0 : -10 }}
                           transition={{ delay: i * 0.1 }}
-                          className="flex justify-between items-center p-2 bg-gray-800/30 rounded"
+                          className="flex justify-between items-center p-3 bg-gray-800/30 rounded"
                         >
-                          <span className="text-xs text-gray-400">{item.issue}</span>
-                          <span className={`text-xs px-2 py-0.5 rounded ${
+                          <span className="text-sm text-gray-400">{item.issue}</span>
+                          <span className={`text-sm px-3 py-1 rounded ${
                             item.severity === 'critical' ? 'bg-red-500/20 text-red-400' : 'bg-orange-500/20 text-orange-400'
-                          }`}>{item.count}</span>
+                          }`}>{item.severity === 'critical' ? 'Critical' : 'High'}</span>
                         </motion.div>
                       ))}
                     </motion.div>
@@ -4680,9 +4701,9 @@ function LegacyProblems() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg"
+                      className="mt-5 p-4 bg-red-500/10 border border-red-500/30 rounded-lg"
                     >
-                      <p className="text-red-400 text-sm text-center">No API gateway or standard integration layer</p>
+                      <p className="text-red-400 text-base text-center">No API gateway or standard integration layer</p>
                     </motion.div>
                   )}
                 </div>
@@ -4692,9 +4713,9 @@ function LegacyProblems() {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-                className="w-full lg:w-80 flex-shrink-0"
+                className="w-full lg:w-96 flex-shrink-0"
               >
-                <h3 className="text-lg font-semibold text-[var(--text-secondary)] mb-4">Integration Debt</h3>
+                <h3 className="text-xl font-semibold text-[var(--text-secondary)] mb-4">Integration Debt</h3>
                 <div className="space-y-4">
                   {[
                     { label: 'Integration Points', value: '100+', impact: 'vs. industry avg of 20 service-level connections', bad: true },
@@ -4708,14 +4729,14 @@ function LegacyProblems() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : 10 }}
                       transition={{ delay: i * 0.1 }}
-                      className="bg-[var(--bg-secondary)] rounded-lg border border-gray-700 p-4"
+                      className="bg-[var(--bg-secondary)] rounded-lg border border-gray-700 p-5"
                     >
                       <div className="flex justify-between items-start">
-                        <p className="text-sm text-gray-400">{metric.label}</p>
-                        <span className="text-xs px-2 py-0.5 bg-red-500/20 text-red-400 rounded">High Risk</span>
+                        <p className="text-base text-gray-400">{metric.label}</p>
+                        <span className="text-sm px-3 py-1 bg-red-500/20 text-red-400 rounded">High Risk</span>
                       </div>
-                      <p className="text-2xl font-bold text-white mt-1">{metric.value}</p>
-                      <p className="text-xs text-gray-500 mt-1">{metric.impact}</p>
+                      <p className="text-3xl font-bold text-white mt-2">{metric.value}</p>
+                      <p className="text-sm text-gray-500 mt-1">{metric.impact}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -4724,7 +4745,7 @@ function LegacyProblems() {
           </div>
         );
 
-      case 3: // Limited Visibility - Focus on reporting delay, duplicate data, reconciliation
+      case 2: // Limited Visibility - Focus on reporting delay, duplicate data, reconciliation
         return (
           <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
             <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
@@ -4847,7 +4868,7 @@ function LegacyProblems() {
           </div>
         );
 
-      case 4: // Maintenance Nightmare - Professional metrics view
+      case 3: // Technical Debt - Professional metrics view
         return (
           <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
             <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
@@ -4885,8 +4906,8 @@ function LegacyProblems() {
                     <p className="text-sm text-gray-400 mb-3">Key Risk Factors</p>
                     {[
                       { factor: 'Documentation Coverage', value: '8%', status: 'critical' },
-                      { factor: 'Test Coverage', value: '12%', status: 'critical' },
-                      { factor: 'Knowledge Concentration', value: '3 people', status: 'critical' },
+                      { factor: 'Test Coverage', value: '60%', status: 'critical' },
+                      { factor: 'Knowledge Concentration', value: 'Scattered', status: 'critical' },
                       { factor: 'Outdated Dependencies', value: '89%', status: 'high' },
                     ].map((item, i) => (
                       <motion.div
@@ -4952,20 +4973,20 @@ function LegacyProblems() {
           </div>
         );
 
-      case 5: // Schema Rigidity - Architectural comparison view
+      case 4: // Schema Rigidity - Architectural comparison view
         return (
           <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
-            <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
+            <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-6 lg:gap-12">
               {/* Left: Current Architecture */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -20 }}
                 className="flex-1 min-w-0"
               >
-                <h3 className="text-lg font-semibold text-red-400 mb-4">Current: Fixed Relational Model</h3>
+                <h3 className="text-xl font-semibold text-red-400 mb-4">Current: Fixed Relational Model</h3>
                 <div className="bg-[var(--bg-secondary)] rounded-xl border border-red-500/30 p-6">
                   {/* Current constraints */}
-                  <div className="space-y-3 mb-4">
+                  <div className="space-y-4 mb-5">
                     {[
                       { label: 'Data Model', value: 'Fixed relational tables', desc: 'Schema defined at design time' },
                       { label: 'Any Change', value: 'Requires deployment', desc: 'No runtime flexibility' },
@@ -4977,13 +4998,13 @@ function LegacyProblems() {
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : -10 }}
                         transition={{ delay: i * 0.1 }}
-                        className="p-3 bg-gray-800/50 rounded-lg border-l-4 border-red-500/50"
+                        className="p-4 bg-gray-800/50 rounded-lg border-l-4 border-red-500/50"
                       >
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="text-sm text-white font-medium">{item.label}</span>
-                          <span className="text-xs px-2 py-0.5 rounded bg-red-500/20 text-red-400">{item.value}</span>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-base text-white font-medium">{item.label}</span>
+                          <span className="text-sm px-3 py-1 rounded bg-red-500/20 text-red-400">{item.value}</span>
                         </div>
-                        <p className="text-xs text-gray-500">{item.desc}</p>
+                        <p className="text-sm text-gray-500">{item.desc}</p>
                       </motion.div>
                     ))}
                   </div>
@@ -4993,9 +5014,9 @@ function LegacyProblems() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg"
+                      className="mt-5 p-4 bg-red-500/10 border border-red-500/30 rounded-lg"
                     >
-                      <p className="text-red-400 text-sm text-center">Every business change requires a full release cycle</p>
+                      <p className="text-red-400 text-base text-center">Every business change requires a full release cycle</p>
                     </motion.div>
                   )}
                 </div>
@@ -5005,10 +5026,10 @@ function LegacyProblems() {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 20 }}
-                className="w-full lg:w-80 flex-shrink-0"
+                className="w-full lg:w-96 flex-shrink-0"
               >
-                <h3 className="text-lg font-semibold text-green-400 mb-4">Modern: Flexible Architecture</h3>
-                <div className="space-y-3">
+                <h3 className="text-xl font-semibold text-green-400 mb-4">Modern: Flexible Architecture</h3>
+                <div className="space-y-4">
                   {[
                     { label: 'Flexible Models', desc: 'Document stores, event sourcing adapt to change' },
                     { label: 'Config-Driven', desc: 'Many changes without deployment' },
@@ -5020,13 +5041,13 @@ function LegacyProblems() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: animPhase >= 3 ? 1 : 0, y: animPhase >= 3 ? 0 : 10 }}
                       transition={{ delay: i * 0.1 }}
-                      className="bg-[var(--bg-secondary)] rounded-lg border border-green-500/30 p-4"
+                      className="bg-[var(--bg-secondary)] rounded-lg border border-green-500/30 p-5"
                     >
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-green-400">✓</span>
-                        <p className="text-sm text-white font-medium">{item.label}</p>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-green-400 text-lg">✓</span>
+                        <p className="text-base text-white font-medium">{item.label}</p>
                       </div>
-                      <p className="text-xs text-gray-400 ml-5">{item.desc}</p>
+                      <p className="text-sm text-gray-400 ml-7">{item.desc}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -5035,7 +5056,7 @@ function LegacyProblems() {
           </div>
         );
 
-      case 6: // Quality & Defects - Balanced view with industry comparison
+      case 5: // Quality & Defects - Balanced view with industry comparison
         return (
           <div className="relative w-full h-full flex items-center justify-center p-4 lg:p-8 overflow-auto">
             <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-6 lg:gap-12">
@@ -5054,6 +5075,7 @@ function LegacyProblems() {
                       { metric: 'Defect Count', from: '132', to: '168', total: '495', change: '+27%', status: 'needs-work' },
                       { metric: 'AOComms', from: '103', to: '77', total: '241', change: '-25%', status: 'good' },
                       { metric: 'Farm Breaks', from: '4,380', to: '729', total: '7,209', change: '-83%', status: 'good' },
+                      { metric: 'Build Time', from: '8 hrs', to: '3 hrs', total: '', change: '-63%', status: 'good' },
                     ].map((item, i) => (
                       <motion.div
                         key={item.metric}
@@ -5063,15 +5085,17 @@ function LegacyProblems() {
                         className="flex items-center justify-between p-3 bg-gray-800/50 rounded-lg"
                       >
                         <div className="flex-1">
-                          <p className="text-sm text-white font-medium">{item.metric}</p>
-                          <p className="text-xs text-gray-500">{item.from} → {item.to}</p>
+                          <p className="text-sm text-white font-medium mb-1">{item.metric}</p>
+                          <p className="text-base">
+                            <span className="text-gray-400">{item.from}</span>
+                            <span className="text-gray-500 mx-2">→</span>
+                            <span className={item.status === 'good' ? 'text-green-400 font-semibold' : 'text-orange-400 font-semibold'}>{item.to}</span>
+                          </p>
                         </div>
-                        <div className="text-center mx-4">
-                          <p className="text-2xl font-bold text-[var(--accent-cyan)]">{item.total}</p>
-                          <p className="text-[10px] text-gray-500">TOTAL</p>
-                        </div>
-                        <span className={`text-lg font-bold px-3 py-1 rounded ${
-                          item.status === 'good' ? 'bg-green-500/20 text-green-400' : 'bg-orange-500/20 text-orange-400'
+                        <span className={`text-2xl font-bold px-4 py-2 rounded-lg ${
+                          item.status === 'good'
+                            ? 'bg-green-500/30 text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.3)]'
+                            : 'bg-orange-500/30 text-orange-400 shadow-[0_0_15px_rgba(249,115,22,0.3)]'
                         }`}>{item.change}</span>
                       </motion.div>
                     ))}
@@ -5100,10 +5124,11 @@ function LegacyProblems() {
                 <div className="bg-[var(--bg-secondary)] rounded-xl border border-gray-700 p-6">
                   <div className="space-y-4">
                     {[
-                      { metric: 'Defect Density', current: '2.1/KLOC', target: '<1.0/KLOC', gap: '2x above', note: 'per 1,000 lines of code' },
+                      { metric: 'Defect Density', current: '2.1/KLOC', target: '<1.0/KLOC', gap: '2x above', note: 'projection based on 10% annual code churn' },
                       { metric: 'MTTR', current: '4.2 hrs', target: '<1 hr', gap: '4x slower', note: 'Mean Time To Recovery' },
                       { metric: 'Change Failure Rate', current: '18%', target: '<5%', gap: '3.6x higher', note: 'deployments causing issues' },
                       { metric: 'Deployment Frequency', current: 'Monthly', target: 'Daily', gap: '30x less', note: 'how often we release' },
+                      { metric: 'Integrated Testing', current: 'Limited', target: 'Continuous', gap: 'Gap', note: 'defect testing in integrated environment' },
                     ].map((item, i) => (
                       <motion.div
                         key={item.metric}
@@ -5143,7 +5168,7 @@ function LegacyProblems() {
           </div>
         );
 
-      case 7: // AI Coding Agents - Monorepo vs Domain Architecture
+      case 6: // AI Coding Agents - Monorepo vs Domain Architecture
         return (
           <div className="relative w-full h-full flex flex-col items-center justify-center p-4 lg:p-5 overflow-hidden">
             {/* Header */}
@@ -5153,24 +5178,24 @@ function LegacyProblems() {
               className="mb-3 text-center"
             >
               <div className="flex items-center justify-center gap-2 mb-1">
-                <span className="text-xs text-gray-500">Industry Trend:</span>
-                <span className="text-sm font-semibold text-[var(--accent-primary)] px-2 py-0.5 bg-[var(--accent-primary)]/10 rounded">AI-Native Architecture</span>
+                <span className="text-sm text-gray-500">Industry Trend:</span>
+                <span className="text-base font-semibold text-[var(--accent-primary)] px-2 py-0.5 bg-[var(--accent-primary)]/10 rounded">AI-Native Architecture</span>
               </div>
-              <h3 className="text-xl font-bold text-white">Context Window is the New Constraint</h3>
+              <h3 className="text-3xl font-bold text-white">Context Window is the New Constraint</h3>
             </motion.div>
 
-            <div className="w-full max-w-4xl flex flex-col lg:flex-row gap-4 flex-1 min-h-0 max-h-[380px]">
+            <div className="w-full max-w-6xl flex flex-col lg:flex-row gap-6 flex-1 min-h-0 max-h-[520px]">
               {/* Left: Monorepo - Context Overflow */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: animPhase >= 1 ? 1 : 0, x: animPhase >= 1 ? 0 : -30 }}
                 className="flex-1 min-w-0 flex flex-col"
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-7 h-7 rounded-full bg-red-500/20 flex items-center justify-center">
-                    <span className="text-red-400 text-sm">✗</span>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-9 h-9 rounded-full bg-red-500/20 flex items-center justify-center">
+                    <span className="text-red-400 text-lg">✗</span>
                   </div>
-                  <h4 className="text-base font-bold text-red-400">Monolithic Codebase</h4>
+                  <h4 className="text-xl font-bold text-red-400">Monolithic Codebase</h4>
                 </div>
 
                 <div className="bg-gray-900/80 rounded-xl border border-red-500/30 p-3 flex-1 flex flex-col">
@@ -5284,7 +5309,7 @@ function LegacyProblems() {
                         initial={{ x: -10, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: i * 0.1 }}
-                        className="flex items-center gap-2 text-xs text-gray-400"
+                        className="flex items-center gap-2 text-sm text-gray-400"
                       >
                         <span>{item.icon}</span>
                         <span>{item.text}</span>
@@ -5339,13 +5364,13 @@ function LegacyProblems() {
                 animate={{ opacity: animPhase >= 2 ? 1 : 0, x: animPhase >= 2 ? 0 : 30 }}
                 className="flex-1 min-w-0 flex flex-col"
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-7 h-7 rounded-full bg-green-500/20 flex items-center justify-center">
-                    <span className="text-green-400 text-sm">✓</span>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-9 h-9 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <span className="text-green-400 text-lg">✓</span>
                   </div>
                   <div>
-                    <h4 className="text-base font-bold text-green-400">AI-Native Architecture</h4>
-                    <p className="text-[9px] text-gray-500">Bounded contexts fit AI context windows</p>
+                    <h4 className="text-xl font-bold text-green-400">AI-Native Architecture</h4>
+                    <p className="text-sm text-gray-500">Bounded contexts fit AI context windows</p>
                   </div>
                 </div>
 
@@ -5445,7 +5470,7 @@ function LegacyProblems() {
                         initial={{ x: 10, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: i * 0.1 }}
-                        className="flex items-center gap-2 text-xs text-gray-400"
+                        className="flex items-center gap-2 text-sm text-gray-400"
                       >
                         <span>{item.icon}</span>
                         <span>{item.text}</span>
@@ -5461,13 +5486,13 @@ function LegacyProblems() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-3 p-3 bg-gray-800/60 border border-gray-700 rounded-xl max-w-4xl"
+                className="mt-4 p-4 bg-gray-800/60 border border-gray-700 rounded-xl max-w-5xl"
               >
                 <div className="flex items-center justify-center gap-2 mb-1">
-                  <span className="text-xs text-gray-500">Leading teams are adopting</span>
-                  <span className="text-sm font-bold text-[var(--accent-primary)] px-2 py-0.5 bg-[var(--accent-primary)]/10 rounded">AI-Native Architecture</span>
+                  <span className="text-sm text-gray-500">Leading teams are adopting</span>
+                  <span className="text-base font-bold text-[var(--accent-primary)] px-2 py-0.5 bg-[var(--accent-primary)]/10 rounded">AI-Native Architecture</span>
                 </div>
-                <div className="flex items-center justify-center gap-4 text-xs">
+                <div className="flex items-center justify-center gap-4 text-sm">
                   <span className="text-gray-400">✓ Cursor / Copilot optimized</span>
                   <span className="text-gray-500">•</span>
                   <span className="text-gray-400">✓ Agent-friendly boundaries</span>
@@ -6376,9 +6401,9 @@ function ProductOpportunities() {
                 {/* Network Growth */}
                 <div className="space-y-2 mb-4">
                   {[
-                    { type: 'Buyers', from: '12', to: '200+', growth: '16x' },
-                    { type: 'Suppliers', from: '8', to: '150+', growth: '18x' },
-                    { type: 'Banks', from: '3', to: '45+', growth: '15x' },
+                    { type: 'Buyers', direction: '↑ Expanding' },
+                    { type: 'Suppliers', direction: '↑ Expanding' },
+                    { type: 'Banks', direction: '↑ Growing' },
                   ].map((item, i) => (
                     <motion.div
                       key={item.type}
@@ -6388,12 +6413,7 @@ function ProductOpportunities() {
                       className="flex items-center justify-between p-2 bg-[var(--bg-secondary)]/50 rounded"
                     >
                       <span className="text-xs text-gray-300">{item.type}</span>
-                      <div className="flex items-center gap-1">
-                        <span className="text-xs text-gray-500">{item.from}</span>
-                        <span className="text-gray-600">→</span>
-                        <span className="text-xs text-[var(--accent-cyan)] font-semibold">{item.to}</span>
-                        <span className="text-xs px-1 py-0.5 bg-green-500/20 text-green-400 rounded text-[10px]">{item.growth}</span>
-                      </div>
+                      <span className="text-xs px-2 py-0.5 bg-green-500/20 text-green-400 rounded font-semibold">{item.direction}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -6434,7 +6454,7 @@ function ProductOpportunities() {
                   className="mt-3 p-2 bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/30 rounded text-center"
                 >
                   <p className="text-xs text-[var(--accent-gold)]">Pipeline Opportunity</p>
-                  <p className="text-lg font-bold text-[var(--accent-gold)]">$22.5M+</p>
+                  <p className="text-lg font-bold text-[var(--accent-gold)]">↑ Growing</p>
                 </motion.div>
               </div>
             </motion.div>
@@ -6485,20 +6505,20 @@ function ProductOpportunities() {
             animate={{ opacity: 1, y: 0 }}
             className="absolute top-16 left-0 right-0 text-center z-10"
           >
-            <h2 className="text-2xl font-bold text-white mb-1">One Integration, All Services</h2>
-            <p className="text-sm text-gray-400">From months of custom work to instant access</p>
+            <h2 className="text-3xl font-bold text-white mb-2">One Integration, All Services</h2>
+            <p className="text-base text-gray-400">From months of custom work to instant access</p>
           </motion.div>
 
-          <div className="w-full max-w-6xl flex gap-8 mt-8">
+          <div className="w-full max-w-7xl flex gap-10 mt-8">
             {/* Left - The Old Way */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: phase >= 1 ? 1 : 0, x: phase >= 1 ? 0 : -30 }}
               className="flex-1"
             >
-              <div className="text-center mb-4">
-                <p className="text-xs text-red-400 uppercase tracking-wider">The Old Way</p>
-                <p className="text-lg font-semibold text-gray-400">Per-Service Onboarding</p>
+              <div className="text-center mb-5">
+                <p className="text-sm text-red-400 uppercase tracking-wider">The Old Way</p>
+                <p className="text-xl font-semibold text-gray-400">Per-Service Onboarding</p>
               </div>
 
               <div className="relative">
@@ -6514,12 +6534,12 @@ function ProductOpportunities() {
                       transition={{ delay: 0.1 + i * 0.08 }}
                       className="flex items-center gap-3 pl-2"
                     >
-                      <div className="w-8 h-8 rounded-full bg-gray-800 border border-gray-600 flex items-center justify-center text-sm z-10">
+                      <div className="w-10 h-10 rounded-full bg-gray-800 border border-gray-600 flex items-center justify-center text-base z-10">
                         {step.icon}
                       </div>
-                      <div className="flex-1 flex items-center justify-between p-2 bg-gray-800/50 rounded border border-gray-700">
-                        <span className="text-sm text-gray-400">{step.label}</span>
-                        <span className="text-xs text-red-400">{step.time}</span>
+                      <div className="flex-1 flex items-center justify-between p-3 bg-gray-800/50 rounded border border-gray-700">
+                        <span className="text-base text-gray-400">{step.label}</span>
+                        <span className="text-sm text-red-400">{step.time}</span>
                       </div>
                     </motion.div>
                   ))}
@@ -6529,10 +6549,10 @@ function ProductOpportunities() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: phase >= 1 ? 1 : 0 }}
                   transition={{ delay: 0.6 }}
-                  className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-center"
+                  className="mt-5 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-center"
                 >
-                  <p className="text-red-400 font-semibold">23-44 weeks total</p>
-                  <p className="text-xs text-gray-500">Repeat for each service</p>
+                  <p className="text-lg text-red-400 font-semibold">23-44 weeks total</p>
+                  <p className="text-sm text-gray-500">Repeat for each service</p>
                 </motion.div>
               </div>
             </motion.div>
@@ -6618,8 +6638,8 @@ function ProductOpportunities() {
                 animate={{ opacity: phase >= 2 ? 1 : 0, y: phase >= 2 ? 0 : -10 }}
                 className="mt-4 text-center"
               >
-                <p className="text-[var(--accent-cyan)] font-semibold">Connect Once</p>
-                <p className="text-xs text-gray-500">Access Everything</p>
+                <p className="text-lg text-[var(--accent-cyan)] font-semibold">Connect Once</p>
+                <p className="text-sm text-gray-500">Access Everything</p>
               </motion.div>
             </motion.div>
 
@@ -6629,9 +6649,9 @@ function ProductOpportunities() {
               animate={{ opacity: phase >= 3 ? 1 : 0, x: phase >= 3 ? 0 : 30 }}
               className="flex-1"
             >
-              <div className="text-center mb-4">
-                <p className="text-xs text-[var(--accent-cyan)] uppercase tracking-wider">The New Way</p>
-                <p className="text-lg font-semibold text-white">Unified Onboarding</p>
+              <div className="text-center mb-5">
+                <p className="text-sm text-[var(--accent-cyan)] uppercase tracking-wider">The New Way</p>
+                <p className="text-xl font-semibold text-white">Unified Onboarding</p>
               </div>
 
               <div className="space-y-3">
@@ -6648,15 +6668,15 @@ function ProductOpportunities() {
                     transition={{ delay: i * 0.1 }}
                     className="flex items-center gap-3"
                   >
-                    <div className="w-8 h-8 rounded-full bg-[var(--accent-cyan)]/20 border border-[var(--accent-cyan)] flex items-center justify-center text-sm text-[var(--accent-cyan)] font-bold">
+                    <div className="w-10 h-10 rounded-full bg-[var(--accent-cyan)]/20 border border-[var(--accent-cyan)] flex items-center justify-center text-base text-[var(--accent-cyan)] font-bold">
                       {item.step}
                     </div>
-                    <div className="flex-1 p-2 bg-[var(--accent-cyan)]/5 rounded border border-[var(--accent-cyan)]/30">
+                    <div className="flex-1 p-3 bg-[var(--accent-cyan)]/5 rounded border border-[var(--accent-cyan)]/30">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-white">{item.label}</span>
-                        <span className="text-xs text-green-400">{item.time}</span>
+                        <span className="text-base text-white">{item.label}</span>
+                        <span className="text-sm text-green-400">{item.time}</span>
                       </div>
-                      <p className="text-xs text-gray-500">{item.desc}</p>
+                      <p className="text-sm text-gray-500">{item.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -6666,10 +6686,10 @@ function ProductOpportunities() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: phase >= 3 ? 1 : 0 }}
                 transition={{ delay: 0.4 }}
-                className="mt-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-center"
+                className="mt-5 p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-center"
               >
-                <p className="text-green-400 font-semibold">2-3 days total</p>
-                <p className="text-xs text-gray-500">All services included</p>
+                <p className="text-lg text-green-400 font-semibold">2-3 days total</p>
+                <p className="text-sm text-gray-500">All services included</p>
               </motion.div>
             </motion.div>
           </div>
@@ -6681,20 +6701,20 @@ function ProductOpportunities() {
             transition={{ delay: 0.5 }}
             className="absolute bottom-6 left-0 right-0 px-8"
           >
-            <div className="max-w-4xl mx-auto grid grid-cols-3 gap-6">
+            <div className="max-w-5xl mx-auto grid grid-cols-3 gap-8">
               {[
                 { metric: 'Time to Market', old: '6-12 months', new: '< 1 week', improvement: '50x faster' },
                 { metric: 'Integration Cost', old: '$500K+', new: '$0', improvement: 'Self-service' },
                 { metric: 'Services Access', old: '1 at a time', new: 'All at once', improvement: 'Instant' },
               ].map((item) => (
                 <div key={item.metric} className="text-center">
-                  <p className="text-xs text-gray-500 mb-1">{item.metric}</p>
+                  <p className="text-sm text-gray-500 mb-1">{item.metric}</p>
                   <div className="flex items-center justify-center gap-2">
-                    <span className="text-sm text-gray-500 line-through">{item.old}</span>
+                    <span className="text-base text-gray-500 line-through">{item.old}</span>
                     <span className="text-gray-600">→</span>
-                    <span className="text-sm text-[var(--accent-cyan)] font-semibold">{item.new}</span>
+                    <span className="text-base text-[var(--accent-cyan)] font-semibold">{item.new}</span>
                   </div>
-                  <p className="text-xs text-green-400 mt-1">{item.improvement}</p>
+                  <p className="text-sm text-green-400 mt-1">{item.improvement}</p>
                 </div>
               ))}
             </div>
@@ -6713,10 +6733,10 @@ function ProductOpportunities() {
       ];
 
       const externalPartners = [
-        { id: 'buyers', label: 'Buyers', count: '500+', icon: '🏢', color: '#00D4FF' },
-        { id: 'suppliers', label: 'Suppliers', count: '1,200+', icon: '🏭', color: '#10B981' },
-        { id: 'banks', label: 'Banks', count: '50+', icon: '🏦', color: '#8B5CF6' },
-        { id: 'corporates', label: 'Corporates', count: '300+', icon: '🏛️', color: '#F59E0B' },
+        { id: 'buyers', label: 'Buyers', count: '500+', icon: '🏢', color: '#00D4FF', examples: '' },
+        { id: 'suppliers', label: 'Suppliers', count: '1,200+', icon: '🏭', color: '#10B981', examples: '' },
+        { id: 'banks', label: 'Banks', count: '50+', icon: '🏦', color: '#8B5CF6', examples: 'e.g. Bank of America, HSBC' },
+        { id: 'corporates', label: 'Corporates', count: '300+', icon: '🏛️', color: '#F59E0B', examples: '' },
       ];
 
       const futureReady = [
@@ -6821,7 +6841,10 @@ function ProductOpportunities() {
                     >
                       <div className="flex items-center gap-2">
                         <span className="text-lg">{partner.icon}</span>
-                        <span className="text-sm font-medium" style={{ color: partner.color }}>{partner.label}</span>
+                        <div>
+                          <span className="text-sm font-medium" style={{ color: partner.color }}>{partner.label}</span>
+                          {partner.examples && <p className="text-[9px] text-gray-400">{partner.examples}</p>}
+                        </div>
                       </div>
                       <span className="text-xs px-2 py-0.5 rounded-full bg-white/10" style={{ color: partner.color }}>{partner.count}</span>
                     </motion.div>
@@ -7020,17 +7043,17 @@ function ProductOpportunities() {
     if (index === 4) {
       const manualTasks = [
         { task: 'Data Entry', hours: '40%', automation: '95%' },
-        { task: 'Reconciliation', hours: '25%', automation: '90%' },
-        { task: 'Exception Handling', hours: '20%', automation: '70%' },
-        { task: 'Reporting', hours: '15%', automation: '85%' },
+        { task: 'Reconciliation', hours: '25%', automation: '↑ High' },
+        { task: 'Exception Handling', hours: '20%', automation: '↑ Improving' },
+        { task: 'Reporting', hours: '15%', automation: '↑ High' },
       ];
 
       const volumeData = [
-        { year: 'Y1', volume: 20, oldEffort: 20, newEffort: 20 },
-        { year: 'Y2', volume: 40, oldEffort: 38, newEffort: 22 },
-        { year: 'Y3', volume: 70, oldEffort: 65, newEffort: 25 },
-        { year: 'Y4', volume: 100, oldEffort: 95, newEffort: 28 },
-        { year: 'Y5', volume: 150, oldEffort: 140, newEffort: 32 },
+        { year: 'Y1', volume: 20, oldEffort: 20, newEffort: 6 },
+        { year: 'Y2', volume: 40, oldEffort: 38, newEffort: 11 },
+        { year: 'Y3', volume: 70, oldEffort: 65, newEffort: 18 },
+        { year: 'Y4', volume: 100, oldEffort: 95, newEffort: 26 },
+        { year: 'Y5', volume: 150, oldEffort: 140, newEffort: 39 },
       ];
 
       return (
@@ -7223,8 +7246,8 @@ function ProductOpportunities() {
             className="mt-6 grid grid-cols-4 gap-4 w-full max-w-4xl"
           >
             {[
-              { metric: 'Cost per Transaction', old: 'High', new: 'Optimized', saving: '80%+ reduction' },
-              { metric: 'Processing Capacity', old: 'Limited', new: 'Elastic', saving: '50x+ throughput' },
+              { metric: 'Cost per Transaction', old: 'High', new: 'Optimized', saving: '↓ Significant' },
+              { metric: 'Processing Capacity', old: 'Limited', new: 'Elastic', saving: '↑ Scalable' },
               { metric: 'Cost of Change', old: 'High', new: 'Low', saving: 'Focused domains' },
               { metric: 'Time to Scale', old: 'Months', new: 'Instant', saving: 'On-demand' },
             ].map((item, i) => (
@@ -7740,7 +7763,7 @@ function TransformationGoals() {
     { icon: '⚡', title: 'Cost Reduction', metric: '~30%', unit: 'lower cost of change', color: '#00D4FF', height: 85 },
     { icon: '🚀', title: 'Time to Market', metric: '2-6', unit: 'months (vs 3-12)', color: '#C9A227', height: 75 },
     { icon: '🔄', title: 'End-to-End STP', metric: '~90%', unit: 'straight-through', color: '#4ECDC4', height: 95 },
-    { icon: '📈', title: 'Processing Time', metric: '40%+', unit: 'reduction', color: '#9B59B6', height: 80 },
+    { icon: '📈', title: 'Processing Time', metric: '↓', unit: 'significant reduction', color: '#9B59B6', height: 80 },
     { icon: '☁️', title: 'Availability', metric: '5 9s', unit: 'system uptime', color: '#E74C3C', height: 90 },
     { icon: '🎯', title: 'Accuracy', metric: '>95%', unit: 'target', color: '#3498DB', height: 70 },
   ];
@@ -8287,9 +8310,9 @@ function TransformationMetrics() {
     {
       icon: '⏱️',
       label: 'Processing Time',
-      before: '40min - 4hrs',
-      after: '15min - 1hr',
-      badge: '40%+ faster',
+      before: 'Current',
+      after: '40%+ faster',
+      badge: '↓ 40%+',
       color: '#C9A227',
       gradient: 'from-orange-500/20 to-cyan-500/20'
     },
@@ -8998,18 +9021,18 @@ function ModuleConsolidation() {
                   <span className="text-lg">💼</span>
                   <p className="text-xs font-bold text-[var(--accent-gold)]">Business Value</p>
                 </div>
-                <div className="space-y-2 text-[11px]">
-                  <div className="flex items-start gap-2 text-[var(--text-secondary)]">
-                    <span className="text-green-400 mt-0.5">✓</span>
-                    <span>Faster time-to-market for new products</span>
+                <div className="space-y-2 text-xs">
+                  <div className="flex items-start gap-2 p-2 rounded-lg bg-[var(--accent-gold)]/5 border border-[var(--accent-gold)]/20">
+                    <span className="text-green-400 mt-0.5 text-sm">✓</span>
+                    <span className="text-white font-medium">Faster time-to-market for new products</span>
                   </div>
-                  <div className="flex items-start gap-2 text-[var(--text-secondary)]">
-                    <span className="text-green-400 mt-0.5">✓</span>
-                    <span>Consistent client experience across platforms</span>
+                  <div className="flex items-start gap-2 p-2 rounded-lg bg-[var(--accent-gold)]/5 border border-[var(--accent-gold)]/20">
+                    <span className="text-green-400 mt-0.5 text-sm">✓</span>
+                    <span className="text-white font-medium">Consistent client experience across platforms</span>
                   </div>
-                  <div className="flex items-start gap-2 text-[var(--text-secondary)]">
-                    <span className="text-green-400 mt-0.5">✓</span>
-                    <span>Single source of truth for billing & pricing</span>
+                  <div className="flex items-start gap-2 p-2 rounded-lg bg-[var(--accent-gold)]/5 border border-[var(--accent-gold)]/20">
+                    <span className="text-green-400 mt-0.5 text-sm">✓</span>
+                    <span className="text-white font-medium">Single source of truth for billing & pricing</span>
                   </div>
                 </div>
               </motion.div>
@@ -9025,42 +9048,25 @@ function ModuleConsolidation() {
                   <span className="text-lg">⚙️</span>
                   <p className="text-xs font-bold text-[#00D4FF]">Technical Value</p>
                 </div>
-                <div className="space-y-2 text-[11px]">
-                  <div className="flex items-start gap-2 text-[var(--text-secondary)]">
-                    <span className="text-green-400 mt-0.5">✓</span>
-                    <span>Reduced code duplication & maintenance</span>
+                <div className="space-y-2 text-xs">
+                  <div className="flex items-start gap-2 p-2 rounded-lg bg-[#00D4FF]/5 border border-[#00D4FF]/20">
+                    <span className="text-green-400 mt-0.5 text-sm">✓</span>
+                    <span className="text-white font-medium">Reduced code duplication & maintenance</span>
                   </div>
-                  <div className="flex items-start gap-2 text-[var(--text-secondary)]">
-                    <span className="text-green-400 mt-0.5">✓</span>
-                    <span>Shared modules = single codebase to enhance</span>
+                  <div className="flex items-start gap-2 p-2 rounded-lg bg-[#00D4FF]/5 border border-[#00D4FF]/20">
+                    <span className="text-green-400 mt-0.5 text-sm">✓</span>
+                    <span className="text-white font-medium">Shared modules = single codebase to enhance</span>
                   </div>
-                  <div className="flex items-start gap-2 text-[var(--text-secondary)]">
-                    <span className="text-green-400 mt-0.5">✓</span>
-                    <span>Clear ownership & faster defect resolution</span>
+                  <div className="flex items-start gap-2 p-2 rounded-lg bg-[#00D4FF]/5 border border-[#00D4FF]/20">
+                    <span className="text-green-400 mt-0.5 text-sm">✓</span>
+                    <span className="text-white font-medium">Clear ownership & faster defect resolution</span>
+                  </div>
+                  <div className="flex items-start gap-2 p-2 rounded-lg bg-[#00D4FF]/5 border border-[#00D4FF]/20">
+                    <span className="text-green-400 mt-0.5 text-sm">✓</span>
+                    <span className="text-white font-medium">Reduction in infrastructure cost</span>
                   </div>
                 </div>
               </motion.div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  { label: 'Systems', value: '14', color: 'text-green-400' },
-                  { label: 'Trade Shared', value: '14', color: 'text-[#00D4FF]' },
-                  { label: 'Payment Shared', value: '9', color: 'text-purple-400' },
-                  { label: 'Duplication', value: '0', color: 'text-green-400' },
-                ].map((item, i) => (
-                  <motion.div
-                    key={item.label}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 + i * 0.1 }}
-                    className="bg-[var(--bg-secondary)]/50 rounded-lg border border-gray-700 p-2 text-center"
-                  >
-                    <p className={`text-lg font-bold ${item.color}`}>{item.value}</p>
-                    <p className="text-[10px] text-gray-400">{item.label}</p>
-                  </motion.div>
-                ))}
-              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -9486,6 +9492,119 @@ function TradeArchitecture() {
   );
 }
 
+// Strategic Paths - Options for the team
+function StrategicPaths() {
+  const { forcePhase } = useContext(CaptureContext);
+  const [phase, setPhase] = useState(forcePhase ?? 1);
+
+  useEffect(() => {
+    if (forcePhase !== undefined) {
+      setPhase(forcePhase);
+      return;
+    }
+    const timers = [
+      setTimeout(() => setPhase(2), 500),
+      setTimeout(() => setPhase(3), 1000),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [forcePhase]);
+
+  const paths = [
+    {
+      id: 1,
+      title: 'Path 1',
+      subtitle: 'TENET Delivers All',
+      description: 'TENET supports all requirements as planned',
+      assumption: 'This is current default planned option',
+      color: '#4CAF50',
+      icon: '▶',
+    },
+    {
+      id: 2,
+      title: 'Path 2',
+      subtitle: 'Pivot to ELC',
+      description: 'TENET pivots for ELC to start with for reimagining',
+      assumption: 'We need to answer all questions especially with the TENET budget ending in 2027',
+      color: '#FFD700',
+      icon: '⚡',
+    },
+    {
+      id: 3,
+      title: 'Path 3',
+      subtitle: 'Parallel Approach',
+      description: 'TENET goes as planned showing limitations if any, assuming ELC did exist. ELC is done as a side project to cater to broader needs.',
+      assumption: 'Includes unification and moving off legacy architecture',
+      color: '#00BCD4',
+      icon: '⇄',
+    },
+  ];
+
+  return (
+    <div className="relative w-full h-full flex flex-col items-center justify-center p-6 pt-20 bg-[var(--bg-primary)]">
+      {/* Header - Fixed at top */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="absolute top-8 left-0 right-0 text-center z-10"
+      >
+        <h2 className="text-2xl font-bold text-white mb-1">Strategic Options</h2>
+        <p className="text-sm text-gray-400">Evaluating paths forward for Trade Transformation</p>
+      </motion.div>
+
+      {/* Paths */}
+      <div className="flex gap-8 w-full max-w-7xl mt-4">
+        {paths.map((path, i) => (
+          <motion.div
+            key={path.id}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: i * 0.2 }}
+            className="flex-1 rounded-2xl p-8 border-2 transition-all bg-[var(--bg-secondary)] border-gray-700"
+          >
+            {/* Path Header */}
+            <div className="flex items-center gap-4 mb-6">
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center text-3xl"
+                style={{ backgroundColor: `${path.color}20`, border: `3px solid ${path.color}` }}
+              >
+                <span style={{ color: path.color }}>{path.icon}</span>
+              </div>
+              <div>
+                <p className="text-base font-bold" style={{ color: path.color }}>{path.title}</p>
+                <p className="text-xl font-bold text-white">{path.subtitle}</p>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="p-5 rounded-xl mb-5 bg-gray-800/50">
+              <p className="text-base text-white leading-relaxed">{path.description}</p>
+            </div>
+
+            {/* Assumption/Note */}
+            <div className="p-4 rounded-lg border border-gray-600 bg-gray-800/30">
+              <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Key Consideration</p>
+              <p className="text-base text-gray-300">{path.assumption}</p>
+            </div>
+
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Footer Note */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        className="mt-6 text-center"
+      >
+        <p className="text-base text-gray-500">
+          TENET budget timeline: <span className="text-[#FFD700] font-semibold">ending 2027</span>
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function InteractiveSlide({ content, slideId, forcePhase, isCapturing = false, onPhaseChange }: InteractiveSlideProps) {
   const visualizationType = content.visualization;
   // Use slideId to force re-render when navigating between slides
@@ -9553,6 +9672,8 @@ export default function InteractiveSlide({ content, slideId, forcePhase, isCaptu
         return <ELCRoadmap key={uniqueKey} />;
       case 'elc-deliverables-heatmap':
         return <ELCDeliverablesHeatmap key={uniqueKey} />;
+      case 'strategic-paths':
+        return <StrategicPaths key={uniqueKey} />;
       default:
         return (
           <div className="w-full h-full flex items-center justify-center">

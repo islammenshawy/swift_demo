@@ -69,6 +69,7 @@ export interface SlideContent {
   subtitle?: string;
   bullets?: string[];
   text?: string;
+  footnote?: string;
   image?: string;
   chartType?: ChartType;
   chartData?: ChartData[];

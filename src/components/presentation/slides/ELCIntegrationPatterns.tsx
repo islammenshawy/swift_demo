@@ -109,7 +109,7 @@ export function ELCIntegrationPatterns() {
           {/* ========== FRONTEND LAYER ========== */}
           <motion.g animate={{ opacity: activePhase >= 0 ? 1 : 0.4 }}>
             <rect x="95" y="25" width="965" height="90" rx="8" fill="url(#modernGrad)" stroke="#00D4FF" strokeOpacity={activePhase === 0 || activePhase === 4 ? 0.8 : 0.3} strokeWidth={activePhase === 0 || activePhase === 4 ? 2 : 1} />
-            <text x="115" y="48" fill="#00D4FF" fontSize="11" fontWeight="600">FRONTEND - TENET Platform</text>
+            <text x="115" y="48" fill="#00D4FF" fontSize="11" fontWeight="600">FRONTEND - Trade Platform</text>
 
             {/* MFE Legend - Small, outside boxes */}
             <circle cx="340" cy="43" r="3" fill="none" stroke="#61dafb" strokeWidth="1" />
@@ -168,9 +168,9 @@ export function ELCIntegrationPatterns() {
 
           {/* ========== MIDDLE LAYER - PLATFORMS WITH EMBEDDED DBs ========== */}
           <motion.g animate={{ opacity: activePhase >= 1 ? 1 : 0.4 }}>
-            {/* ===== ELC PLATFORM (After DevOps sidebar) ===== */}
+            {/* ===== NEW TRADE PLATFORM (After DevOps sidebar) ===== */}
             <rect x="95" y="130" width="395" height="195" rx="8" fill="url(#modernGrad)" stroke="#00D4FF" strokeOpacity={activePhase === 1 || activePhase === 4 ? 0.8 : 0.3} strokeWidth={activePhase === 1 || activePhase === 4 ? 2 : 1} />
-            <text x="115" y="148" fill="#00D4FF" fontSize="10" fontWeight="600">ELC PLATFORM</text>
+            <text x="115" y="148" fill="#00D4FF" fontSize="10" fontWeight="600">NEW TRADE PLATFORM</text>
 
             {/* ===== WORKFLOW ENGINE - HORIZONTAL BAR ===== */}
             <motion.rect

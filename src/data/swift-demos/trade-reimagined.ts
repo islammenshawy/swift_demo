@@ -16,6 +16,7 @@ export const tradeReimaginedDemo: Demo = {
         title: 'Trade Reimagined',
         subtitle: 'From Legacy to Leading Edge',
         text: 'Transforming trade processing for the modern era',
+        footnote: 'This initiative does not impact TENET/TradeAI (LLM)',
       },
       animation: { entry: 'scale', duration: 0.6, delay: 0 },
     },
@@ -56,8 +57,17 @@ export const tradeReimaginedDemo: Demo = {
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
     {
-      id: 'slide-6b',
+      id: 'slide-8',
       order: 5,
+      type: 'interactive',
+      content: {
+        visualization: 'elc-integration-patterns',
+      },
+      animation: { entry: 'fadeIn', duration: 0.2, delay: 0 },
+    },
+    {
+      id: 'slide-6b',
+      order: 6,
       type: 'title',
       content: {
         title: 'Introducing ELC',
@@ -68,19 +78,10 @@ export const tradeReimaginedDemo: Demo = {
     },
     {
       id: 'slide-10',
-      order: 6,
-      type: 'interactive',
-      content: {
-        visualization: 'transformation-metrics',
-      },
-      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
-    },
-    {
-      id: 'slide-4',
       order: 7,
       type: 'interactive',
       content: {
-        visualization: 'transformation-goals',
+        visualization: 'transformation-metrics',
       },
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
@@ -94,17 +95,8 @@ export const tradeReimaginedDemo: Demo = {
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
     {
-      id: 'slide-8',
-      order: 9,
-      type: 'interactive',
-      content: {
-        visualization: 'elc-integration-patterns',
-      },
-      animation: { entry: 'fadeIn', duration: 0.2, delay: 0 },
-    },
-    {
       id: 'slide-arch-compare',
-      order: 10,
+      order: 9,
       type: 'interactive',
       content: {
         visualization: 'architecture-comparison',
@@ -113,7 +105,7 @@ export const tradeReimaginedDemo: Demo = {
     },
     {
       id: 'slide-8b',
-      order: 11,
+      order: 10,
       type: 'interactive',
       content: {
         visualization: 'elc-roadmap',
@@ -122,10 +114,19 @@ export const tradeReimaginedDemo: Demo = {
     },
     {
       id: 'slide-10b',
-      order: 12,
+      order: 11,
       type: 'interactive',
       content: {
         visualization: 'elc-deliverables-heatmap',
+      },
+      animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
+    },
+    {
+      id: 'slide-strategic-paths',
+      order: 12,
+      type: 'interactive',
+      content: {
+        visualization: 'strategic-paths',
       },
       animation: { entry: 'fadeIn', duration: 0.5, delay: 0 },
     },
@@ -134,7 +135,7 @@ export const tradeReimaginedDemo: Demo = {
       order: 13,
       type: 'title',
       content: {
-        title: 'Questions?',
+        title: 'Demo Time',
         text: "Let's discuss how we can get there ...",
       },
       animation: { entry: 'scale', duration: 0.6, delay: 0 },

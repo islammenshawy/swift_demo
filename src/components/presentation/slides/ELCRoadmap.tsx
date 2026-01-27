@@ -4,229 +4,108 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export function ELCRoadmap() {
-  const opsItems = [
-    { req: 'Foundational Framework', watch: 'Aggregated current tech cost $40 per transaction + overhead cognitive cost' },
-    { req: 'Collection Related Changes', watch: 'Increased system complexity' },
-    { req: 'Loan Related Changes', watch: 'More $ spent later for modularizing the system as per Product Vision' },
-    { req: 'Other Product Related Changes (400 per product avg)', watch: '2027 Mule Elimination - Cost of Mule, API unification' },
-    { req: 'Data Lite changes', watch: '2029 Mandatory Oracle Migration → 1700+ tables' },
-    { req: 'Maker/Checker STP changes', watch: 'Rework & cross impact to TPS when Common Platform starts' },
-    { req: 'Reverse API flows / Screen rebuilds', watch: '' },
+  const features = [
+    { name: 'Business Panorama View', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Synopsis of the Transaction', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Data Source View', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Data Entry Drawers', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Outputs _ Swifts/Letters', opsEndState: 100, elcPrototype: 100 },
+    { name: 'What changed Indicators', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Seamless Integration with Trade AI', opsEndState: 100, elcPrototype: 100 },
+    { name: 'STP Enabler (configurable)', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Classification & Extraction', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Decision Engine', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Data Integration', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Color Coding on TPS (Static/Mapped/Extracted/User input)', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Smart Route outs', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Actionable Dashboard', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Integrated Image Viewer', opsEndState: 100, elcPrototype: 100 },
+    { name: 'Data Quality & Completion Scores', opsEndState: 50, elcPrototype: 100 },
+    { name: 'Configurable Workflow', opsEndState: 50, elcPrototype: 100 },
+    { name: 'User Navigation to any Tab', opsEndState: 50, elcPrototype: 100 },
+    { name: 'Enabler for Agentic Processing', opsEndState: 50, elcPrototype: 100 },
+    { name: 'Transaction Processing Wall', opsEndState: 0, elcPrototype: 100 },
+    { name: 'Fast Track View', opsEndState: 0, elcPrototype: 100 },
+    { name: 'SLA Timer clock', opsEndState: 0, elcPrototype: 100 },
+    { name: 'Focused User Edits', opsEndState: 0, elcPrototype: 100 },
+    { name: 'Data Dependency/Lineage view', opsEndState: 0, elcPrototype: 100 },
+    { name: 'Seamless Integration with Template based Decision/Processing', opsEndState: 0, elcPrototype: 100 },
+    { name: 'Proactive Sanctions Alerts', opsEndState: 0, elcPrototype: 100 },
+    { name: 'Collaborative Maker Checker Interactions', opsEndState: 0, elcPrototype: 100 },
+    { name: 'Document Focused - User Review', opsEndState: 0, elcPrototype: 100 },
   ];
 
-  const elcItems = [
-    { feature: 'Fastrack Mode of Transaction Processing', status: 'no', gain: '40% reduction in processing time – agentic tech' },
-    { feature: 'Dynamic "Source" & "Panorama" View', status: 'no', gain: '50% increased volume resilience' },
-    { feature: 'Confidence score driven human involvement', status: 'partial', gain: 'Operations Future-ready scalability' },
-    { feature: 'Data dependency lineage view', status: 'no', gain: 'No rework for Mule Elimination' },
-    { feature: 'User edits indicators for checker', status: 'partial', gain: 'Reduced Oracle Migration effort' },
-    { feature: 'Auto "Party" data mapping for Decision Engine', status: 'partial', gain: 'API driven Trade & Unified Contract' },
-    { feature: 'Proactive sanctions hit notifications', status: 'yes', gain: 'Common components readiness' },
-  ];
+  const getScoreColor = (score: number) => {
+    if (score === 100) return 'text-green-400';
+    if (score === 50) return 'text-yellow-400';
+    return 'text-red-400';
+  };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'yes': return <span className="text-green-400">✓</span>;
-      case 'no': return <span className="text-red-400">✗</span>;
-      case 'partial': return <span className="text-yellow-400">◐</span>;
-      default: return null;
-    }
+  const getScoreBg = (score: number) => {
+    if (score === 100) return 'bg-green-500/20';
+    if (score === 50) return 'bg-yellow-500/20';
+    return 'bg-red-500/20';
   };
 
   return (
-    <div className="w-full h-full flex flex-col p-4 pt-8">
-      {/* Page Title - Fixed at top */}
+    <div className="w-full h-full flex flex-col p-3 pt-4">
+      {/* Page Title */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-4"
+        className="text-center mb-2"
       >
-        <h2 className="text-3xl font-bold text-[var(--text-primary)]">
+        <h2 className="text-2xl font-bold text-[var(--text-primary)]">
           Ops End State & Extended Features
         </h2>
-        <p className="text-sm text-[var(--text-secondary)] mt-1">Value Proposition</p>
+        <p className="text-xs text-[var(--text-secondary)]">Feature Alignment Comparison</p>
       </motion.div>
 
-      {/* Table centered in remaining space */}
-      <div className="flex-1 flex items-start pt-8">
-      <div className="flex gap-4 w-full">
-        {/* Left Labels */}
-        <div className="flex flex-col justify-start pt-[42px] gap-0 shrink-0 w-[130px]">
-        {/* Ops End State Label */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="h-[calc(7*36px+40px)] flex flex-col justify-center"
-        >
-          <div className="bg-gradient-to-br from-[#5D4E37] to-[#4a3f2f] rounded-lg p-3 border border-[var(--accent-gold)]/30">
-            <div className="text-sm font-bold text-white leading-tight">Ops End State</div>
-            <div className="mt-1 px-2 py-0.5 rounded bg-[var(--accent-gold)]/20 text-[var(--accent-gold)] text-xs font-bold inline-block">
-              Part of $3.2m
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ELC Features Label */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 }}
-          className="h-[calc(7*36px+40px)] flex flex-col justify-center"
-        >
-          <div className="bg-gradient-to-br from-[#2d5a4a] to-[#234a3a] rounded-lg p-3 border border-emerald-500/30">
-            <div className="text-sm font-bold text-white leading-tight">ELC Reimagine</div>
-            <div className="text-xs text-emerald-300/80 mt-0.5">Enhanced Features</div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Main Table with 3D effect */}
+      {/* Table with Legend on right */}
       <motion.div
-        initial={{ opacity: 0, rotateX: 5 }}
-        animate={{ opacity: 1, rotateX: 0 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1, duration: 0.5 }}
-        className="flex-1 overflow-hidden"
-        style={{ perspective: '1000px' }}
+        className="flex-1 flex items-center justify-center gap-4"
       >
         <div
-          className="rounded-xl overflow-hidden"
+          className="rounded-xl overflow-hidden flex-1 max-w-5xl"
           style={{
             background: 'linear-gradient(145deg, rgba(40,40,50,0.9), rgba(20,20,30,0.95))',
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.1)',
-            transform: 'translateZ(0)',
+            boxShadow: '0 20px 40px -10px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)',
           }}
         >
-          <table className="w-full text-sm border-collapse">
-            {/* Ops End State Section */}
+          <table className="w-full text-[12px] border-collapse">
             <thead>
-              <tr style={{ background: 'linear-gradient(135deg, #5D4E37 0%, #4a3f2f 100%)' }}>
-                <th className="px-3 py-2 text-left font-semibold text-white w-[32%] border-r border-black/30 border-b border-b-black/40">Requirements</th>
-                <th className="px-1 py-2 text-center font-semibold text-white w-[3%] border-r border-black/30 border-b border-b-black/40">ELC</th>
-                <th className="px-3 py-2 text-left font-semibold text-white border-b border-b-black/40">Watch Items</th>
+              <tr style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%)' }}>
+                <th className="px-4 py-2.5 text-left font-semibold text-white border-r border-black/30 w-[60%]">Feature</th>
+                <th className="px-4 py-2.5 text-center font-semibold text-white border-r border-black/30 w-[20%]">Ops End State</th>
+                <th className="px-4 py-2.5 text-center font-semibold text-white w-[20%]">ELC Prototype</th>
               </tr>
             </thead>
             <tbody>
-              {opsItems.map((item, i) => (
+              {features.map((item, i) => (
                 <motion.tr
-                  key={`ops-${i}`}
+                  key={i}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: i * 0.02 }}
+                  transition={{ delay: i * 0.01 }}
                   className="hover:bg-white/5 transition-colors"
                   style={{
                     background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.1)',
                   }}
                 >
-                  <td className="px-3 py-2 text-[var(--text-primary)] border-b border-r border-gray-700/50">{item.req}</td>
-                  <td className="px-1 py-2 text-center border-b border-r border-gray-700/50">
-                    <span className="text-green-400 text-base">✓</span>
+                  <td className="px-4 py-1.5 text-[var(--text-primary)] border-b border-r border-gray-700/50">
+                    {item.name}
                   </td>
-                  <td className="px-3 py-2 text-[var(--text-secondary)] border-b border-gray-700/50">
-                    {item.watch && (
-                      <span className="flex items-center gap-1.5">
-                        <span className="text-amber-500 text-xs">⚠</span>
-                        <span>{item.watch}</span>
-                      </span>
-                    )}
+                  <td className="px-4 py-1.5 text-center border-b border-r border-gray-700/50">
+                    <span className={`inline-block min-w-[28px] px-1.5 py-0.5 rounded text-xs font-bold ${getScoreColor(item.opsEndState)} ${getScoreBg(item.opsEndState)}`}>
+                      {item.opsEndState}
+                    </span>
                   </td>
-                </motion.tr>
-              ))}
-            </tbody>
-
-            {/* ELC Enhanced Features Section - Continuous Highlight */}
-            <tbody className="relative">
-              {/* Shimmer overlay */}
-              <tr className="absolute inset-0 pointer-events-none overflow-hidden" style={{ height: '100%' }}>
-                <td colSpan={3} className="p-0 relative">
-                  <motion.div
-                    className="absolute inset-0"
-                    style={{
-                      background: 'linear-gradient(90deg, transparent 0%, rgba(16, 185, 129, 0.15) 50%, transparent 100%)',
-                      width: '50%',
-                    }}
-                    animate={{ x: ['-100%', '300%'] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: 'linear', repeatDelay: 2 }}
-                  />
-                </td>
-              </tr>
-            </tbody>
-            <thead>
-              <tr style={{ background: 'linear-gradient(135deg, #2d5a4a 0%, #234a3a 100%)' }}>
-                <th className="px-3 py-2 text-left font-semibold text-white border-r border-black/30 border-b border-b-black/40 relative overflow-hidden">
-                  <motion.span
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400/20 to-transparent"
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
-                  />
-                  <span className="relative flex items-center gap-2">
-                    <motion.span
-                      animate={{
-                        opacity: [1, 0.4, 1],
-                        textShadow: ['0 0 0px #10b981', '0 0 10px #10b981', '0 0 0px #10b981']
-                      }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                      className="text-emerald-300"
-                    >
-                      ★
-                    </motion.span>
-                    Extended Features
-                  </span>
-                </th>
-                <th className="px-1 py-2 text-center font-semibold text-white border-r border-black/30 border-b border-b-black/40">ELC</th>
-                <th className="px-3 py-2 text-left font-semibold text-white border-b border-b-black/40">Strategic Gains & Value Drivers</th>
-              </tr>
-            </thead>
-            <tbody
-              style={{
-                boxShadow: 'inset 0 0 30px rgba(16, 185, 129, 0.1)',
-              }}
-            >
-              {elcItems.map((item, i) => (
-                <motion.tr
-                  key={`elc-${i}`}
-                  animate={{
-                    backgroundColor: [
-                      i % 2 === 0 ? 'rgba(16, 185, 129, 0.03)' : 'rgba(16, 185, 129, 0.06)',
-                      i % 2 === 0 ? 'rgba(16, 185, 129, 0.08)' : 'rgba(16, 185, 129, 0.12)',
-                      i % 2 === 0 ? 'rgba(16, 185, 129, 0.03)' : 'rgba(16, 185, 129, 0.06)',
-                    ]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.15,
-                    ease: 'easeInOut'
-                  }}
-                  className="relative overflow-hidden"
-                >
-                  <td className={`px-3 py-2 border-b border-r border-gray-700/50 ${item.status === 'yes' ? 'text-green-400' : 'text-[var(--text-primary)]'}`}>
-                    {item.feature}
-                  </td>
-                  <td className="px-1 py-2 text-center border-b border-r border-gray-700/50">
-                    <motion.span
-                      className="inline-block"
-                      animate={item.status === 'yes' ? {
-                        scale: [1, 1.3, 1],
-                        filter: ['drop-shadow(0 0 0px #22c55e)', 'drop-shadow(0 0 6px #22c55e)', 'drop-shadow(0 0 0px #22c55e)']
-                      } : {}}
-                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
-                    >
-                      {getStatusIcon(item.status)}
-                    </motion.span>
-                  </td>
-                  <td className="px-3 py-2 text-[var(--text-secondary)] border-b border-gray-700/50">
-                    <span className="flex items-center gap-1.5">
-                      <motion.span
-                        className="text-emerald-400 text-xs"
-                        animate={{
-                          x: [0, 5, 0],
-                          opacity: [0.6, 1, 0.6]
-                        }}
-                        transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.1 }}
-                      >
-                        →
-                      </motion.span>
-                      <span>{item.gain}</span>
+                  <td className="px-4 py-1.5 text-center border-b border-gray-700/50">
+                    <span className={`inline-block min-w-[28px] px-1.5 py-0.5 rounded text-xs font-bold ${getScoreColor(item.elcPrototype)} ${getScoreBg(item.elcPrototype)}`}>
+                      {item.elcPrototype}
                     </span>
                   </td>
                 </motion.tr>
@@ -234,9 +113,23 @@ export function ELCRoadmap() {
             </tbody>
           </table>
         </div>
+
+        {/* Legend - vertical on right */}
+        <div className="flex flex-col gap-3 p-3 rounded-lg bg-black/20">
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-green-500"></span>
+            <span className="text-xs text-[var(--text-secondary)]">100 - Fully Aligned</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
+            <span className="text-xs text-[var(--text-secondary)]">50 - Partially Aligned</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-red-500"></span>
+            <span className="text-xs text-[var(--text-secondary)]">0 - Not available</span>
+          </div>
+        </div>
       </motion.div>
-      </div>
-      </div>
     </div>
   );
 }
