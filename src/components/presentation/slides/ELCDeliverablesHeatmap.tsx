@@ -31,10 +31,10 @@ export function ELCDeliverablesHeatmap() {
     'Proactive Sanctions Alerts',
     'What changed Indicators',
     'Collaborative Maker Checker Interactions',
-    'Integrated Image Viewer',
   ];
 
   const integratedExperience = [
+    'Integrated Image Viewer',
     'Decision Engine',
     'Seamless Integration with Trade AI',
     'Classification & Extraction',
@@ -70,22 +70,22 @@ export function ELCDeliverablesHeatmap() {
   // Heatmap data from image - values mapped by row
   const heatmapData: Record<string, (number | string)[]> = {
     'Export LC': [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
-    'Import LC': [20, 20, 35, 40, 35, 20, 20, 20, 20, 30, 30, 30, 30, 30, 20, 100, 30, 30, 30, 100, 100, 100, 100, 40, 20, 100, 100, 100, 100, 100],
-    'Export LC Presentation': [30, 30, 35, 70, 45, 20, 20, 30, 20, 80, 80, 70, 70, 70, 30, 15, 30, 30, 30, 100, 100, 100, 15, 70, 15, 15, 15, 15, 15, 15],
-    'Import LC Presentation': [15, 20, 30, 30, 30, 20, 20, 20, 20, 30, 30, 30, 30, 30, 30, 15, 30, 15, 15, 15, 30, 15, 15, 15, 15, 15, 15, 15, 15, 15],
-    'Standby Issuance': [20, 30, 30, 30, 35, 20, 20, 20, 20, 70, 70, 40, 60, 80, 30, 15, 30, 15, 15, 30, 100, 15, 15, 40, 15, 15, 15, 15, 15, 15],
+    'Import LC': [20, 20, 15, 40, 35, 20, 20, 20, 20, 30, 30, 30, 30, 30, 20, 40, 30, 30, 30, 20, 20, 20, 20, 40, 20, 20, 20, 20, 20, 20],
+    'Export LC Presentation': [30, 30, 15, 70, 45, 20, 20, 30, 20, 80, 80, 70, 70, 70, 30, 15, 30, 30, 30, 15, 15, 100, 15, 15, 70, 15, 15, 15, 15, 15],
+    'Import LC Presentation': [15, 20, 10, 30, 30, 20, 20, 20, 20, 30, 30, 30, 30, 30, 30, 15, 30, 15, 15, 15, 30, 15, 15, 15, 15, 15, 15, 15, 15, 15],
+    'Standby Issuance': [20, 30, 10, 30, 35, 20, 20, 20, 20, 70, 70, 40, 60, 80, 30, 15, 30, 15, 15, 30, 100, 15, 15, 40, 15, 15, 15, 15, 15, 15],
     'Standby Advising': [15, 15, 15, 20, 30, 20, 20, 20, 30, 30, 30, 30, 30, 15, 30, 15, 30, 15, 15, 30, 30, 15, 40, 15, 15, 15, 15, 15, 15, 15],
     'Standby Issuance Draw': [20, 15, 15, 30, 35, 20, 20, 20, 70, 70, 30, 30, 15, 70, 30, 15, 30, 15, 15, 30, 30, 80, 15, 15, 15, 15, 15, 15, 15, 15],
-    'Standby Advising Draw': [15, 15, 15, 20, 30, 20, 20, 20, 30, 30, 30, 80, 15, 30, 30, 15, 15, 15, 15, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15],
+    'Standby Advising Draw': [15, 15, 10, 20, 30, 20, 20, 20, 30, 30, 30, 80, 15, 30, 30, 15, 15, 15, 15, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15],
     'Export Collection': [20, 15, 15, 30, 35, 20, 20, 20, 70, 70, 20, 20, 15, 30, 30, 15, 15, 15, 15, 30, 60, 15, 15, 15, 15, 15, 30, 30, 15, 15],
     'Import Collection': [15, 15, 15, 20, 30, 20, 20, 10, 30, 30, 30, 20, 15, 15, 30, 15, 10, 15, 15, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15],
     'Loans': [15, 15, 10, 30, 30, 20, 20, 10, 30, 70, 70, 30, 15, 30, 30, 15, 15, 15, 15, 30, 60, 15, 15, 15, 15, 15, 20, 15, 15, 15],
     'Reimbursement Authority': [15, 15, 15, 20, 30, 20, 20, 10, 20, 70, 20, 70, 15, 60, 30, 15, 15, 15, 15, 30, 30, 100, 15, 15, 15, 15, 15, 15, 15, 15],
-    'Reimbursement Claim': [15, 15, 15, 20, 30, 20, 20, 10, 20, 60, 60, 20, 40, 15, 40, 15, 15, 15, 15, 30, 30, 80, 15, 15, 15, 15, 15, 15, 15, 15],
+    'Reimbursement Claim': [15, 15, 10, 20, 30, 20, 20, 10, 20, 60, 60, 20, 40, 15, 40, 15, 15, 15, 15, 30, 30, 80, 15, 15, 15, 15, 15, 15, 15, 15],
     'Transfer LC': [15, 15, 15, 20, 30, 20, 20, 10, 30, 30, 30, 20, 15, 20, 30, 15, 10, 15, 15, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15],
-    'Transfer LC Presentation': [15, 15, 15, 20, 30, 20, 20, 10, 30, 30, 30, 20, 15, 20, 30, 15, 15, 20, 15, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15],
-    'Bank Release': [15, 15, 15, 20, 30, 20, 20, 10, 20, 30, 30, 30, 20, 30, 30, 15, 20, 15, 15, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15],
-    'Periodic Payment': [15, 15, 15, 20, 30, 20, 20, 10, 20, 70, 70, 30, 20, 30, 30, 15, 15, 15, 15, 30, 20, 15, 15, 15, 15, 15, 30, 15, 15, 15],
+    'Transfer LC Presentation': [15, 15, 10, 20, 30, 20, 20, 10, 30, 30, 30, 20, 15, 20, 30, 15, 15, 20, 15, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15],
+    'Bank Release': [15, 15, 10, 20, 30, 20, 20, 10, 20, 30, 30, 30, 20, 30, 30, 15, 20, 15, 15, 30, 20, 15, 15, 15, 15, 15, 15, 15, 15, 15],
+    'Periodic Payment': [15, 15, 10, 20, 30, 20, 20, 10, 20, 70, 70, 30, 20, 30, 30, 15, 15, 15, 15, 30, 20, 15, 15, 15, 15, 15, 30, 15, 15, 15],
   };
 
   useEffect(() => {
@@ -96,19 +96,42 @@ export function ELCDeliverablesHeatmap() {
     return () => timers.forEach(clearTimeout);
   }, []);
 
-  // Color mapping - Green to Orange/Red gradient: higher = warmer colors
-  const getCellBg = (value: number | string) => {
-    // Light green for '<5' string
-    if (value === '<5') return 'bg-[#A5D6A7] text-gray-800';
-
+  // Color mapping with gradients within ranges
+  const getCellStyle = (value: number | string): { backgroundColor: string; color: string } => {
     const v = typeof value === 'number' ? value : 0;
 
-    // Red for high values (80-100)
-    if (v >= 80) return 'bg-[#F44336] text-white';
-    // Orange for medium values (30-79)
-    if (v >= 30) return 'bg-[#D4A017] text-white';
-    // Green for low values (<30)
-    return 'bg-[#4CAF50] text-white';
+    // Very light green for values <= 5 (special case - distinct color)
+    if (value === '<5' || v <= 5) return { backgroundColor: '#E8F5E9', color: '#1a1a1a' };
+
+    // Helper to interpolate between two colors
+    const interpolateColor = (color1: number[], color2: number[], factor: number) => {
+      const r = Math.round(color1[0] + (color2[0] - color1[0]) * factor);
+      const g = Math.round(color1[1] + (color2[1] - color1[1]) * factor);
+      const b = Math.round(color1[2] + (color2[2] - color1[2]) * factor);
+      return `rgb(${r}, ${g}, ${b})`;
+    };
+
+    // Red range (71-100): Light red to dark red
+    if (v >= 71) {
+      const factor = (v - 71) / 29; // 0 at 71, 1 at 100
+      const lightRed = [255, 205, 210]; // #FFCDD2
+      const darkRed = [198, 40, 40];    // #C62828
+      return { backgroundColor: interpolateColor(lightRed, darkRed, factor), color: factor > 0.3 ? 'white' : '#1a1a1a' };
+    }
+
+    // Amber range (40-70): Light amber to dark amber
+    if (v >= 40) {
+      const factor = (v - 40) / 30; // 0 at 40, 1 at 70
+      const lightAmber = [255, 224, 130]; // #FFE082
+      const darkAmber = [245, 124, 0];    // #F57C00
+      return { backgroundColor: interpolateColor(lightAmber, darkAmber, factor), color: factor > 0.5 ? 'white' : '#1a1a1a' };
+    }
+
+    // Green range (6-39): Dark green to light green (lower numbers = darker green)
+    const factor = Math.max(0, (v - 6) / 33); // 0 at 6, 1 at 39
+    const darkGreen = [46, 125, 50];    // #2E7D32
+    const lightGreen = [200, 230, 201]; // #C8E6C9
+    return { backgroundColor: interpolateColor(darkGreen, lightGreen, factor), color: factor < 0.5 ? 'white' : '#1a1a1a' };
   };
 
   const allColumns = [...userNavigationWall, ...focusedDataEntry, ...integratedExperience];
@@ -213,18 +236,27 @@ export function ELCDeliverablesHeatmap() {
                 >
                   {deliverable}
                 </td>
-                {heatmapData[deliverable]?.map((value, colIndex) => (
-                  <motion.td
-                    key={colIndex}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.005 * colIndex + 0.01 * rowIndex }}
-                    className={`text-center text-[8px] font-bold text-white rounded ${getCellBg(value)}`}
-                    style={{ minWidth: '28px', padding: '3px 1px', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
-                  >
-                    {value}
-                  </motion.td>
-                ))}
+                {heatmapData[deliverable]?.map((value, colIndex) => {
+                  const cellStyle = getCellStyle(value);
+                  return (
+                    <motion.td
+                      key={colIndex}
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.005 * colIndex + 0.01 * rowIndex }}
+                      className="text-center text-[8px] font-bold rounded"
+                      style={{
+                        minWidth: '28px',
+                        padding: '3px 1px',
+                        backgroundColor: cellStyle.backgroundColor,
+                        color: cellStyle.color,
+                        textShadow: cellStyle.color === 'white' ? '0 1px 2px rgba(0,0,0,0.3)' : 'none'
+                      }}
+                    >
+                      {value}
+                    </motion.td>
+                  );
+                })}
               </motion.tr>
             ))}
           </tbody>
@@ -239,20 +271,20 @@ export function ELCDeliverablesHeatmap() {
       >
         <span className="text-[var(--text-muted)] font-medium">Coverage:</span>
         <div className="flex items-center gap-1">
-          <div className="w-4 h-4 rounded bg-[#F44336]"></div>
-          <span className="text-[var(--text-secondary)]">80-100%</span>
+          <div className="w-12 h-4 rounded" style={{ background: 'linear-gradient(to right, #FFCDD2, #C62828)' }}></div>
+          <span className="text-[var(--text-secondary)]">71-100%</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-4 h-4 rounded bg-[#D4A017]"></div>
-          <span className="text-[var(--text-secondary)]">30-79%</span>
+          <div className="w-12 h-4 rounded" style={{ background: 'linear-gradient(to right, #FFE082, #F57C00)' }}></div>
+          <span className="text-[var(--text-secondary)]">40-70%</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-4 h-4 rounded bg-[#4CAF50]"></div>
-          <span className="text-[var(--text-secondary)]">5-29%</span>
+          <div className="w-12 h-4 rounded" style={{ background: 'linear-gradient(to right, #2E7D32, #C8E6C9)' }}></div>
+          <span className="text-[var(--text-secondary)]">6-39%</span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="w-4 h-4 rounded bg-[#A5D6A7]"></div>
-          <span className="text-[var(--text-secondary)]">&lt;5%</span>
+          <div className="w-4 h-4 rounded" style={{ backgroundColor: '#E8F5E9' }}></div>
+          <span className="text-[var(--text-secondary)]">≤5%</span>
         </div>
       </motion.div>
     </div>

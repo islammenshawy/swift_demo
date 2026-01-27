@@ -365,7 +365,7 @@ export default function StandaloneApp() {
   const [zoomLevel, setZoomLevel] = useState(1);
   const hideTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
-  const MIN_ZOOM = 0.5;
+  const MIN_ZOOM = 1;
   const MAX_ZOOM = 3;
   const ZOOM_STEP = 0.25;
 
@@ -592,7 +592,12 @@ export default function StandaloneApp() {
       </div>
 
       {/* Slide content - key only changes on slide change, not phase change */}
-      <div className="absolute inset-0 overflow-auto">
+      <div
+        className="absolute inset-0"
+        style={{
+          overflow: zoomLevel > 1 ? 'auto' : 'hidden',
+        }}
+      >
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={currentSlide}
@@ -603,14 +608,20 @@ export default function StandaloneApp() {
             exit="exit"
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="w-full h-full"
-            style={{
-              transform: `scale(${zoomLevel})`,
-              transformOrigin: 'center center',
-              minHeight: zoomLevel > 1 ? `${100 * zoomLevel}%` : '100%',
-              minWidth: zoomLevel > 1 ? `${100 * zoomLevel}%` : '100%',
-            }}
           >
-            <SlideRenderer slide={slides[currentSlide]} phase={currentPhase} />
+            {/* Zoom wrapper - separate from animation */}
+            <div
+              style={{
+                width: `${100 * zoomLevel}%`,
+                height: `${100 * zoomLevel}%`,
+                transform: `scale(${zoomLevel})`,
+                transformOrigin: 'top left',
+              }}
+            >
+              <div style={{ width: `${100 / zoomLevel}%`, height: `${100 / zoomLevel}%` }}>
+                <SlideRenderer slide={slides[currentSlide]} phase={currentPhase} />
+              </div>
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>

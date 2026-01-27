@@ -24,14 +24,14 @@ export function ELCRoadmap() {
     { name: 'Configurable Workflow', opsEndState: 50, elcPrototype: 100 },
     { name: 'User Navigation to any Tab', opsEndState: 50, elcPrototype: 100 },
     { name: 'Enabler for Agentic Processing', opsEndState: 50, elcPrototype: 100 },
+    { name: 'SLA Timer clock', opsEndState: 50, elcPrototype: 100 },
+    { name: 'Collaborative Maker Checker Interactions', opsEndState: 50, elcPrototype: 100 },
     { name: 'Transaction Processing Wall', opsEndState: 0, elcPrototype: 100 },
     { name: 'Fast Track View', opsEndState: 0, elcPrototype: 100 },
-    { name: 'SLA Timer clock', opsEndState: 0, elcPrototype: 100 },
     { name: 'Focused User Edits', opsEndState: 0, elcPrototype: 100 },
     { name: 'Data Dependency/Lineage view', opsEndState: 0, elcPrototype: 100 },
     { name: 'Seamless Integration with Template based Decision/Processing', opsEndState: 0, elcPrototype: 100 },
     { name: 'Proactive Sanctions Alerts', opsEndState: 0, elcPrototype: 100 },
-    { name: 'Collaborative Maker Checker Interactions', opsEndState: 0, elcPrototype: 100 },
     { name: 'Document Focused - User Review', opsEndState: 0, elcPrototype: 100 },
   ];
 
@@ -45,6 +45,24 @@ export function ELCRoadmap() {
     if (score === 100) return 'bg-green-500/20';
     if (score === 50) return 'bg-yellow-500/20';
     return 'bg-red-500/20';
+  };
+
+  const getScoreIcon = (score: number) => {
+    if (score === 100) return (
+      <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+      </svg>
+    );
+    if (score === 50) return (
+      <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+      </svg>
+    );
+    return (
+      <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+      </svg>
+    );
   };
 
   return (
@@ -78,9 +96,9 @@ export function ELCRoadmap() {
           <table className="w-full text-[12px] border-collapse">
             <thead>
               <tr style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%)' }}>
-                <th className="px-4 py-2.5 text-left font-semibold text-white border-r border-black/30 w-[60%]">Feature</th>
-                <th className="px-4 py-2.5 text-center font-semibold text-white border-r border-black/30 w-[20%]">Ops End State</th>
-                <th className="px-4 py-2.5 text-center font-semibold text-white w-[20%]">ELC Prototype</th>
+                <th className="px-4 py-2 text-left font-semibold text-white text-[12px] border-r border-black/30 w-[60%]">Feature</th>
+                <th className="px-3 py-2 text-center font-semibold text-white text-[12px] border-r border-black/30 w-[20%]">Ops End State</th>
+                <th className="px-3 py-2 text-center font-semibold text-white text-[12px] w-[20%]">ELC Prototype</th>
               </tr>
             </thead>
             <tbody>
@@ -95,17 +113,17 @@ export function ELCRoadmap() {
                     background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.1)',
                   }}
                 >
-                  <td className="px-4 py-1.5 text-[var(--text-primary)] border-b border-r border-gray-700/50">
+                  <td className="px-4 py-1.5 text-[12px] text-[var(--text-primary)] border-b border-r border-gray-700/50">
                     {item.name}
                   </td>
-                  <td className="px-4 py-1.5 text-center border-b border-r border-gray-700/50">
-                    <span className={`inline-block min-w-[28px] px-1.5 py-0.5 rounded text-xs font-bold ${getScoreColor(item.opsEndState)} ${getScoreBg(item.opsEndState)}`}>
-                      {item.opsEndState}
+                  <td className="px-3 py-1.5 text-center border-b border-r border-gray-700/50">
+                    <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full ${getScoreColor(item.opsEndState)} ${getScoreBg(item.opsEndState)}`}>
+                      {getScoreIcon(item.opsEndState)}
                     </span>
                   </td>
-                  <td className="px-4 py-1.5 text-center border-b border-gray-700/50">
-                    <span className={`inline-block min-w-[28px] px-1.5 py-0.5 rounded text-xs font-bold ${getScoreColor(item.elcPrototype)} ${getScoreBg(item.elcPrototype)}`}>
-                      {item.elcPrototype}
+                  <td className="px-3 py-1.5 text-center border-b border-gray-700/50">
+                    <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full ${getScoreColor(item.elcPrototype)} ${getScoreBg(item.elcPrototype)}`}>
+                      {getScoreIcon(item.elcPrototype)}
                     </span>
                   </td>
                 </motion.tr>
@@ -117,16 +135,28 @@ export function ELCRoadmap() {
         {/* Legend - vertical on right */}
         <div className="flex flex-col gap-3 p-3 rounded-lg bg-black/20">
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-green-500"></span>
-            <span className="text-xs text-[var(--text-secondary)]">100 - Fully Aligned</span>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-green-500/20 text-green-400">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </span>
+            <span className="text-xs text-[var(--text-secondary)]">Fully Aligned</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-yellow-500"></span>
-            <span className="text-xs text-[var(--text-secondary)]">50 - Partially Aligned</span>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-yellow-500/20 text-yellow-400">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+              </svg>
+            </span>
+            <span className="text-xs text-[var(--text-secondary)]">Partially Aligned</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-red-500"></span>
-            <span className="text-xs text-[var(--text-secondary)]">0 - Not available</span>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-500/20 text-red-400">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </span>
+            <span className="text-xs text-[var(--text-secondary)]">Not Available</span>
           </div>
         </div>
       </motion.div>

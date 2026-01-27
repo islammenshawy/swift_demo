@@ -45,7 +45,7 @@ export default function PresentationContainer({ demo, initialSlide = 0 }: Presen
   const [showExportDialog, setShowExportDialog] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
 
-  const MIN_ZOOM = 0.5;
+  const MIN_ZOOM = 1;
   const MAX_ZOOM = 3;
   const ZOOM_STEP = 0.25;
 
@@ -302,7 +302,12 @@ export default function PresentationContainer({ demo, initialSlide = 0 }: Presen
       <ProgressIndicator />
 
       {/* Slide content with transitions */}
-      <div className="absolute inset-0 overflow-auto">
+      <div
+        className="absolute inset-0"
+        style={{
+          overflow: zoomLevel > 1 ? 'auto' : 'hidden',
+        }}
+      >
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={`${currentSlideIndex}-${navigationKey}`}
@@ -320,14 +325,20 @@ export default function PresentationContainer({ demo, initialSlide = 0 }: Presen
               rotateY: { duration: 0.5 },
             }}
             className="w-full h-full"
-            style={{
-              transform: `scale(${zoomLevel})`,
-              transformOrigin: 'center center',
-              minHeight: zoomLevel > 1 ? `${100 * zoomLevel}%` : '100%',
-              minWidth: zoomLevel > 1 ? `${100 * zoomLevel}%` : '100%',
-            }}
           >
-            <SlideRenderer slide={currentSlide} navigationKey={navigationKey} forcePhase={currentPhase} onPhaseChange={setPhase} />
+            {/* Zoom wrapper - separate from animation */}
+            <div
+              style={{
+                width: `${100 * zoomLevel}%`,
+                height: `${100 * zoomLevel}%`,
+                transform: `scale(${zoomLevel})`,
+                transformOrigin: 'top left',
+              }}
+            >
+              <div style={{ width: `${100 / zoomLevel}%`, height: `${100 / zoomLevel}%` }}>
+                <SlideRenderer slide={currentSlide} navigationKey={navigationKey} forcePhase={currentPhase} onPhaseChange={setPhase} />
+              </div>
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>
