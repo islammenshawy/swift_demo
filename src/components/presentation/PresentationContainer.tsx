@@ -43,6 +43,11 @@ export default function PresentationContainer({ demo, initialSlide = 0 }: Presen
   const [showControls, setShowControls] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showExportDialog, setShowExportDialog] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(1);
+
+  const MIN_ZOOM = 0.5;
+  const MAX_ZOOM = 3;
+  const ZOOM_STEP = 0.25;
 
   const {
     currentSlideIndex,
@@ -69,6 +74,41 @@ export default function PresentationContainer({ demo, initialSlide = 0 }: Presen
     pauseRecording,
     resumeRecording,
   } = useRecording();
+
+  // Zoom functions
+  const zoomIn = useCallback(() => {
+    setZoomLevel((prev) => Math.min(prev + ZOOM_STEP, MAX_ZOOM));
+  }, []);
+
+  const zoomOut = useCallback(() => {
+    setZoomLevel((prev) => Math.max(prev - ZOOM_STEP, MIN_ZOOM));
+  }, []);
+
+  const resetZoom = useCallback(() => {
+    setZoomLevel(1);
+  }, []);
+
+  // Reset zoom when changing slides
+  useEffect(() => {
+    setZoomLevel(1);
+  }, [currentSlideIndex]);
+
+  // Mouse wheel zoom handler
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        if (e.deltaY < 0) {
+          zoomIn();
+        } else {
+          zoomOut();
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [zoomIn, zoomOut]);
 
   // Track fullscreen state and stop recording when entering fullscreen
   useEffect(() => {
@@ -175,9 +215,23 @@ export default function PresentationContainer({ demo, initialSlide = 0 }: Presen
           e.preventDefault();
           goToSlide(demo.slides.length - 1);
           break;
+        case '+':
+        case '=':
+          e.preventDefault();
+          zoomIn();
+          break;
+        case '-':
+        case '_':
+          e.preventDefault();
+          zoomOut();
+          break;
+        case '0':
+          e.preventDefault();
+          resetZoom();
+          break;
       }
     },
-    [nextSlide, prevSlide, togglePlayback, toggleFullscreen, router, demo.id, demo.slides.length, goToSlide, isRecording, startRecording, stopRecording]
+    [nextSlide, prevSlide, togglePlayback, toggleFullscreen, router, demo.id, demo.slides.length, goToSlide, isRecording, startRecording, stopRecording, zoomIn, zoomOut, resetZoom]
   );
 
   useEffect(() => {
@@ -248,27 +302,35 @@ export default function PresentationContainer({ demo, initialSlide = 0 }: Presen
       <ProgressIndicator />
 
       {/* Slide content with transitions */}
-      <AnimatePresence mode="wait" custom={direction}>
-        <motion.div
-          key={`${currentSlideIndex}-${navigationKey}`}
-          custom={direction}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            type: 'spring',
-            stiffness: 200,
-            damping: 25,
-            opacity: { duration: 0.4 },
-            scale: { duration: 0.4 },
-            rotateY: { duration: 0.5 },
-          }}
-          className="absolute inset-0"
-        >
-          <SlideRenderer slide={currentSlide} navigationKey={navigationKey} forcePhase={currentPhase} onPhaseChange={setPhase} />
-        </motion.div>
-      </AnimatePresence>
+      <div className="absolute inset-0 overflow-auto">
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={`${currentSlideIndex}-${navigationKey}`}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              type: 'spring',
+              stiffness: 200,
+              damping: 25,
+              opacity: { duration: 0.4 },
+              scale: { duration: 0.4 },
+              rotateY: { duration: 0.5 },
+            }}
+            className="w-full h-full"
+            style={{
+              transform: `scale(${zoomLevel})`,
+              transformOrigin: 'center center',
+              minHeight: zoomLevel > 1 ? `${100 * zoomLevel}%` : '100%',
+              minWidth: zoomLevel > 1 ? `${100 * zoomLevel}%` : '100%',
+            }}
+          >
+            <SlideRenderer slide={currentSlide} navigationKey={navigationKey} forcePhase={currentPhase} onPhaseChange={setPhase} />
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {/* Navigation controls - fade with mouse */}
       <motion.div
@@ -370,6 +432,39 @@ export default function PresentationContainer({ demo, initialSlide = 0 }: Presen
 
         {/* Right side controls */}
         <div className="flex items-center gap-2 pointer-events-auto">
+          {/* Zoom controls */}
+          <div className="flex items-center gap-1 bg-[var(--bg-secondary)]/80 backdrop-blur-md rounded-full border border-[var(--accent-cyan)]/20 px-2 py-1">
+            <button
+              onClick={zoomOut}
+              disabled={zoomLevel <= MIN_ZOOM}
+              className="p-1 rounded text-[var(--text-secondary)] hover:text-[var(--text-primary)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              aria-label="Zoom out"
+              title="Zoom Out (-)"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+              </svg>
+            </button>
+            <button
+              onClick={resetZoom}
+              className="px-2 py-0.5 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors min-w-[3rem] text-center"
+              title="Reset Zoom (0)"
+            >
+              {Math.round(zoomLevel * 100)}%
+            </button>
+            <button
+              onClick={zoomIn}
+              disabled={zoomLevel >= MAX_ZOOM}
+              className="p-1 rounded text-[var(--text-secondary)] hover:text-[var(--text-primary)] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              aria-label="Zoom in"
+              title="Zoom In (+)"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
+          </div>
+
           {/* Export to PowerPoint button - hidden in fullscreen */}
           {!isFullscreen && (
             <button
