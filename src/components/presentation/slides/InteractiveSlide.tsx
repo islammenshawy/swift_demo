@@ -4054,7 +4054,7 @@ function JourneyOverview() {
           </div>
         </motion.div>
 
-        {/* Center - Platform A Architecture SVG */}
+        {/* Center - Platform A Platform Architecture SVG */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: phase >= 2 ? 1 : 0, scale: phase >= 2 ? 1 : 0.95 }}
@@ -4522,7 +4522,7 @@ function LegacyProblems() {
                   </div>
                   <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--accent-gold)]/30 p-4">
                     <p className="text-sm text-[var(--accent-gold)] font-semibold mb-3 text-center">TPS Architecture</p>
-                    {/* Platform A Architecture Image with UI layer greyed out */}
+                    {/* Platform A Platform Architecture Image with UI layer greyed out */}
                     <div className="relative">
                       <img
                         src={tpsArchitectureImage}

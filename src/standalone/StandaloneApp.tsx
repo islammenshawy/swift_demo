@@ -130,6 +130,17 @@ function TitleSlide({ content }: { content: SlideContent }) {
             {content.text}
           </motion.p>
         )}
+
+        {content.footnote && (
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.6, ease: [0.25, 0.4, 0.25, 1] }}
+            className="mt-6 text-xl md:text-2xl text-[var(--accent-gold)] max-w-2xl mx-auto italic"
+          >
+            {content.footnote}
+          </motion.p>
+        )}
       </div>
 
       {/* Bottom accent line with glow */}
