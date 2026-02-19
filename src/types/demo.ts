@@ -40,7 +40,8 @@ export type VisualizationType =
   | 'elc-roadmap'
   | 'elc-deliverables-heatmap'
   | 'journey-overview'
-  | 'architecture-comparison';
+  | 'architecture-comparison'
+  | 'strategic-paths';
 
 export type ChartType = 'bar' | 'line' | 'pie' | 'donut';
 
@@ -83,10 +84,18 @@ export interface SlideContent {
 }
 
 export interface SlideAnimation {
-  entry: 'fadeIn' | 'slideLeft' | 'slideRight' | 'slideUp' | 'scale' | 'blur';
+  type?: 'none' | 'fadeIn' | 'slideLeft' | 'slideRight' | 'slideUp' | 'scale' | 'blur' | 'custom';
+  entry?: 'fadeIn' | 'slideLeft' | 'slideRight' | 'slideUp' | 'scale' | 'blur'; // Legacy support
   duration: number;
   delay: number;
   stagger?: number;
+  // Custom animation support
+  customAnimationId?: string;
+  customCode?: string;
+  customConfig?: Record<string, unknown>;
+  // Spring animation config
+  stiffness?: number;
+  damping?: number;
 }
 
 export interface Slide {
@@ -109,6 +118,9 @@ export interface Demo {
   slides: Slide[];
   theme: 'swift-dark' | 'swift-light';
   autoPlaySpeed?: number;
+  // For database-stored projects
+  projectId?: string;
+  userId?: string;
 }
 
 export interface UploadedFile {

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "@/components/auth";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,8 +15,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SWIFT Trade Finance | Demo Presentation",
-  description: "Interactive presentation platform for SWIFT banking trade finance initiatives",
+  title: "SlideForge | AI-Powered Presentation Platform",
+  description: "Create stunning presentations with AI assistance",
 };
 
 export default function RootLayout({
@@ -27,7 +29,19 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: '#1e293b',
+                color: '#f1f5f9',
+                border: '1px solid #334155',
+              },
+            }}
+          />
+        </AuthProvider>
       </body>
     </html>
   );

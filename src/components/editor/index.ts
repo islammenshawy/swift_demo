@@ -1,0 +1,6 @@
+export { SlideEditor } from './SlideEditor'
+export { SlidePanel } from './SlidePanel'
+export { SlideCanvas } from './SlideCanvas'
+export { ChatPanel } from './ChatPanel'
+export { EditorToolbar } from './EditorToolbar'
+export { PropertiesPanel } from './PropertiesPanel'
